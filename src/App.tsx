@@ -1,13 +1,10 @@
-import { Button } from "@/components/ui/button"
 
 function App() {
 
   return (
-    <>
-      <div>
-        hello world
-       </div>
-    </>
+    <div className="flex h-screen w-screen items-center justify-center">
+    <h1 className="font-bold text-xl">Nwobia David Portfolio</h1>
+  </div>
   )
 }
 
