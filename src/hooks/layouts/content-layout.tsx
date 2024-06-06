@@ -6,7 +6,7 @@ interface ContentLayoutProps {
 
 export const ContentLayout = ({ children }: ContentLayoutProps) => {
   return (
-    <div className="flex flex-col w-[80%]">
+    <div className="flex flex-col w-full lg:w-[80%] overflow-x-hidden ">
       <TopbarContent />
       {children}
     </div>

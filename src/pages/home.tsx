@@ -6,7 +6,7 @@ import { type Container } from "@tsparticles/engine";
 import Particles, { initParticlesEngine } from "@tsparticles/react";
 import { loadSlim } from "@tsparticles/slim";
 
-import { ArrowRight, Check } from "lucide-react";
+import { ArrowDown, ArrowRight, Check, Contact, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useEffect, useState } from "react";
@@ -48,24 +48,24 @@ export default function Home() {
       ? particleOptionsLight
       : undefined;
 
-  const verifyPortofolio = async () => {
-    if (session) {
-      const user = session.user.user_metadata;
-      await supabase.from("verified").insert({
-        user_id: session.user.id,
-        email: user.email,
-        full_name: user.full_name,
-        image_url: user.avatar_url,
-      });
-    } else {
-      return;
-    }
-  };
+  // const verifyPortofolio = async () => {
+  //   if (session) {
+  //     const user = session.user.user_metadata;
+  //     await supabase.from("verified").insert({
+  //       user_id: session.user.id,
+  //       email: user.email,
+  //       full_name: user.full_name,
+  //       image_url: user.avatar_url,
+  //     });
+  //   } else {
+  //     return;
+  //   }
+  // };
 
-  useEffect(() => {
-    verifyPortofolio();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [session?.user.id]);
+  // useEffect(() => {
+  //   verifyPortofolio();
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [session?.user.id]);
 
   return (
     <div className="md:h-full w-screen relative md:w-full flex items-center justify-center">
@@ -82,7 +82,7 @@ export default function Home() {
         transition={{ duration: 0.8 }}
         className="flex md:flex-row flex-col-reverse items-center justify-center gap-4 md:mx-4"
       >
-        <div className="flex flex-col w-[60%] items-start justify-center gap-2">
+        <div className="flex flex-col w-[80%] lg:w-[60%] items-start justify-center gap-2">
           <h3 className="scroll-m-20 text-2xl  font-semibold tracking-tight">
             Welcome
           </h3>
@@ -114,18 +114,22 @@ export default function Home() {
               <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-all duration-300" />
             </Button>
           </Link>
-          <Button
-            className={cn(session && "hidden")}
-            onClick={() => navigate("/login")}
-          >
-            <Check className="h-4 w-4 mr-2" /> verified my portfolio
-          </Button>
-          <VerifiedAvatar />
+
+          <Link to="mailto:dnwobia@gmail.com" >
+            <Button
+              className={cn(session && "hidden")}
+              >
+              <Mail className="h-4 w-4 mr-2" /> Gmail me
+            </Button>
+          </Link>
+            
+          {/* <VerifiedAvatar /> */}
         </div>
+
         <div className="w-fit">
           <Avatar className="w-52 h-52">
-            <AvatarImage src="https://avatars.githubusercontent.com/u/104153142?v=4" />
-            <AvatarFallback>RFI</AvatarFallback>
+            <AvatarImage src="/images/profile pic.jpg" />
+            <AvatarFallback>Nwobia David</AvatarFallback>
           </Avatar>
         </div>
       </motion.div>

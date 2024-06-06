@@ -35,6 +35,11 @@ export interface Database {
           user_id?: string
         }
         Relationships: []
+      },
+      likes: {
+        id?: number
+        cunt: number
+
       }
     }
     Views: {

@@ -11,7 +11,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-// import { supabase } from "@/database/db";
+import { supabase } from "@/database/db";
 
 export default function Login() {
   const { session } = useSession();
@@ -27,37 +27,37 @@ export default function Login() {
     <div className="w-screen md:w-full h-screen flex items-center justify-center">
       <Card>
         <CardHeader>
-          <CardTitle>1 Simple steps to Help me</CardTitle>
+          <CardTitle>Step 1: </CardTitle>
           <CardDescription>
-            Login to Help me verified my Portofolio
+            Login to Help me verified my Portfolio
           </CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-2">
           <Button
             className="flex gap-2"
             variant="outline"
-            // onClick={async () =>
-            //   supabase.auth.signInWithOAuth({
-            //     provider: "google",
-            //     options: {
-            //       queryParams: {
-            //         access_type: "offline",
-            //         prompt: "consent",
-            //       },
-            //     },
-            //   })
-            // }
+            onClick={async () =>
+              supabase.auth.signInWithOAuth({
+                provider: "google",
+                options: {
+                  queryParams: {
+                    access_type: "offline",
+                    prompt: "consent",
+                  },
+                },
+              })
+            }
           >
             <IconGoogle /> Login with Google
           </Button>
           <Button
             className="flex gap-2"
             variant="outline"
-            // onClick={async () =>
-            //   supabase.auth.signInWithOAuth({
-            //     provider: "github",
-            //   })
-            // }
+            onClick={async () =>
+              supabase.auth.signInWithOAuth({
+                provider: "github",
+              })
+            }
           >
             <IconGithub /> Login with Github
           </Button>

@@ -3,6 +3,7 @@ import {
   ArrowRight,
   ArrowUpIcon,
   DoorOpen,
+  Heart,
   Menu,
 } from "lucide-react";
 import Breadcrumbs from "../breadcrumbs";
@@ -21,12 +22,58 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { createAvatarFallback } from "@/lib/string";
+import { useEffect, useState } from "react";
 
 export const TopbarContent = () => {
   const navigate = useNavigate();
   const { isOpen, open } = useSheet();
   const { session } = useSession();
 
+  const [likeCount, setLikeCount] = useState(0);
+  const [hasLiked, setHasLiked] = useState(false);
+
+  useEffect(() => {
+    const liked = localStorage.getItem("hasLikedPortfolio");
+    if (liked) {
+      setHasLiked(true);
+    }
+
+    // Fetch the likes count from Supabase
+    const fetchLikes = async () => {
+      const { data, error } = await supabase
+        .from("likes")
+        .select("count")
+        .eq("id", 1)
+        .single();
+
+      if (error) {
+        console.error("Error fetching likes:", error);
+      } else if (data) {
+        setLikeCount(data.count);
+      }
+    };
+
+    fetchLikes();
+  }, []);
+
+  const handleLike = async () => {
+    if (!hasLiked) {
+      const { data, error } = await supabase
+      .from("likes")
+        .update({ count: likeCount + 1 })
+        .eq("id", 1)
+        .select("count")
+        .single();
+
+      if (error) {
+        console.error("Error updating likes:", error.message);
+      } else if (data) {
+        setLikeCount(data.count);
+        setHasLiked(true);
+        localStorage.setItem("hasLikedPortfolio", "true");
+      }
+    }
+  };
   return (
     <div className="w-screen md:w-full flex items-center justify-between">
       <div className="p-4 flex items-center gap-4 md:gap-8">
@@ -58,7 +105,23 @@ export const TopbarContent = () => {
         </div>
         <Breadcrumbs />
       </div>
-      {session && (
+
+      <div className="p-4 text-xs lg:text-base flex lg:flex-row flex-col lg:mr-0 mr-2 justify-center items-center  ">
+        <div className=" lg:mr-5 lg:flex justify-center items-center hidden    "><h2 className=" mr-2 font-bold " >{likeCount}</h2> <span className=" whitespace-nowrap capitalize " >like this website</span></div>
+
+        <Button
+          className={` gap-4 justify-start ${hasLiked && ' bg-pink-600 text-white ' }  w-full flex hover:bg-pink-100 border-pink-600 text-pink-600 lg:text-black lg:border-0 border hover:text-pink-600 `}
+          variant="ghost"
+          onClick={handleLike}
+          disabled={hasLiked}
+        >
+          <Heart />
+          <h2 className=" hidden lg:flex">{hasLiked ? "Liked" : "Like this Website"}</h2>
+        </Button>
+      </div>
+
+
+      {/* {session && (
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger>
@@ -86,7 +149,7 @@ export const TopbarContent = () => {
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
-      )}
+      )} */}
     </div>
   );
 };

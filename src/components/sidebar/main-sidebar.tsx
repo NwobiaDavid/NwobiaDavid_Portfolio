@@ -144,6 +144,7 @@ export const MainSidebar = ({ isMobile = false }: MainSidebarProps) => {
                 variant="ghost"
                 onClick={close}
               >
+                
                 <GraduationCap />
                 Education
               </Button>
