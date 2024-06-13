@@ -8,18 +8,18 @@ export interface VideoData {
 
 export const videoUrls: VideoData[] = [
   {
-    title: "TULUS - Hati-Hati di Jalan",
+    title: "In The Room (Afro Beat Version)",
     thumbnail:
-      "https://i.ytimg.com/vi/_N6vSc_mT6I/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDNnjDgSWIKHltC_WHkW6ZsNSLKwQ",
-    link: "https://www.youtube.com/watch?v=_N6vSc_mT6I",
-    artist: "Tulus",
+      "https://i.ytimg.com/vi/pb4KwPKJoFM/hq720.jpg",
+    link: "https://www.youtube.com/watch?v=pb4KwPKJoFM&pp=ygUZaW4gdGhlIHJvb20gbWF2ZXJpY2sgY2l0eQ%3D%3D",
+    artist: " Annatoria & Maverick City Music",
   },
   {
-    title: "TULUS - Monokrom",
+    title: "Love Theory",
     thumbnail:
-      "https://i.ytimg.com/vi/QqJ-Vp8mvbk/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLAXMC7DktlvXdktxePlhMCIHSmFIg",
-    link: "https://www.youtube.com/watch?v=QqJ-Vp8mvbk",
-    artist: "Tulus",
+      "https://i.ytimg.com/vi/3aD8OK07iIY/hq720.jpg",
+    link: "https://www.youtube.com/watch?v=3aD8OK07iIY&pp=ygUZbG92ZSB0aGVvcnkga2lyayBmcmFua2xpbg%3D%3D",
+    artist: "Kirk Franklin",
   },
   {
     title: "TULUS - Pamit",
