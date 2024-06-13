@@ -13,8 +13,10 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import {
+  Book,
   Folder,
   Gamepad2,
+  GraduationCap,
   Headphones,
   Speaker,
   UserCircle2,
@@ -27,10 +29,11 @@ import { cn } from "@/lib/utils";
 import { TourProvider } from "@reactour/tour";
 import { steps } from "@/constants/steps";
 import { usePlay } from "@/hooks/use-play";
+import { BookHobbyContent } from "@/components/content/books-hobby-content";
 
 export default function Hobby() {
-  useDocumentTitle("Rizky Fauzi Ilmi - Hobby");
-  const [tabState, setTabState] = useState("game");
+  useDocumentTitle("Nwobia David | Hobby");
+  const [tabState, setTabState] = useState("books");
   const play = usePlay();
 
   return (
@@ -60,18 +63,18 @@ export default function Hobby() {
         <Tabs value={tabState}>
           <TabsList className="mx-5">
             <TabsTrigger
-              value="game"
+              value="books"
               onClick={() => {
-                setTabState("game");
+                setTabState("books");
                 play.setFalse();
               }}
             >
-              <Gamepad2 className="h-4 w-4 mr-2" /> Game
+              <Book className="h-4 w-4 mr-2" /> Books
             </TabsTrigger>
             <AlertDialog>
               <AlertDialogTrigger>
                 <TabsTrigger value="music">
-                  <Headphones className="h-4 w-4 mr-2" /> Music
+                  <Headphones className="h-4 w-4 mr-2" /> Musics
                 </TabsTrigger>
               </AlertDialogTrigger>
               <AlertDialogContent>
@@ -95,6 +98,9 @@ export default function Hobby() {
           <TabsContent value="game">
             <GameHobbyContent />
           </TabsContent>
+          <TabsContent value="books">
+            <BookHobbyContent />
+          </TabsContent>
           <TabsContent value="music" className="h-full  bg-blue-600">
             <MusicHobbyContent />
           </TabsContent>
@@ -104,10 +110,10 @@ export default function Hobby() {
             tabState === "music" && "hidden",
             "p-5 w-full"
           )}
-          leftTitle="Profile"
+          leftTitle="Education"
           leftDescription="see about me"
-          leftIcon={<UserCircle2 />}
-          leftRoute="/profile"
+          leftIcon={<GraduationCap />}
+          leftRoute="/education"
           rightTitle="Projects"
           rightDescription="see what I'm working on"
           rightIcon={<Folder />}
