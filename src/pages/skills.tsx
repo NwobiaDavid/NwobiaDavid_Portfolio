@@ -1,28 +1,29 @@
-import IconDocker from "@/components/svg/docker-svg";
-import IconElectron from "@/components/svg/electron-svg";
+// import IconDocker from "@/components/svg/docker-svg";
+// import IconElectron from "@/components/svg/electron-svg";
 import IconExpress from "@/components/svg/express-svg";
 import IconFirebase from "@/components/svg/firebase-svg";
 import IconGit from "@/components/svg/git-svg";
 import IconBrandJavascript from "@/components/svg/javascript-svg";
 import IconMongodb from "@/components/svg/mongodb-svg";
 import IconMysql from "@/components/svg/mysql-svg";
-import IconNestjs from "@/components/svg/nestjs-svg";
+// import IconNestjs from "@/components/svg/nestjs-svg";
 import IconNextjs from "@/components/svg/nextjs-svg";
-import IconPrisma from "@/components/svg/prisma-svg";
+import IconPython from "@/components/svg/python-svg";
+// import IconPrisma from "@/components/svg/prisma-svg";
 import IconReact from "@/components/svg/react-svg";
-import IconRust from "@/components/svg/rust-svg";
+// import IconRust from "@/components/svg/rust-svg";
 import IconSupabase from "@/components/svg/supabase-svg";
 import IconTailwind from "@/components/svg/tailwind-svg";
-import IconTauri from "@/components/svg/tauri-svg";
+// import IconTauri from "@/components/svg/tauri-svg";
 import IconTypescript from "@/components/svg/typescript-svg";
 import { useDocumentTitle } from "usehooks-ts";
 import { motion } from "framer-motion";
-import IconGolang from "@/components/svg/golang-svg";
+// import IconGolang from "@/components/svg/golang-svg";
 import { FlowAppButton } from "@/components/content/flow-app-button";
-import { Folder, Globe } from "lucide-react";
+import { Folder, ShieldCheckIcon } from "lucide-react";
 
 export default function Skills() {
-  useDocumentTitle("Rizky Fauzi Ilmi - Skills");
+  useDocumentTitle("Nwobia David | Skills");
 
   enum Categoty {
     LANGUAGE,
@@ -50,6 +51,11 @@ export default function Skills() {
       category: Categoty.LANGUAGE,
     },
     {
+      title: "Python",
+      icon: <IconPython className="h-10 w-10" />,
+      category: Categoty.LANGUAGE,
+    },
+    {
       title: "React",
       icon: <IconReact className="h-10 w-10" />,
       category: Categoty.FRONTEND,
@@ -70,34 +76,9 @@ export default function Skills() {
       category: Categoty.FULLSTACK,
     },
     {
-      title: "Docker",
-      icon: <IconDocker className="h-10 w-10" />,
-      category: Categoty.OTHER,
-    },
-    {
-      title: "Electron",
-      icon: <IconElectron className="h-10 w-10" />,
-      category: Categoty.FRONTEND,
-    },
-    {
       title: "Tailwind",
       icon: <IconTailwind className="h-10 w-10" />,
       category: Categoty.FRONTEND,
-    },
-    {
-      title: "NestJS",
-      icon: <IconNestjs className="h-10 w-10" />,
-      category: Categoty.BACKEND,
-    },
-    {
-      title: "Tauri",
-      icon: <IconTauri className="h-10 w-10" />,
-      category: Categoty.FULLSTACK,
-    },
-    {
-      title: "Rust",
-      icon: <IconRust className="h-10 w-10" />,
-      category: Categoty.LANGUAGE,
     },
     {
       title: "MySQL",
@@ -108,16 +89,6 @@ export default function Skills() {
       title: "MongoDB",
       icon: <IconMongodb className="h-10 w-10" />,
       category: Categoty.BACKEND,
-    },
-    {
-      title: "Prisma",
-      icon: <IconPrisma className="h-10 w-10" />,
-      category: Categoty.BACKEND,
-    },
-    {
-      title: "Golang",
-      icon: <IconGolang className="h-10 w-10" />,
-      category: Categoty.LANGUAGE,
     },
     {
       title: "Firebase",
@@ -160,8 +131,8 @@ export default function Skills() {
             Programming Language
           </h4>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {skillsLanguage.map((value) => (
-              <div className="p-5 rounded-md shadow-lg bg-secondary flex justify-center items-center flex-col gap-2">
+            {skillsLanguage.map((value,index) => (
+              <div key={index} className="p-5 rounded-md shadow-lg bg-secondary flex justify-center items-center flex-col gap-2">
                 {value.icon}
                 <p>{value.title}</p>
               </div>
@@ -170,11 +141,11 @@ export default function Skills() {
         </div>
         <div>
           <h4 className="scroll-m-20 text-xl font-semibold tracking-tight mb-2">
-            Front End
+            Front-End Frameworks
           </h4>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {skillsFrontend.map((value) => (
-              <div className="p-5 rounded-md shadow-lg bg-secondary flex justify-center items-center flex-col gap-2">
+            {skillsFrontend.map((value, index) => (
+              <div key={index} className="p-5 rounded-md shadow-lg bg-secondary flex justify-center items-center flex-col gap-2">
                 {value.icon}
                 <p>{value.title}</p>
               </div>
@@ -183,11 +154,11 @@ export default function Skills() {
         </div>
         <div>
           <h4 className="scroll-m-20 text-xl font-semibold tracking-tight mb-2">
-            Backend
+            Back-End Frameworks
           </h4>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {skillsBackend.map((value) => (
-              <div className="p-5 rounded-md shadow-lg bg-secondary flex justify-center items-center flex-col gap-2">
+            {skillsBackend.map((value, index) => (
+              <div key={index} className="p-5 rounded-md shadow-lg bg-secondary flex justify-center items-center flex-col gap-2">
                 {value.icon}
                 <p>{value.title}</p>
               </div>
@@ -196,11 +167,11 @@ export default function Skills() {
         </div>
         <div>
           <h4 className="scroll-m-20 text-xl font-semibold tracking-tight mb-2">
-            Full Stack
+            Full Stack Frameworks
           </h4>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {skillsFullstack.map((value) => (
-              <div className="p-5 rounded-md shadow-lg bg-secondary flex justify-center items-center flex-col gap-2">
+            {skillsFullstack.map((value, index) => (
+              <div key={index} className="p-5 rounded-md shadow-lg bg-secondary flex justify-center items-center flex-col gap-2">
                 {value.icon}
                 <p>{value.title}</p>
               </div>
@@ -209,7 +180,7 @@ export default function Skills() {
         </div>
         <div>
           <h4 className="scroll-m-20 text-xl font-semibold tracking-tight mb-2">
-            Other
+            Others
           </h4>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {skillsOther.map((value) => (
@@ -226,10 +197,10 @@ export default function Skills() {
         leftTitle="Projects"
         leftDescription="see what I'm working on"
         leftIcon={<Folder />}
-        leftRoute="/projects"
-        rightTitle="Network"
-        rightDescription="see all the contacts you can contact"
-        rightIcon={<Globe />}
+        leftRoute="/certifications"
+        rightTitle="Certifications"
+        rightDescription="see institutions backing up my skills"
+        rightIcon={<ShieldCheckIcon />}
         
       />
     </div>

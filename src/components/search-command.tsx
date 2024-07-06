@@ -5,6 +5,7 @@ import {
   Home,
   Gamepad,
   Globe,
+  ShieldCheckIcon,
 } from "lucide-react";
 
 import {
@@ -62,7 +63,11 @@ export const SearchCommand = ({ setOpen }: SearchCommandProps) => {
             <Gamepad className="mr-2 h-4 w-4" />
             <span>hobby</span>
           </CommandItem>
-          <CommandItem
+          <CommandItem value="certifications" onSelect={(value) => handleClick(value)}>
+            <ShieldCheckIcon className="mr-2 h-4 w-4" />
+            <span>certifications</span>
+          </CommandItem>
+          {/* <CommandItem
             onSelect={() => {
               setOpen(false);
               close();
@@ -70,7 +75,7 @@ export const SearchCommand = ({ setOpen }: SearchCommandProps) => {
           >
             <Globe className="mr-2 h-4 w-4" />
             <span>network</span>
-          </CommandItem>
+          </CommandItem> */}
         </CommandGroup>
       </CommandList>
     </Command>
