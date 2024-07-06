@@ -81,7 +81,7 @@ export default function Projects() {
       : Projects.filter((value) => value.category === selectedCategory);
 
   return (
-    <div className="p-5 w-screen md:w-full h-full overflow-auto">
+    <div className="  p-2 md:p-5 w-screen md:w-full h-full overflow-auto">
       <div className="h-[14%] md:mb-2">
         <div className="flex justify-between">
           <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">
@@ -120,7 +120,7 @@ export default function Projects() {
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.8, opacity: 0 }}
                 transition={{ type: "spring", duration: 0.8 }}
-                className="flex p-2 flex-col rounded-lg border w-[450px] h-[400px] lg:items-center gap-4 shadow-lg"
+                className="flex md:px-2 px-1 py-2 flex-col rounded-lg border w-[100%] md:w-[450px] h-[400px] lg:items-center gap-4 shadow-lg"
               >
                 <img
                   src={value.imgUrl}
@@ -162,7 +162,7 @@ export default function Projects() {
         </AnimatePresence>
       </div>
       
-      <div className="fixed bottom-[15px]">
+      <div className="md:fixed bottom-[15px]">
         
         <FlowAppButton
           containerClassName="p-5"

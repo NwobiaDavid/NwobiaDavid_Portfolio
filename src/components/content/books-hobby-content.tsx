@@ -214,7 +214,7 @@ import {
             ]}
             setApi={setApiMobileGame}
           >
-            <CarouselContent className="md:-ml-4 md:pl-2 md:py-2">
+            <CarouselContent className="md:-ml-4 h-[350px] md:pl-2 md:py-2">
               {mobileGameData.map((value) => (
                 <CarouselItem
                 key={value.author}
