@@ -160,21 +160,21 @@ import {
             ]}
             setApi={setApiPcGame}
           >
-            <CarouselContent className="md:-ml-4 h-[300px] md:pl-2 md:py-2">
+            <CarouselContent className="md:-ml-4 h-[350px] md:pl-2 md:py-2">
               {pcGameData.map((value) => (
                 <CarouselItem
                   key={value.author}
-                  className="md:basis-1/2 lg:basis-1/3 h-[300px] w-[150px] hover:scale-105 transition-all"
+                  className="md:basis-1/2 lg:basis-1/3 h-[300px]  w-[150px] hover:scale-105 transition-all"
                 >
                   {/* <Link to={value.link as string} replace target="_blank"> */}
-                    <Card className="overflow-hidden flex-row flex w-full h-full">
+                    <Card className="overflow-hidden border-0   shadow-none  justify-center md:justify-around items-center  flex-row flex w-full h-full">
                         <img
                           src={value.imgUrl}
                           alt={value.author}
-                          className="object-contain"
+                          className="object-contain min-w-[50%] h-[100%]  "
                         />
                       <CardHeader className="p-0  ">
-                        <div className="p-6 hidden md:block">
+                        <div className="p-6 block">
                           <CardTitle className="text-lg">{value.title}</CardTitle>
                           <p>by</p>
                           <p>{value.author}</p>
@@ -221,14 +221,14 @@ import {
                 className="md:basis-1/2 lg:basis-1/3 h-[300px] w-[150px] hover:scale-105 transition-all"
               >
                 {/* <Link to={value.link as string} replace target="_blank"> */}
-                  <Card className="overflow-hidden flex-row flex w-full h-full">
+                <Card className="overflow-hidden border-0   shadow-none  justify-center md:justify-around items-center  flex-row flex w-full h-full">
                       <img
                         src={value.imgUrl}
                         alt={value.author}
-                        className="object-contain"
+                        className="object-contain min-w-[50%] h-[100%]"
                       />
                     <CardHeader className="p-0  ">
-                      <div className="p-6 hidden md:block">
+                      <div className="p-6 block">
                         <CardTitle className="text-lg">{value.title}</CardTitle>
                         <p>by</p>
                         <p>{value.author}</p>
