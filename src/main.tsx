@@ -12,6 +12,7 @@ import Skills from "./pages/skills.tsx";
 import Login from "./pages/login.tsx";
 import Certifications from "./pages/certifications.tsx";
 import Experiences from "./pages/experiences.tsx";
+import ProjectDetail from "./pages/project-detail.tsx";
 
 const router = createBrowserRouter([
   {
@@ -38,6 +39,7 @@ const router = createBrowserRouter([
         path: "/projects",
         element: <Projects />,
       },
+      { path: "/projects/:id", element: <ProjectDetail /> },
       {
         path: "/skills",
         element: <Skills />,

@@ -1,4 +1,4 @@
-import { GameHobbyContent } from "@/components/content/game-hobby-content";
+// import { GameHobbyContent } from "@/components/content/game-hobby-content";
 import { MusicHobbyContent } from "@/components/content/music-hobby-content";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
@@ -15,11 +15,9 @@ import {
 import {
   Book,
   Folder,
-  Gamepad2,
   GraduationCap,
   Headphones,
   Speaker,
-  UserCircle2,
   Volume2,
 } from "lucide-react";
 import { useDocumentTitle } from "usehooks-ts";
@@ -95,9 +93,9 @@ export default function Hobby() {
               </AlertDialogContent>
             </AlertDialog>
           </TabsList>
-          <TabsContent value="game">
+          {/* <TabsContent value="game">
             <GameHobbyContent />
-          </TabsContent>
+          </TabsContent> */}
           <TabsContent value="books">
             <BookHobbyContent />
           </TabsContent>

@@ -8,6 +8,7 @@ const iconMap: Record<string, React.ReactElement> = {
   hobby: <Gamepad className="h-4 w-4" />,
   articles: <Book className="h-4 w-4" />,
   projects: <Folder className="h-4 w-4" />,
+  project2: <Folder className="h-4 w-4" />,
   education: <GraduationCap className="h-4 w-4" />,
   experiences: <PackageOpen className="h-4 w-4" />,
   certifications: <ShieldCheck className="h-4 w-4" />,
