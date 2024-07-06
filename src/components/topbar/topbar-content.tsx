@@ -4,6 +4,7 @@ import {
   ArrowUpIcon,
   DoorOpen,
   Heart,
+  HeartIcon,
   Menu,
 } from "lucide-react";
 import Breadcrumbs from "../breadcrumbs";
@@ -46,6 +47,8 @@ export const TopbarContent = () => {
         .eq("id", 1)
         .single();
 
+      console.log("data here" + JSON.stringify(data))
+
       if (error) {
         console.error("Error fetching likes:", error);
       } else if (data) {
@@ -59,11 +62,13 @@ export const TopbarContent = () => {
   const handleLike = async () => {
     if (!hasLiked) {
       const { data, error } = await supabase
-      .from("likes")
+        .from("likes")
         .update({ count: likeCount + 1 })
         .eq("id", 1)
         .select("count")
         .single();
+
+      console.log("entering like update-- ")
 
       if (error) {
         console.error("Error updating likes:", error.message);
@@ -107,16 +112,19 @@ export const TopbarContent = () => {
       </div>
 
       <div className="p-4 text-xs lg:text-base flex lg:flex-row flex-col lg:mr-0 mr-2 justify-center items-center  ">
-        <div className=" lg:mr-5 lg:flex justify-center items-center hidden    "><h2 className=" mr-2 font-bold " >{likeCount}</h2> <span className=" whitespace-nowrap capitalize " >like this website</span></div>
+        <div className=" dark:text-white lg:mr-5 lg:flex justify-center items-center hidden    "><h2 className=" mr-2 font-bold " >{likeCount}</h2> <span className=" whitespace-nowrap capitalize " >people like this website</span></div>
 
         <Button
-          className={` gap-4 justify-start ${hasLiked && ' bg-pink-600 text-white ' }  w-full flex hover:bg-pink-100 border-pink-600 text-pink-600 lg:text-black lg:border-0 border hover:text-pink-600 `}
-          variant="ghost"
+          className={` gap-2 justify-start w-full flex bg-white  hover:bg-pink-100 border-red-600 text-black  border hover:text-red-600 ${hasLiked && ' bg-red-600 text-white '} `}
           onClick={handleLike}
-          disabled={hasLiked}
+        disabled={hasLiked}
         >
-          <Heart />
-          <h2 className=" hidden lg:flex">{hasLiked ? "Liked" : "Like this Website"}</h2>
+          {hasLiked ? (
+            <Heart fill="white" color="white" />
+          ) : (
+            <Heart />
+          )}
+          <h2 className=" hidden font-semibold lg:flex">{hasLiked ? "Liked" : "Like this Website"}</h2>
         </Button>
       </div>
 
