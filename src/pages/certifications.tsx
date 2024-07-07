@@ -1,151 +1,89 @@
-import IconDocker from "@/components/svg/docker-svg";
-import IconElectron from "@/components/svg/electron-svg";
-import IconExpress from "@/components/svg/express-svg";
-import IconFirebase from "@/components/svg/firebase-svg";
-import IconGit from "@/components/svg/git-svg";
-import IconBrandJavascript from "@/components/svg/javascript-svg";
-import IconMongodb from "@/components/svg/mongodb-svg";
-import IconMysql from "@/components/svg/mysql-svg";
-import IconNestjs from "@/components/svg/nestjs-svg";
-import IconNextjs from "@/components/svg/nextjs-svg";
-import IconPrisma from "@/components/svg/prisma-svg";
-import IconReact from "@/components/svg/react-svg";
-import IconRust from "@/components/svg/rust-svg";
-import IconSupabase from "@/components/svg/supabase-svg";
-import IconTailwind from "@/components/svg/tailwind-svg";
-import IconTauri from "@/components/svg/tauri-svg";
-import IconTypescript from "@/components/svg/typescript-svg";
+
 import { useDocumentTitle } from "usehooks-ts";
 import { motion } from "framer-motion";
-import IconGolang from "@/components/svg/golang-svg";
 import { FlowAppButton } from "@/components/content/flow-app-button";
 import { Folder, Globe } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export default function Certifications() {
   useDocumentTitle("Nwobia David | Certificates");
 
-  enum Categoty {
-    LANGUAGE,
-    FRONTEND,
-    BACKEND,
-    FULLSTACK,
-    OTHER,
+
+  enum Category {
+    WEBDEVELOPMENT,
+    DATASCIENCE,
+    OTHERS,
   }
 
-  interface Skill {
+  interface Certificate {
     title: string;
-    icon: JSX.Element;
-    category: Categoty;
+    image: string;
+    link: string;
+    category: Category;
   }
 
-  const Skills: Skill[] = [
+  const Certs: Certificate[] = [
     {
-      title: "Javascript",
-      icon: <IconBrandJavascript className="h-14 w-14" />,
-      category: Categoty.LANGUAGE,
+      title: "JavaScript (Intermediate) Certificate",
+      link: "https://www.hackerrank.com/certificates/a26fd989b676",
+      image: "/images/certs/JavaScript (Intermediate) Certificate.png",
+      category: Category.WEBDEVELOPMENT
     },
     {
-      title: "Typescript",
-      icon: <IconTypescript className="h-10 w-10" />,
-      category: Categoty.LANGUAGE,
+      title: "JavaScript (Basic) Certificate",
+      link: "https://www.hackerrank.com/certificates/1ed1cb5ddcf3",
+      image: "/images/certs/JavaScript (Basic) Certificate.png",
+      category: Category.WEBDEVELOPMENT
     },
     {
-      title: "React",
-      icon: <IconReact className="h-10 w-10" />,
-      category: Categoty.FRONTEND,
+      title: "Advanced Learning Algorithms",
+      link: "https://coursera.org/verify/YUCH3EAAM63S",
+      image: "/images/certs/Coursera cert 3.jpg",
+      category: Category.DATASCIENCE
     },
     {
-      title: "Express",
-      icon: <IconExpress className="h-10 w-10" />,
-      category: Categoty.BACKEND,
+      title: "Python for Data Science, AI & Development",
+      link: "https://coursera.org/verify/E28S3GM28MXA",
+      image: "/images/certs/Coursera cert 2_page-0001.jpg",
+      category: Category.DATASCIENCE
     },
     {
-      title: "Git",
-      icon: <IconGit className="h-10 w-10" />,
-      category: Categoty.OTHER,
+      title: "Prompt Engineering Course on Large Language Models(LLMs)",
+      link: "#",
+      image: "/images/certs/obs.png",
+      category: Category.OTHERS
     },
     {
-      title: "NextJS",
-      icon: <IconNextjs className="h-10 w-10" />,
-      category: Categoty.FULLSTACK,
+      title: "Machine Learning",
+      link: "https://www.coursera.org/account/accomplishments/specialization/DG6UFVA4QPRJ",
+      image: "/images/certs/Coursera cert 5.jpg",
+      category: Category.DATASCIENCE
     },
     {
-      title: "Docker",
-      icon: <IconDocker className="h-10 w-10" />,
-      category: Categoty.OTHER,
+      title: "Supervised Machine Learning: Regression and Classification",
+      link: "https://coursera.org/verify/LULZL2QEFZY4",
+      image: "/images/certs/Coursera cert 1.png_page-0001.jpg",
+      category: Category.DATASCIENCE
     },
     {
-      title: "Electron",
-      icon: <IconElectron className="h-10 w-10" />,
-      category: Categoty.FRONTEND,
+      title: "Unsupervised Learning, Recommenders, Reinforcement Learning",
+      link: "https://www.coursera.org/account/accomplishments/verify/HB3XADKR5ZSA",
+      image: "/images/certs/Coursera cert 6_page-0001.jpg",
+      category: Category.DATASCIENCE
     },
-    {
-      title: "Tailwind",
-      icon: <IconTailwind className="h-10 w-10" />,
-      category: Categoty.FRONTEND,
-    },
-    {
-      title: "NestJS",
-      icon: <IconNestjs className="h-10 w-10" />,
-      category: Categoty.BACKEND,
-    },
-    {
-      title: "Tauri",
-      icon: <IconTauri className="h-10 w-10" />,
-      category: Categoty.FULLSTACK,
-    },
-    {
-      title: "Rust",
-      icon: <IconRust className="h-10 w-10" />,
-      category: Categoty.LANGUAGE,
-    },
-    {
-      title: "MySQL",
-      icon: <IconMysql className="h-10 w-10" />,
-      category: Categoty.BACKEND,
-    },
-    {
-      title: "MongoDB",
-      icon: <IconMongodb className="h-10 w-10" />,
-      category: Categoty.BACKEND,
-    },
-    {
-      title: "Prisma",
-      icon: <IconPrisma className="h-10 w-10" />,
-      category: Categoty.BACKEND,
-    },
-    {
-      title: "Golang",
-      icon: <IconGolang className="h-10 w-10" />,
-      category: Categoty.LANGUAGE,
-    },
-    {
-      title: "Firebase",
-      icon: <IconFirebase className="h-10 w-10" />,
-      category: Categoty.BACKEND,
-    },
-    {
-      title: "Supabase",
-      icon: <IconSupabase className="h-10 w-10" />,
-      category: Categoty.BACKEND,
-    },
-  ];
+  ]
 
-  const skillsLanguage = Skills.filter(
-    (value) => value.category === Categoty.LANGUAGE
-  );
-  const skillsFrontend = Skills.filter(
-    (value) => value.category === Categoty.FRONTEND
-  );
-  const skillsBackend = Skills.filter(
-    (value) => value.category === Categoty.BACKEND
-  );
-  const skillsFullstack = Skills.filter(
-    (value) => value.category === Categoty.FULLSTACK
-  );
-  const skillsOther = Skills.filter(
-    (value) => value.category === Categoty.OTHER
-  );
+ 
+  const webdevCerts = Certs.filter(
+    (value) => value.category === Category.WEBDEVELOPMENT
+  )
+  const datasciCerts = Certs.filter(
+    (value) => value.category === Category.DATASCIENCE
+  )
+  const otherCerts = Certs.filter(
+    (value) => value.category === Category.OTHERS
+  )
+
 
   return (
     <div className="p-5 h-screen overflow-auto w-screen md:w-full">
@@ -157,76 +95,63 @@ export default function Certifications() {
       >
         <div>
           <h4 className="scroll-m-20 text-xl font-semibold tracking-tight mb-2">
-            Programming Language
+          Web Development
           </h4>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {skillsLanguage.map((value) => (
-              <div className="p-5 rounded-md shadow-lg bg-secondary flex justify-center items-center flex-col gap-2">
-                {value.icon}
-                <p>{value.title}</p>
-              </div>
+            {webdevCerts.map((value, index) => (
+              <Link to={value.link} key={index} >
+                <div className="p-5 rounded-md shadow-lg bg-secondary flex justify-center items-center flex-col gap-2">
+                  <div>
+                    <img src={value.image} alt="" />
+                  </div>
+                  <p>{value.title}</p>
+                </div>
+              </Link>
             ))}
           </div>
         </div>
         <div>
           <h4 className="scroll-m-20 text-xl font-semibold tracking-tight mb-2">
-            Front End
+            Data Science 
           </h4>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {skillsFrontend.map((value) => (
+            {datasciCerts.map((value, index) => (
+              <Link to={value.link} key={index} >
               <div className="p-5 rounded-md shadow-lg bg-secondary flex justify-center items-center flex-col gap-2">
-                {value.icon}
+                <div>
+                  <img src={value.image} alt="" />
+                </div>
                 <p>{value.title}</p>
               </div>
+            </Link>
             ))}
           </div>
         </div>
         <div>
           <h4 className="scroll-m-20 text-xl font-semibold tracking-tight mb-2">
-            Backend
+            Others
           </h4>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {skillsBackend.map((value) => (
+            {otherCerts.map((value, index) => (
+              <Link to={value.link} key={index} >
               <div className="p-5 rounded-md shadow-lg bg-secondary flex justify-center items-center flex-col gap-2">
-                {value.icon}
+                <div>
+                  <img src={value.image} alt="" />
+                </div>
                 <p>{value.title}</p>
               </div>
+            </Link>
             ))}
           </div>
         </div>
-        <div>
-          <h4 className="scroll-m-20 text-xl font-semibold tracking-tight mb-2">
-            Full Stack
-          </h4>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {skillsFullstack.map((value) => (
-              <div className="p-5 rounded-md shadow-lg bg-secondary flex justify-center items-center flex-col gap-2">
-                {value.icon}
-                <p>{value.title}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-        <div>
-          <h4 className="scroll-m-20 text-xl font-semibold tracking-tight mb-2">
-            Other
-          </h4>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {skillsOther.map((value) => (
-              <div className="p-5 rounded-md shadow-lg bg-secondary flex justify-center items-center flex-col gap-2">
-                {value.icon}
-                <p>{value.title}</p>
-              </div>
-            ))}
-          </div>
-        </div>
+       
       </motion.div>
       <FlowAppButton
         containerClassName="pt-5"
-        leftTitle="Projects"
+        leftTitle="Skills"
         leftDescription="see what I'm working on"
         leftIcon={<Folder />}
-        leftRoute="/projects"
+        leftRoute="/skills"
         rightTitle="Network"
         rightDescription="see all the contacts you can contact"
         rightIcon={<Globe />}
