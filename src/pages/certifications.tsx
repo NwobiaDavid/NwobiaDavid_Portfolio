@@ -2,7 +2,7 @@
 import { useDocumentTitle } from "usehooks-ts";
 import { motion } from "framer-motion";
 import { FlowAppButton } from "@/components/content/flow-app-button";
-import { Folder, Globe } from "lucide-react";
+import { Contact, Folder } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export default function Certifications() {
@@ -152,9 +152,9 @@ export default function Certifications() {
         leftDescription="see what I'm working on"
         leftIcon={<Folder />}
         leftRoute="/skills"
-        rightTitle="Network"
-        rightDescription="see all the contacts you can contact"
-        rightIcon={<Globe />}
+        rightTitle="Say Hi👋"
+        rightDescription="reach out tome through this channels"
+        rightIcon={<Contact />}
         
       />
     </div>

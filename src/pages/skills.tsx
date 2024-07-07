@@ -201,7 +201,7 @@ export default function Skills() {
         rightTitle="Certifications"
         rightDescription="see institutions backing up my skills"
         rightIcon={<ShieldCheckIcon />}
-        
+        rightRoute="/certifications"
       />
     </div>
   );
