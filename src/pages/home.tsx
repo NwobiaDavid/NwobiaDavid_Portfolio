@@ -96,10 +96,10 @@ export default function Home() {
             }}
             onInit={(typewriter) => {
               typewriter
-                .typeString("I'm a Software ")
+                .typeString("I'm a Program")
                 .pauseFor(300)
                 .deleteChars(4)
-                .typeString("are Engineer")
+                .typeString("grammer")
                 .pauseFor(2000)
                 .start();
             }}

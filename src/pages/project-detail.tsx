@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useParams } from "react-router-dom";
-import { Projects } from "@/constants/data/projects";
+import { Projectss } from "@/constants/data/projects";
 import { Button } from "@/components/ui/button";
 import { Github, LayoutTemplate } from "lucide-react";
 import { useDocumentTitle } from "usehooks-ts";
@@ -11,7 +11,7 @@ const ProjectDetail: React.FC = () => {
     useDocumentTitle("Nwobia David | Projects");
 
   const { id } = useParams<{ id: string }>();
-  const project = Projects.find((proj) => proj.id === id);
+  const project = Projectss.find((proj) => proj.id === id);
 
   if (!project) {
     return <div>Project not found</div>;
