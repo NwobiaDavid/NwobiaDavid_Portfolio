@@ -109,7 +109,7 @@ export default function Hobby() {
             "p-5 w-full"
           )}
           leftTitle="Education"
-          leftDescription="see about me"
+          leftDescription="see my education arc"
           leftIcon={<GraduationCap />}
           leftRoute="/education"
           rightTitle="Projects"

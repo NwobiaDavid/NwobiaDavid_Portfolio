@@ -9,19 +9,19 @@ const timelineItems: TimelineItemProps[] = [
     date: "2015 - 2020",
     title: "CSMT",
     description:
-      "When I was little, I liked efficient things and was lazy about doing repetitive things. Maybe that makes it easier for me as a programmer now.",
+      "In secondary school, I emphasized creativity while excelling in core science subjects. I joined the literary club to express myself in a supportive environment.",
   },
   {
     date: "Mar 2024 - Sep 2024",
     title: "Oceanz Robotics",
     description:
-      "When I was in high school I liked subjects related to calculations, problem solving and logic, such as mathematics.",
+      "During my time at Ocean Robotics, I developed mini robots using Arduinos and programmed them to perform tasks with embedded C++.",
   },
   {
     date: "2020 - now",
     title: "Covenant University",
     description:
-      "Now that I'm studying at Widyatama University and taking a major in Informatics Engineering, I plan to take a database major, but do not close the possibility that I will take a major other than that.",
+      "At university, I became an active member of the Hebron Startup Lab, a tech community on campus. I built various tech projects and demonstrated high achievement through dedication and the mercies of God",
   },
 ];
 
@@ -45,7 +45,7 @@ export default function Education() {
         leftTitle="Experiences"
         leftDescription="timeline of my work experiences"
         leftIcon={<PackageOpen />}
-        leftRoute="/"
+        leftRoute="/experiences"
         rightTitle="Hobby"
         rightDescription="see what I like"
         rightIcon={<Laugh />}

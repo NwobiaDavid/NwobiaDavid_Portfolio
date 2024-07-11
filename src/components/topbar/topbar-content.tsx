@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/tooltip";
 import { createAvatarFallback } from "@/lib/string";
 import { useEffect, useState } from "react";
+import "./loader.css"
 
 export const TopbarContent = () => {
   const navigate = useNavigate();
@@ -33,31 +34,31 @@ export const TopbarContent = () => {
   const [likeCount, setLikeCount] = useState(0);
   const [hasLiked, setHasLiked] = useState(false);
 
-  useEffect(() => {
-    const liked = localStorage.getItem("hasLikedPortfolio");
-    if (liked) {
-      setHasLiked(true);
-    }
+  // useEffect(() => {
+  //   const liked = localStorage.getItem("hasLikedPortfolio");
+  //   if (liked) {
+  //     setHasLiked(true);
+  //   }
 
-    // Fetch the likes count from Supabase
-    const fetchLikes = async () => {
-      const { data, error } = await supabase
-        .from("likes")
-        .select("count")
-        .eq("id", 1)
-        .single();
+  //   // Fetch the likes count from Supabase
+  //   const fetchLikes = async () => {
+  //     const { data, error } = await supabase
+  //       .from("likes")
+  //       .select("count")
+  //       .eq("id", 1)
+  //       .single();
 
-      console.log("data here" + JSON.stringify(data))
+  //     console.log("data here" + JSON.stringify(data))
 
-      if (error) {
-        console.error("Error fetching likes:", error);
-      } else if (data) {
-        setLikeCount(data.count);
-      }
-    };
+  //     if (error) {
+  //       console.error("Error fetching likes:", error);
+  //     } else if (data) {
+  //       setLikeCount(data.count);
+  //     }
+  //   };
 
-    fetchLikes();
-  }, []);
+  //   fetchLikes();
+  // }, []);
 
   const handleLike = async () => {
     if (!hasLiked) {
@@ -112,7 +113,7 @@ export const TopbarContent = () => {
       </div>
 
       <div className="p-4 text-xs lg:text-base flex lg:flex-row flex-col lg:mr-0 mr-2 justify-center items-center  ">
-        <div className=" dark:text-white lg:mr-5 lg:flex justify-center items-center hidden    "><h2 className=" mr-2 font-bold " >{likeCount}</h2> <span className=" whitespace-nowrap capitalize " >people like this website</span></div>
+        <div className=" dark:text-white lg:mr-5 lg:flex justify-center items-center hidden    "><h2 className=" mr-2 font-bold flex items-center justify-center " >{likeCount > 0 ? likeCount : ( <span className="loader "></span> )}</h2> <span className=" whitespace-nowrap capitalize " >people like this website</span></div>
 
         <Button
           className={` gap-2 justify-start w-full flex bg-white  hover:bg-pink-100 border-red-600 text-black  border hover:text-red-600 ${hasLiked && ' bg-red-600 text-white '} `}
@@ -128,36 +129,6 @@ export const TopbarContent = () => {
         </Button>
       </div>
 
-
-      {/* {session && (
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger>
-              <Avatar
-                className="mr-2 cursor-pointer"
-                onClick={async () => {
-                  supabase.auth.signOut().then(() => {
-                    window.location.reload();
-                  });
-                }}
-              >
-                <AvatarImage
-                  src={session?.user.user_metadata.avatar_url}
-                  alt={session.user.user_metadata.full_name}
-                />
-                <AvatarFallback>
-                  {createAvatarFallback(
-                    session.user.user_metadata.full_name as string
-                  )}
-                </AvatarFallback>
-              </Avatar>
-            </TooltipTrigger>
-            <TooltipContent className="flex items-center">
-              <DoorOpen className="w-4 h-4 mr-2" /> Sign out
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-      )} */}
     </div>
   );
 };

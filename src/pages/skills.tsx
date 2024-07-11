@@ -197,7 +197,7 @@ export default function Skills() {
         leftTitle="Projects"
         leftDescription="see what I'm working on"
         leftIcon={<Folder />}
-        leftRoute="/certifications"
+        leftRoute="/projects"
         rightTitle="Certifications"
         rightDescription="see institutions backing up my skills"
         rightIcon={<ShieldCheckIcon />}

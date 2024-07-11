@@ -9,31 +9,31 @@ const timelineItems: TimelineItemProps[] = [
         date: "2021 - 2023",
         title: "Byte&Crunch - Full-stack developer",
         description:
-            "When I was in high school I liked subjects related to calculations, problem solving and logic, such as mathematics.",
+            "As a contract full stack developer, I developed their online web store using the MERN stack, ensuring a robust and user-friendly platform.",
     },
     {
         date: "2022 - 2024",
         title: "Freelancer",
         description:
-            "At this time I was new to the world of programming and started learning using the self-taught method",
+            "I built professional websites for individuals and agencies, delivering custom solutions that catered to diverse client needs.",
     },
     {
         date: "2023 - 2024",
         title: "Transcend Agency - Front-end Developer | Contract",
         description:
-            "When I was little, I liked efficient things and was lazy about doing repetitive things. Maybe that makes it easier for me as a programmer now.",
+            "As a frontend developer, I collaborated with a team to create dynamic websites for businesses worldwide, enhancing user experience and engagement.",
     },
     {
         date: "2024 - 2024",
         title: "Pallly - Front-end Developer | Contract",
         description:
-            "At this time I was new to the world of programming and started learning using the self-taught method",
+            "I helped design and build Pally's app, contributing from conceptual design to final implementation to meet user needs and company goals.",
     },
     {
         date: "2024 - now",
         title: "Oceanz Robotics",
         description:
-            "Now that I'm studying at Widyatama University and taking a major in Informatics Engineering, I plan to take a database major, but do not close the possibility that I will take a major other than that.",
+            "I developed small robotics for clients and designed business applications, enhancing operational efficiency through innovative technological solutions.",
     },
 ];
 
@@ -61,7 +61,7 @@ export default function Experiences() {
                 rightTitle="Education"
                 rightDescription="history of my academics timeline"
                 rightIcon={<GraduationCap />}
-                rightRoute="/hobby"
+                rightRoute="/education"
             />
         </div>
     );
