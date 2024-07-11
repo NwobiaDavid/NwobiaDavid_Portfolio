@@ -1,26 +1,21 @@
-// import IconDocker from "@/components/svg/docker-svg";
-// import IconElectron from "@/components/svg/electron-svg";
 import IconExpress from "@/components/svg/express-svg";
 import IconFirebase from "@/components/svg/firebase-svg";
 import IconGit from "@/components/svg/git-svg";
 import IconBrandJavascript from "@/components/svg/javascript-svg";
 import IconMongodb from "@/components/svg/mongodb-svg";
 import IconMysql from "@/components/svg/mysql-svg";
-// import IconNestjs from "@/components/svg/nestjs-svg";
 import IconNextjs from "@/components/svg/nextjs-svg";
 import IconPython from "@/components/svg/python-svg";
-// import IconPrisma from "@/components/svg/prisma-svg";
 import IconReact from "@/components/svg/react-svg";
-// import IconRust from "@/components/svg/rust-svg";
 import IconSupabase from "@/components/svg/supabase-svg";
 import IconTailwind from "@/components/svg/tailwind-svg";
-// import IconTauri from "@/components/svg/tauri-svg";
 import IconTypescript from "@/components/svg/typescript-svg";
 import { useDocumentTitle } from "usehooks-ts";
 import { motion } from "framer-motion";
-// import IconGolang from "@/components/svg/golang-svg";
 import { FlowAppButton } from "@/components/content/flow-app-button";
 import { Folder, ShieldCheckIcon } from "lucide-react";
+import IconCplusjs from "@/components/svg/cplusplus-svg";
+import IconNpm from "@/components/svg/npm-svg";
 
 export default function Skills() {
   useDocumentTitle("Nwobia David | Skills");
@@ -49,6 +44,15 @@ export default function Skills() {
       title: "Typescript",
       icon: <IconTypescript className="h-10 w-10" />,
       category: Categoty.LANGUAGE,
+    },{
+      title: "C++",
+      icon: <IconCplusjs className="h-10 w-10" />,
+      category: Categoty.LANGUAGE,
+    },
+    {
+      title: "Npm",
+      icon: <IconNpm className="h-10 w-10" />,
+      category: Categoty.OTHER,
     },
     {
       title: "Python",

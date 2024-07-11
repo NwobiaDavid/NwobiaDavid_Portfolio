@@ -25,6 +25,7 @@ import {
   Contact,
   Laugh,
   PackageOpen,
+  Grip,
 } from "lucide-react";
 import { ModeToggle } from "../mode-toggle";
 import { Button } from "../ui/button";
@@ -253,6 +254,20 @@ export const MainSidebar = ({ isMobile = false }: MainSidebarProps) => {
                 </DrawerFooter>
               </DrawerContent>
             </Drawer>
+
+            <a href={"/public/files/resume.pdf"} >
+              <Button
+                className={cn(
+                  isCertificationsRoute && "bg-muted",
+                  "w-full flex gap-4 justify-start pl-2"
+                )}
+                variant="ghost"
+                onClick={close}
+              >
+                <Grip />
+                Resume
+              </Button>
+            </a>
 
             <Separator />
           </div>

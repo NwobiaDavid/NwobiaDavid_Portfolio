@@ -84,7 +84,7 @@ export default function Home() {
       >
         <div className="flex flex-col w-[80%] lg:w-[60%] items-start justify-center gap-2">
           <h3 className="scroll-m-20 text-2xl  font-semibold tracking-tight">
-            Welcome
+            Hello World
           </h3>
           <Typewriter
             options={{
@@ -115,20 +115,20 @@ export default function Home() {
             </Button>
           </Link>
 
-          <Link to="mailto:dnwobia@gmail.com" >
+          <a href={"/public/files/resume.pdf"}>
             <Button
               className={cn(session && "hidden")}
               >
-              <Mail className="h-4 w-4 mr-2" /> Gmail me
+              My Resume
             </Button>
-          </Link>
+          </a>
             
           {/* <VerifiedAvatar /> */}
         </div>
 
         <div className="w-fit">
-          <Avatar className="w-52 h-52">
-            <AvatarImage src="/images/profile pic.jpg" />
+          <Avatar className="w-52 border-gray-300 border-[3px] h-52">
+            <AvatarImage  src="/images/profile pic.jpg" />
             <AvatarFallback>Nwobia David</AvatarFallback>
           </Avatar>
         </div>
