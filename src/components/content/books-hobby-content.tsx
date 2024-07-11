@@ -6,8 +6,7 @@ import {
   import { type CarouselApi } from "@/components/ui/carousel";
   import { Card, CardHeader, CardTitle } from "../ui/card";
   import Autoplay from "embla-carousel-autoplay";
-  import { Link } from "react-router-dom";
-  import { Handshake, PcCase, PersonStanding, Smartphone } from "lucide-react";
+  import { Handshake, PersonStanding } from "lucide-react";
   import { motion } from "framer-motion";
   import React from "react";
   

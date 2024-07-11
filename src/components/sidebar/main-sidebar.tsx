@@ -16,11 +16,8 @@ import {
 import {
   ArrowDown,
   Folder,
-  Gamepad,
-  Globe,
   Home,
   Search,
-  UserCircle2,
   Wrench,
   GraduationCap,
   ShieldCheck,
@@ -39,8 +36,6 @@ import { useEffect, useState } from "react";
 import IconGithub from "../svg/github-svg";
 import IconLinkedin from "../svg/linkedin-svg";
 import IconGmail from "../svg/gmail-svg";
-import IconWhatsapp from "../svg/whatsapp-svg";
-import IconInstagram from "../svg/instagram-svg";
 import { useDrawer } from "@/hooks/use-drawer";
 
 interface MainSidebarProps {

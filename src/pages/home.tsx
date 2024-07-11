@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Typewriter from "typewriter-effect";
 import { motion } from "framer-motion";
 import { useDocumentTitle } from "usehooks-ts";
@@ -6,22 +6,22 @@ import { type Container } from "@tsparticles/engine";
 import Particles, { initParticlesEngine } from "@tsparticles/react";
 import { loadSlim } from "@tsparticles/slim";
 
-import { ArrowDown, ArrowRight, Check, Contact, Mail } from "lucide-react";
+import {  ArrowRight, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useEffect, useState } from "react";
 import { particleOptionsDark, particleOptionsLight } from "@/config/particles";
 import { useTheme } from "@/components/theme-provider";
-import { supabase } from "@/database/db";
+// import { supabase } from "@/database/db";
 import { useSession } from "@/hooks/use-session";
 import { cn } from "@/lib/utils";
-import { VerifiedAvatar } from "@/components/content/verified-avatar";
+// import { VerifiedAvatar } from "@/components/content/verified-avatar";
 import { isDarkSystem } from "@/lib/theme";
 
 export default function Home() {
   useDocumentTitle("Nwobia David | Home");
   const [init, setInit] = useState<boolean>(false);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const { session } = useSession();
   const { theme } = useTheme();
 

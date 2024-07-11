@@ -87,7 +87,7 @@ export default function Projects() {
                   </div>
                   <div className="flex h-[20%] items-center gap-2">
                     {value.githubUrl && (
-                      <Link to={value.githubUrl} target="_blank" passHref>
+                      <Link to={value.githubUrl} target="_blank" >
                         <Button variant="outline">
                           <Github className="h-4 w-4 mr-2" />
                           Github
@@ -95,7 +95,7 @@ export default function Projects() {
                       </Link>
                     )}
                     {value.liveDemo && (
-                      <Link to={value.liveDemo} target="_blank" passHref>
+                      <Link to={value.liveDemo} target="_blank" >
                         <Button variant="outline">
                           <LayoutTemplate className="h-4 w-4 mr-2" />
                           Live Demo

@@ -2,9 +2,7 @@ import {
   ArrowLeft,
   ArrowRight,
   ArrowUpIcon,
-  DoorOpen,
   Heart,
-  HeartIcon,
   Menu,
 } from "lucide-react";
 import Breadcrumbs from "../breadcrumbs";
@@ -13,23 +11,15 @@ import { Button } from "../ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { MainSidebar } from "../sidebar/main-sidebar";
 import { useSheet } from "@/hooks/use-sheet";
-import { useSession } from "@/hooks/use-session";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+// import { useSession } from "@/hooks/use-session";
 import { supabase } from "@/database/db";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { createAvatarFallback } from "@/lib/string";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./loader.css"
 
 export const TopbarContent = () => {
   const navigate = useNavigate();
   const { isOpen, open } = useSheet();
-  const { session } = useSession();
+  // const { session } = useSession();
 
   const [likeCount, setLikeCount] = useState(0);
   const [hasLiked, setHasLiked] = useState(false);
@@ -113,7 +103,7 @@ export const TopbarContent = () => {
       </div>
 
       <div className="p-4 text-xs lg:text-base flex lg:flex-row flex-col lg:mr-0 mr-2 justify-center items-center  ">
-        <div className=" dark:text-white lg:mr-5 lg:flex justify-center items-center hidden    "><h2 className=" mr-2 font-bold flex items-center justify-center " >{likeCount > 0 ? likeCount : ( <span className="loader "></span> )}</h2> <span className=" whitespace-nowrap capitalize " >people like this website</span></div>
+        <div className=" dark:text-white lg:mr-5 lg:flex justify-center items-center hidden    "><h2 className=" mr-2 font-bold flex items-center justify-center text-black dark:text-white  " >{likeCount > 0 ? likeCount : ( <span className="loader "></span> )}</h2> <span className=" whitespace-nowrap capitalize " >people like this website</span></div>
 
         <Button
           className={` gap-2 justify-start w-full flex bg-white  hover:bg-pink-100 border-red-600 text-black  border hover:text-red-600 ${hasLiked && ' bg-red-600 text-white '} `}

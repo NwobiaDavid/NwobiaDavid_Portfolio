@@ -4,7 +4,6 @@ import {
   UserCircle2,
   Home,
   Gamepad,
-  Globe,
   ShieldCheckIcon,
 } from "lucide-react";
 
