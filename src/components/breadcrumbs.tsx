@@ -49,7 +49,7 @@ const Breadcrumbs = () => {
             {`>`}
             {isLast ? (
               <>
-                {iconMap[displayName] || <span className="h-4 w-4"></span>}
+                {iconMap[displayName] || <span className=""></span>}
                 {displayName}
               </>
             ) : (
