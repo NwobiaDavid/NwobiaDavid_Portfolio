@@ -29,6 +29,11 @@ export default function Projects() {
       ? Projectss
       : Projectss.filter((value) => value.category === selectedCategory);
 
+      function truncateText(text: string, maxLength: number) {
+        if (text.length <= maxLength) return text;
+        return text.slice(0, maxLength) + '...';
+      }
+
   return (
     <div className="p-2 md:p-5 w-screen md:w-full h-full overflow-auto">
       <div className="h-[14%] md:mb-2">
@@ -59,33 +64,43 @@ export default function Projects() {
       <div className="overflow-y-auto pb-7 px-2 gap-5 pt-2 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 h-[73.5%]">
         <AnimatePresence>
           {filteredProjects.map((value) => (
-            <Link key={value.title} to={value.id}>
+            <div key={value.title} >
               <motion.div
                 initial={{ scale: 0, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.8, opacity: 0 }}
                 transition={{ type: "spring", duration: 0.8 }}
-                className="flex md:px-2 px-1 py-2 flex-col rounded-lg border w-[100%] lg:w-[100%] xl:w-[450px] h-[400px] lg:items-center gap-4 shadow-lg"
+                className="flex md:px-2 px-1 py-2 flex-col rounded-lg border w-[100%] lg:w-[100%] xl:w-[450px] h-[450px] lg:h-[400px] lg:items-center gap-4 shadow-lg"
               >
-                <img
-                  src={value.imgUrl}
-                  alt={value.title}
-                  className="object-contain h-[30%] rounded-md w-full "
-                />
+                <Link to={value.id}  className="w-full object-contain border  rounded-lg overflow-hidden h-[45%] " >
+                  {/* <div > */}
+                    <motion.img
+                     initial={{ scale: 0, opacity: 0 }}
+                     animate={{ scale: 1, opacity: 1 }}
+                     whileHover={{ scale: 1.1 }}
+                     transition={{ duration: 0.3 }}
+                      src={value.imgUrl}
+                      alt={value.title}
+                      className=" h-full  w-full "
+                    />
+                  {/* </div> */}
+                </Link>
                 <Separator />
-                <div className="flex h-[70%] flex-col py-2 px-6 gap-4">
+                <div className="flex h-[55%] flex-col py-2 px-3 lg:px-6 gap-4">
                   <div className="h-[80%]">
                     <p className="text-lg mb-1 font-semibold">{value.title}</p>
                     <p className="text-sm line-clamp-3 lg:line-clamp-4">
-                      {value.description}
+                    {truncateText(value.description, 100)}
                     </p>
-                    <div className="py-2 flex gap-2">
+
+                    <div className="py-2 flex-wrap flex gap-2">
                       {value.stack.map((item, index) => (
                         <Badge key={index}>{item}</Badge>
                       ))}
                     </div>
+
                   </div>
-                  <div className="flex h-[20%] items-center gap-2">
+                  <div className="flex h-[20%] z-[500] items-center gap-2">
                     {value.githubUrl && (
                       <Link to={value.githubUrl} target="_blank" >
                         <Button variant="outline">
@@ -105,7 +120,7 @@ export default function Projects() {
                   </div>
                 </div>
               </motion.div>
-            </Link>
+            </div>
           ))}
         </AnimatePresence>
       </div>
