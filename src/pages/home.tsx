@@ -77,7 +77,7 @@ export default function Home() {
         />
       )}
       <motion.div
-        initial={{ opacity: 0, translateY: window.innerHeight }}
+        initial={{ opacity: 0, translateY: -10 }}
         animate={{ opacity: 1, translateY: 0 }}
         transition={{ duration: 0.8 }}
         className="flex md:flex-row flex-col-reverse items-center justify-center gap-4 md:mx-4"
