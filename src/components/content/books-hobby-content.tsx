@@ -138,7 +138,7 @@ import {
   
     return (
       <div className="p-5 w-full mt-4">
-        <h3 className="scroll-m-20 mb-1 text-2xl font-semibold tracking-tight flex items-center gap-1">
+        <h3 className="scroll-m-20 p_style mb-1 text-2xl font-semibold tracking-tight flex items-center gap-1">
           <PersonStanding  /> Personal Development
         </h3>
         <motion.div
@@ -173,8 +173,8 @@ import {
                           className="object-contain min-w-[50%] h-[100%]  "
                         />
                       <CardHeader className="p-0  ">
-                        <div className="p-6 block">
-                          <CardTitle className="text-lg">{value.title}</CardTitle>
+                        <div className="p-6 block p_style ">
+                          <CardTitle className="text-lg ">{value.title}</CardTitle>
                           <p>by</p>
                           <p>{value.author}</p>
                         </div>
@@ -192,7 +192,7 @@ import {
 
 
 
-        <h3 className="scroll-m-20 mb-1 mt-6 text-2xl font-semibold tracking-tight flex items-center gap-1">
+        <h3 className="scroll-m-20 p_style mb-1 mt-6 text-2xl font-semibold tracking-tight flex items-center gap-1">
           <Handshake  /> Entrepreneurship 
         </h3>
         <motion.div

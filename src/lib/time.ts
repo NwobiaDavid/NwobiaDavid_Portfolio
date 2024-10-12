@@ -1,27 +1,28 @@
 /**
  * Pads a number with a leading zero if it is less than 10.
  * 
- * @param angka - The number to pad.
+ * @param number - The number to pad.
  * @returns The padded number as a string.
-*/
-const pad = (angka: number) => {
-  return angka < 10 ? "0" + angka : angka;
+ */
+const pad = (number: number) => {
+  return number < 10 ? "0" + number : number;
 };
 
 /**
  * Converts seconds to a formatted time string in the format HH:MM:SS.
- * @param detik - The number of seconds to be converted.
+ * 
+ * @param seconds - The number of seconds to be converted.
  * @returns The formatted time string.
  */
-export const detikKeStringWaktu = (detik: number) => {
-  // Menghitung jam, menit, dan detik
-  const jam = Math.floor(detik / 3600);
-  const sisaDetik = detik % 3600;
-  const menit = Math.floor(sisaDetik / 60);
-  const detikSisa = sisaDetik % 60;
+export const secondsToTimeString = (seconds: number) => {
+  // Calculate hours, minutes, and seconds
+  const hours = Math.floor(seconds / 3600);
+  const remainingSeconds = seconds % 3600;
+  const minutes = Math.floor(remainingSeconds / 60);
+  const leftoverSeconds = remainingSeconds % 60;
 
-  // Mengonversi ke format string dengan format JJ:MM:DD
-  const waktuString = pad(jam) + ":" + pad(menit) + ":" + pad(detikSisa);
+  // Convert to string format HH:MM:SS
+  const timeString = pad(hours) + ":" + pad(minutes) + ":" + pad(leftoverSeconds);
 
-  return waktuString;
+  return timeString;
 };

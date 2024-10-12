@@ -1,10 +1,10 @@
 import {
   Folder,
   Wrench,
-  UserCircle2,
   Home,
   Gamepad,
   ShieldCheckIcon,
+  PackageOpen,
 } from "lucide-react";
 
 import {
@@ -39,9 +39,9 @@ export const SearchCommand = ({ setOpen }: SearchCommandProps) => {
       <CommandList>
         <CommandEmpty>No results found.</CommandEmpty>
         <CommandGroup heading="Suggestions">
-          <CommandItem value="profile" onSelect={(value) => handleClick(value)}>
-            <UserCircle2 className="mr-2 h-4 w-4" />
-            <span>profile</span>
+          <CommandItem value="experiences" onSelect={(value) => handleClick(value)}>
+            <PackageOpen className="mr-2 h-4 w-4" />
+            <span>experiences</span>
           </CommandItem>
           <CommandItem value="projects" onSelect={(value) => handleClick(value)}>
             <Folder className="mr-2 h-4 w-4" />

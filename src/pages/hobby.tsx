@@ -77,7 +77,7 @@ export default function Hobby() {
               </AlertDialogTrigger>
               <AlertDialogContent>
                 <AlertDialogHeader>
-                  <AlertDialogTitle className="flex items-center gap-2">
+                  <AlertDialogTitle className="flex p_style items-center gap-2">
                     <Volume2 /> Audio Playback Confirmation
                   </AlertDialogTitle>
                   <AlertDialogDescription>
@@ -87,7 +87,7 @@ export default function Hobby() {
                 <AlertDialogFooter>
                   <AlertDialogCancel>No, Cancel</AlertDialogCancel>
                   <AlertDialogAction onClick={() => setTabState("music")}>
-                    <Speaker className="w-4 h-4 mr-1" /> Yes, Play
+                    <Speaker className="w-4 h-4 mr-1  " /> Yes, Play
                   </AlertDialogAction>
                 </AlertDialogFooter>
               </AlertDialogContent>

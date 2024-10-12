@@ -21,4 +21,5 @@ export const videoUrls: VideoData[] = [
     link: "https://www.youtube.com/watch?v=3aD8OK07iIY&pp=ygUZbG92ZSB0aGVvcnkga2lyayBmcmFua2xpbg%3D%3D",
     artist: "Kirk Franklin",
   },
+  
 ];

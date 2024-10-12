@@ -45,7 +45,7 @@ const Breadcrumbs = () => {
         const displayName = name.replace("-", "");
 
         return (
-          <span key={name} className="flex items-center gap-2">
+          <span key={name} className="flex capitalize items-center gap-2">
             {`>`}
             {isLast ? (
               <>

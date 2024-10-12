@@ -131,7 +131,7 @@ export default function Skills() {
         className="flex flex-col gap-6"
       >
         <div>
-          <h4 className="scroll-m-20 text-xl font-semibold tracking-tight mb-2">
+          <h4 className="scroll-m-20 p_style text-xl font-semibold tracking-tight mb-2">
             Programming Language
           </h4>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -144,7 +144,7 @@ export default function Skills() {
           </div>
         </div>
         <div>
-          <h4 className="scroll-m-20 text-xl font-semibold tracking-tight mb-2">
+          <h4 className="scroll-m-20 p_style text-xl font-semibold tracking-tight mb-2">
             Front-End Frameworks
           </h4>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -157,7 +157,7 @@ export default function Skills() {
           </div>
         </div>
         <div>
-          <h4 className="scroll-m-20 text-xl font-semibold tracking-tight mb-2">
+          <h4 className="scroll-m-20 p_style text-xl font-semibold tracking-tight mb-2">
             Back-End Frameworks
           </h4>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -170,7 +170,7 @@ export default function Skills() {
           </div>
         </div>
         <div>
-          <h4 className="scroll-m-20 text-xl font-semibold tracking-tight mb-2">
+          <h4 className="scroll-m-20 p_style text-xl font-semibold tracking-tight mb-2">
             Full Stack Frameworks
           </h4>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -183,7 +183,7 @@ export default function Skills() {
           </div>
         </div>
         <div>
-          <h4 className="scroll-m-20 text-xl font-semibold tracking-tight mb-2">
+          <h4 className="scroll-m-20 p_style text-xl font-semibold tracking-tight mb-2">
             Others
           </h4>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">

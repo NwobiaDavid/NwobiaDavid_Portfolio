@@ -37,8 +37,8 @@ export default function Projects() {
   return (
     <div className="p-2 md:p-5 w-screen md:w-full h-full overflow-auto">
       <div className="h-[14%] md:mb-2">
-        <div className="flex justify-between">
-          <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">
+        <div className="flex justify-between p_style">
+          <h3 className="scroll-m-20 p_style text-2xl font-semibold tracking-tight">
             Projects
           </h3>
           <Select
@@ -48,7 +48,7 @@ export default function Projects() {
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="All" />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className=" p_style " >
               <SelectItem value="ALL">All</SelectItem>
               <SelectItem value="FRONTEND">Frontend</SelectItem>
               <SelectItem value="BACKEND">Backend</SelectItem>
@@ -56,7 +56,7 @@ export default function Projects() {
             </SelectContent>
           </Select>
         </div>
-        <h4 className="scroll-m-20 text-lg text-muted-foreground font-semibold tracking-tight mt-6">
+        <h4 className="scroll-m-20 p_style text-lg text-muted-foreground font-semibold tracking-tight mt-6">
           {category} ({filteredProjects.length})
         </h4>
       </div>
@@ -88,19 +88,19 @@ export default function Projects() {
                 <Separator />
                 <div className="flex h-[55%] flex-col py-2 px-3 lg:px-6 gap-4">
                   <div className="h-[80%]">
-                    <p className="text-lg mb-1 font-semibold">{value.title}</p>
+                    <p className="text-lg mb-1 font-semibold p_style ">{value.title}</p>
                     <p className="text-sm line-clamp-3 lg:line-clamp-4">
                     {truncateText(value.description, 100)}
                     </p>
 
-                    <div className="py-2 flex-wrap flex gap-2">
+                    <div className="py-2 flex-wrap p_style flex gap-2">
                       {value.stack.map((item, index) => (
                         <Badge key={index}>{item}</Badge>
                       ))}
                     </div>
 
                   </div>
-                  <div className="flex h-[20%] z-[500] items-center gap-2">
+                  <div className="flex h-[20%] p_style items-center gap-2">
                     {value.githubUrl && (
                       <Link to={value.githubUrl} target="_blank" >
                         <Button variant="outline">

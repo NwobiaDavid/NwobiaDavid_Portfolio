@@ -94,7 +94,7 @@ export default function Certifications() {
         className="flex flex-col gap-6"
       >
         <div>
-          <h4 className="scroll-m-20 text-xl font-semibold tracking-tight mb-2">
+          <h4 className="scroll-m-20 p_style text-xl font-semibold tracking-tight mb-2">
           Web Development
           </h4>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -102,16 +102,16 @@ export default function Certifications() {
               <Link to={value.link} key={index} >
                 <div className="p-5 rounded-md shadow-lg bg-secondary flex justify-center items-center flex-col gap-2">
                   <div>
-                    <img src={value.image} alt="" />
+                    <img src={value.image} loading="lazy" alt={value.title} />
                   </div>
-                  <p>{value.title}</p>
+                  <p  >{value.title}</p>
                 </div>
               </Link>
             ))}
           </div>
         </div>
         <div>
-          <h4 className="scroll-m-20 text-xl font-semibold tracking-tight mb-2">
+          <h4 className="scroll-m-20 p_style text-xl font-semibold tracking-tight mb-2">
             Data Science 
           </h4>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -119,7 +119,7 @@ export default function Certifications() {
               <Link to={value.link} key={index} >
               <div className="p-5 rounded-md shadow-lg bg-secondary flex justify-center items-center flex-col gap-2">
                 <div>
-                  <img src={value.image} alt="" />
+                  <img loading="lazy" src={value.image} alt={value.title} />
                 </div>
                 <p>{value.title}</p>
               </div>
@@ -128,7 +128,7 @@ export default function Certifications() {
           </div>
         </div>
         <div>
-          <h4 className="scroll-m-20 text-xl font-semibold tracking-tight mb-2">
+          <h4 className="scroll-m-20 p_style text-xl font-semibold tracking-tight mb-2">
             Others
           </h4>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -136,7 +136,7 @@ export default function Certifications() {
               <Link to={value.link} key={index} >
               <div className="p-5 rounded-md shadow-lg bg-secondary flex justify-center items-center flex-col gap-2">
                 <div>
-                  <img src={value.image} alt="" />
+                  <img src={value.image} loading="lazy" alt={value.title} />
                 </div>
                 <p>{value.title}</p>
               </div>

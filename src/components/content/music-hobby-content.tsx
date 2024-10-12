@@ -16,7 +16,7 @@ import { OnProgressProps } from "react-player/base";
 import { toast } from "sonner";
 import { VideoData, videoUrls } from "@/constants/data/video";
 import { MusicList } from "../music/music-list";
-import { detikKeStringWaktu } from "@/lib/time";
+import { secondsToTimeString } from "@/lib/time";
 import { cn } from "@/lib/utils";
 import { getRandomVideo } from "@/lib/random";
 import { motion } from "framer-motion";
@@ -278,10 +278,10 @@ export const MusicHobbyContent = () => {
         />
         <div className="flex justify-between mt-2">
           <p className="text-sm text-muted-foreground">
-            {detikKeStringWaktu(Math.floor(progressState.playedSeconds))}
+            {secondsToTimeString(Math.floor(progressState.playedSeconds))}
           </p>
           <p className="text-sm text-muted-foreground">
-            {detikKeStringWaktu(duration)}
+            {secondsToTimeString(duration)}
           </p>
         </div>
         <div className="w-full flex justify-between mt-4">

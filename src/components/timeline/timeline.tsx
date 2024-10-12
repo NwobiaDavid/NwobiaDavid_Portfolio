@@ -7,7 +7,7 @@ interface TimelineProps {
 
 export const Timeline: React.FC<TimelineProps> = ({ items }) => {
   return (
-    <ol className="relative border-s border-gray-200 dark:border-gray-700">
+    <ol className="relative border-s  border-gray-200 dark:border-gray-700">
       {items.map((item, index) => (
         <motion.li
           key={index}

@@ -83,15 +83,15 @@ export default function Home() {
         className="flex md:flex-row flex-col-reverse items-center justify-center gap-4 md:mx-4"
       >
         <div className="flex flex-col w-[80%] lg:w-[60%] items-start justify-center gap-2">
-          <h3 className="scroll-m-20 text-2xl  font-semibold tracking-tight">
+          <h3 className="scroll-m-20 text-2xl p_style  font-semibold tracking-tight">
             Hello World
           </h3>
           <Typewriter
             options={{
-              cursorClassName: "text-4xl",
+              cursorClassName: " text-4xl",
               autoStart: true,
               wrapperClassName:
-                "scroll-m-20 text-4xl opacity-80 font-extrabold tracking-tight lg:text-5xl",
+                "scroll-m-20  text-4xl opacity-80 font-extrabold tracking-tight lg:text-5xl",
               loop: true,
             }}
             onInit={(typewriter) => {
@@ -104,7 +104,7 @@ export default function Home() {
                 .start();
             }}
           />
-          <blockquote className="mb-4 mt-2 border-l-2 pl-6 italic">
+          <blockquote className="mb-4 mt-2 h_style border-l-2 pl-6 italic">
             "I'm a Software engineer that specializes in Front-end development. I try simplifying my day-to-day life using coding. I'm passionate
             about using technology to solve problems and make the world an easier place."
           </blockquote>

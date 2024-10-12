@@ -42,7 +42,7 @@ export const MusicList = ({
           className="rounded-md w-20 md:w-40"
         />
         <div>
-          <h3 className="scroll-m-20 text-md md:text-xl font-semibold tracking-tight">
+          <h3 className="scroll-m-20 p_style text-md md:text-xl font-semibold tracking-tight">
             {value.title}
           </h3>
           <p className="leading-7 text-sm">{value.artist}</p>
