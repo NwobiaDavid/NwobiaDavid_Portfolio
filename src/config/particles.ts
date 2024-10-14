@@ -13,7 +13,7 @@ export const particleOptionsDark: ISourceOptions = {
       value: "#ffffff",
     },
     shape: {
-      type: "circle",
+      type: "square",
     },
     opacity: {
       value: {
@@ -92,7 +92,7 @@ export const particleOptionsLight: ISourceOptions = {
   name: "NASA",
   particles: {
     number: {
-      value: 160,
+      value: 110,
       density: {
         enable: true,
       },
@@ -101,7 +101,7 @@ export const particleOptionsLight: ISourceOptions = {
       value: "#000000",
     },
     shape: {
-      type: "circle",
+      type: "square",
     },
     opacity: {
       value: {
@@ -116,8 +116,8 @@ export const particleOptionsLight: ISourceOptions = {
     },
     size: {
       value: {
-        min: 1,
-        max: 3,
+        min: 3,
+        max: 10,
       },
     },
     move: {

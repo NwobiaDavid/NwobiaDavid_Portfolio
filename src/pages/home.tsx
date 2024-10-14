@@ -82,9 +82,9 @@ export default function Home() {
         transition={{ duration: 0.8 }}
         className="flex md:flex-row flex-col-reverse items-center justify-center gap-4 md:mx-4"
       >
-        <div className="flex flex-col w-[80%] lg:w-[60%] items-start justify-center gap-2">
-          <h3 className="scroll-m-20 text-2xl p_style  font-semibold tracking-tight">
-            Hello World
+        <div className="flex z-10 flex-col w-[80%] lg:w-[60%] items-start justify-center gap-2">
+          <h3 className="scroll-m-20 z-10 text-2xl p_style  font-semibold tracking-tight">
+            console.log("Hello World");
           </h3>
           <Typewriter
             options={{
@@ -104,7 +104,7 @@ export default function Home() {
                 .start();
             }}
           />
-          <blockquote className="mb-4 mt-2 h_style border-l-2 pl-6 italic">
+          <blockquote className="mb-4 mt-2 text-lg h_style border-l-2 pl-6 italic">
             "I'm a Software engineer that specializes in Front-end development. I try simplifying my day-to-day life using coding. I'm passionate
             about using technology to solve problems and make the world an easier place."
           </blockquote>
@@ -128,7 +128,7 @@ export default function Home() {
 
         <div className="w-fit">
           <Avatar className="w-52 border-gray-300 border-[3px] h-52">
-            <AvatarImage  src="/images/profile pic.jpg" />
+            <AvatarImage src="/images/profile pic.jpg" />
             <AvatarFallback>Nwobia David</AvatarFallback>
           </Avatar>
         </div>

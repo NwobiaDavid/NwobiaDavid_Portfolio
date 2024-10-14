@@ -1,5 +1,6 @@
 // import { GameHobbyContent } from "@/components/content/game-hobby-content";
 import { MusicHobbyContent } from "@/components/content/music-hobby-content";
+import { BookHobbyContent } from "@/components/content/books-hobby-content";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   AlertDialog,
@@ -27,7 +28,6 @@ import { cn } from "@/lib/utils";
 import { TourProvider } from "@reactour/tour";
 import { steps } from "@/constants/steps";
 import { usePlay } from "@/hooks/use-play";
-import { BookHobbyContent } from "@/components/content/books-hobby-content";
 
 export default function Hobby() {
   useDocumentTitle("Nwobia David | Hobby");

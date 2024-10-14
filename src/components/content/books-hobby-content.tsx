@@ -16,7 +16,7 @@ import {
     imgUrl: string;
   }
   
-  const pcGameData: BookData[] = [
+  const personalDevData: BookData[] = [
     {
       title: "The Compound Effect",
       author: "Darren Hardy",
@@ -53,7 +53,7 @@ import {
     },
   ];
   
-  const mobileGameData: BookData[] = [
+  const entBookData: BookData[] = [
     {
       title: "The Lean Startup",
       author: "Nir Eyal, Ryan Hoover ",
@@ -107,34 +107,34 @@ import {
   ];
   
   export const BookHobbyContent = () => {
-    const [apiPcGame, setApiPcGame] = React.useState<CarouselApi>();
-    const [apiMobileGame, setApiMobileGame] = React.useState<CarouselApi>();
-    const [currentPcGame, setCurrentPcGame] = React.useState(0);
-    const [currentMobileGame, setCurrentMobileGame] = React.useState(0);
+    const [apiPersBook, setApiPersBook] = React.useState<CarouselApi>();
+    const [apiEntBook, setApiEntBook] = React.useState<CarouselApi>();
+    const [currentDevBook, setCurrentDevBook] = React.useState(0);
+    const [currentEntBook, setCurrentEntBook] = React.useState(0);
   
     React.useEffect(() => {
-      if (!apiPcGame) {
+      if (!apiPersBook) {
         return;
       }
   
-      setCurrentPcGame(apiPcGame.selectedScrollSnap());
+      setCurrentDevBook(apiPersBook.selectedScrollSnap());
   
-      apiPcGame.on("select", () => {
-        setCurrentPcGame(apiPcGame.selectedScrollSnap());
+      apiPersBook.on("select", () => {
+        setCurrentDevBook(apiPersBook.selectedScrollSnap());
       });
-    }, [apiPcGame]);
+    }, [apiPersBook]);
   
     React.useEffect(() => {
-      if (!apiMobileGame) {
+      if (!apiEntBook) {
         return;
       }
   
-      setCurrentMobileGame(apiMobileGame.selectedScrollSnap());
+      setCurrentEntBook(apiEntBook.selectedScrollSnap());
   
-      apiMobileGame.on("select", () => {
-        setCurrentMobileGame(apiMobileGame.selectedScrollSnap());
+      apiEntBook.on("select", () => {
+        setCurrentEntBook(apiEntBook.selectedScrollSnap());
       });
-    }, [apiMobileGame]);
+    }, [apiEntBook]);
   
     return (
       <div className="p-5 w-full mt-4">
@@ -157,10 +157,10 @@ import {
                 delay: 3000,
               }),
             ]}
-            setApi={setApiPcGame}
+            setApi={setApiPersBook}
           >
             <CarouselContent className="md:-ml-4 h-[350px] md:pl-2 md:py-2">
-              {pcGameData.map((value) => (
+              {personalDevData.map((value) => (
                 <CarouselItem
                   key={value.author}
                   className="md:basis-1/2 lg:basis-1/3 h-[300px]  w-[150px] hover:scale-105 transition-all"
@@ -173,8 +173,8 @@ import {
                           className="object-contain min-w-[50%] h-[100%]  "
                         />
                       <CardHeader className="p-0  ">
-                        <div className="p-6 block p_style ">
-                          <CardTitle className="text-lg ">{value.title}</CardTitle>
+                        <div className="p-6 block ">
+                          <CardTitle className="text-lg p_style ">{value.title}</CardTitle>
                           <p>by</p>
                           <p>{value.author}</p>
                         </div>
@@ -186,7 +186,7 @@ import {
             </CarouselContent>
           </Carousel>
           <div className="md:hidden py-2 text-center text-sm text-muted-foreground">
-            {pcGameData[currentPcGame].title}
+            {personalDevData[currentDevBook].title}
           </div>
         </motion.div>
 
@@ -211,10 +211,10 @@ import {
                 delay: 2500,
               }),
             ]}
-            setApi={setApiMobileGame}
+            setApi={setApiEntBook}
           >
             <CarouselContent className="md:-ml-4 h-[350px] md:pl-2 md:py-2">
-              {mobileGameData.map((value) => (
+              {entBookData.map((value) => (
                 <CarouselItem
                 key={value.author}
                 className="md:basis-1/2 lg:basis-1/3 h-[300px] w-[150px] hover:scale-105 transition-all"
@@ -228,7 +228,7 @@ import {
                       />
                     <CardHeader className="p-0  ">
                       <div className="p-6 block">
-                        <CardTitle className="text-lg">{value.title}</CardTitle>
+                        <CardTitle className="text-lg p_style ">{value.title}</CardTitle>
                         <p>by</p>
                         <p>{value.author}</p>
                       </div>
@@ -240,7 +240,7 @@ import {
             </CarouselContent>
           </Carousel>
           <div className="md:hidden py-2 text-center text-sm text-muted-foreground">
-            {mobileGameData[currentMobileGame].title}
+            {entBookData[currentEntBook].title}
           </div>
         </motion.div>
       </div>
