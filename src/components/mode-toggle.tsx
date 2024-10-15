@@ -1,4 +1,4 @@
-import { Moon, Sun } from "lucide-react"
+import { Moon, Sun, PartyPopper } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -10,14 +10,36 @@ import {
 import { useTheme } from "@/components/theme-provider"
 
 export function ModeToggle() {
-  const { setTheme } = useTheme()
+  const { theme, setTheme } = useTheme()
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="icon">
-          <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-          <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+          {/* Show Sun when theme is light */}
+          <Sun
+            className={`h-[1.2rem] w-[1.2rem] transition-all ${
+              theme === "light"
+                ? "rotate-0 scale-100"
+                : "rotate-90 scale-0"
+            }`}
+          />
+          {/* Show Moon when theme is dark */}
+          <Moon
+            className={`absolute h-[1.2rem] w-[1.2rem] transition-all ${
+              theme === "dark"
+                ? "rotate-0 scale-100"
+                : "rotate-90 scale-0"
+            }`}
+          />
+          {/* Show PartyPopper when theme is fun */}
+          <PartyPopper
+            className={`absolute h-[1.2rem] w-[1.2rem] transition-all ${
+              theme === "fun"
+                ? "rotate-0 scale-100"
+                : "rotate-90 scale-0"
+            }`}
+          />
           <span className="sr-only">Toggle theme</span>
         </Button>
       </DropdownMenuTrigger>
@@ -27,6 +49,9 @@ export function ModeToggle() {
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme("dark")}>
           Dark
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme("fun")}>
+          Fun
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme("system")}>
           System

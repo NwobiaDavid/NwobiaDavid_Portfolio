@@ -117,7 +117,7 @@ export const particleOptionsLight: ISourceOptions = {
     size: {
       value: {
         min: 3,
-        max: 10,
+        max: 6,
       },
     },
     move: {
