@@ -6,7 +6,7 @@ import { type Container } from "@tsparticles/engine";
 import Particles, { initParticlesEngine } from "@tsparticles/react";
 import { loadSlim } from "@tsparticles/slim";
 
-import {  ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useEffect, useState } from "react";
@@ -41,31 +41,14 @@ export default function Home() {
     theme === "dark"
       ? particleOptionsDark
       : theme === "light"
-      ? particleOptionsLight
-      : theme === "system" && isDarkSystem
-      ? particleOptionsDark
-      : theme === "system" && !isDarkSystem
-      ? particleOptionsLight
-      : undefined;
+        ? particleOptionsLight
+        : theme === "system" && isDarkSystem
+          ? particleOptionsDark
+          : theme === "system" && !isDarkSystem
+            ? particleOptionsLight
+            : undefined;
 
-  // const verifyPortofolio = async () => {
-  //   if (session) {
-  //     const user = session.user.user_metadata;
-  //     await supabase.from("verified").insert({
-  //       user_id: session.user.id,
-  //       email: user.email,
-  //       full_name: user.full_name,
-  //       image_url: user.avatar_url,
-  //     });
-  //   } else {
-  //     return;
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   verifyPortofolio();
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [session?.user.id]);
+            
 
   return (
     <div className="md:h-full w-screen relative md:w-full flex items-center justify-center">
@@ -96,7 +79,7 @@ export default function Home() {
             }}
             onInit={(typewriter) => {
               typewriter
-                .typeString("I'm a Program")
+                .typeString("I'm a Profram")
                 .pauseFor(300)
                 .deleteChars(4)
                 .typeString("grammer")
@@ -105,8 +88,7 @@ export default function Home() {
             }}
           />
           <blockquote className="mb-4 mt-2 text-lg h_style border-l-2 pl-6 italic">
-            "I'm a Software engineer that specializes in Front-end development. I try simplifying my day-to-day life using coding. I'm passionate
-            about using technology to solve problems and make the world an easier place."
+            "Frontend-focused software engineer passionate about building sleek, responsive user interfaces. I specialize in creating clean, efficient, and intuitive web experiences using modern technologies like React, JavaScript(ES6+), and Next js."
           </blockquote>
           <Link to="/experiences">
             <Button className="w-fit group" variant="outline">
@@ -118,11 +100,11 @@ export default function Home() {
           <a href={"/files/resume.pdf"}>
             <Button
               className={cn(session && "hidden")}
-              >
+            >
               My Resume
             </Button>
           </a>
-            
+
           {/* <VerifiedAvatar /> */}
         </div>
 

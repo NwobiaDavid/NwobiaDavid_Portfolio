@@ -20,7 +20,7 @@ export const TimelineItem: React.FC<TimelineItemProps> = ({ date, title, descrip
       <div className={cn(isCurrent ? "bg-primary/80 border-none animate-ping" : "bg-gray-200 dark:border-gray-900 dark:bg-gray-700", "absolute w-3 h-3  rounded-full mt-1.5 -start-1.5 border border-white")}></div>
       <time className="mb-1 text-sm font-normal leading-none text-gray-400 p_style  dark:text-gray-500">{date}</time>
       <h3 className="text-lg font-semibold text-gray-900 p_style  dark:text-white">{title}</h3>
-      <p className="mb-4 text-base font-normal text-gray-500  dark:text-gray-400">{description}</p>
+      <p className="mb-4 text-base body_style font-normal text-gray-500  dark:text-gray-400">{description}</p>
       {link && (
         <a
           href={link.href}

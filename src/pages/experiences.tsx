@@ -4,37 +4,47 @@ import { TimelineItemProps } from "@/components/timeline/timeline-item";
 import { GraduationCap, Home, PackageOpen } from "lucide-react";
 import { useDocumentTitle } from "usehooks-ts";
 
+
+
+
 const timelineItems: TimelineItemProps[] = [
     {
         date: "2021 - 2023",
-        title: "Byte&Crunch - Full-stack developer",
+        title: "Byte&Crunch - Full-stack Developer | Contract",
         description:
-            "As a contract full stack developer, I developed their online web store using the MERN stack, ensuring a robust and user-friendly platform.",
+            "Led the development of Byte&Crunch's e-commerce platform using the MERN stack (MongoDB, Express, React, Node.js). Delivered a high-performing, scalable, and secure online store with an optimized user interface, resulting in improved customer satisfaction and operational efficiency. Integrated payment gateways, implemented user authentication, and enhanced website performance through front-end optimization.",
     },
     {
         date: "2022 - 2024",
-        title: "Freelancer",
+        title: "Freelance Web Developer",
         description:
-            "I built professional websites for individuals and agencies, delivering custom solutions that catered to diverse client needs.",
+            "Developed custom websites and web applications for a diverse portfolio of clients, including individuals and agencies. Leveraged expertise in full-stack development, responsive design, and content management systems (CMS) to deliver tailored solutions that meet business objectives. Focused on delivering clean code, improved SEO, and cross-browser compatibility. Managed all aspects of project lifecycle from client communication to final deployment.",
     },
     {
         date: "2023 - 2024",
         title: "Transcend Agency - Front-end Developer | Contract",
         description:
-            "As a frontend developer, I collaborated with a team to create dynamic websites for businesses worldwide, enhancing user experience and engagement.",
+            "Collaborated with cross-functional teams to build dynamic, user-centric websites for global brands, focusing on UI/UX design improvements and front-end performance optimization. Utilized modern front-end technologies (React, HTML5, CSS3, JavaScript) to enhance user engagement and improve page load speed, contributing to increased site traffic and customer retention.",
     },
     {
-        date: "2024 - 2024",
-        title: "Pallly - Front-end Developer | Contract",
+        date: "April 2024 - July 2024",
+        title: "Pally - Front-end Developer | Contract",
         description:
-            "I helped design and build Pally's app, contributing from conceptual design to final implementation to meet user needs and company goals.",
+            "Designed and developed the front-end of Pally’s web app, from initial wireframes to final deployment. Played a key role in ensuring a seamless and intuitive user experience while aligning with company goals and user requirements. Employed modern JavaScript frameworks (Next JS, Redux, PWA) to optimize performance and scalability.",
     },
     {
-        date: "2024 - now",
-        title: "Oceanz Robotics",
+        date: "March 2024 - Sept 2024",
+        title: "Oceanz Robotics - Robotics engineer | Internship",
         description:
-            "I developed small robotics for clients and designed business applications, enhancing operational efficiency through innovative technological solutions.",
+            "Developed innovative robotics solutions and designed custom business applications to improve operational efficiency for clients in various industries. Utilized a blend of software development, IoT integration, and robotics engineering to deliver high-impact technological solutions. Focused on automation, prototyping, and optimizing client workflows through agile methodologies.",
     },
+    {
+        date: "Sept 2024 - present",
+        title: "Google Developer Student Club - Covenant University, Nigeria | Co-lead",
+        description:
+            "Co-led the Google Developer Student Club Frontend track, organizing workshops, hackathons, and coding bootcamps to promote hands-on learning in software development and cloud computing. Mentored over 100 students in areas such as web development, mobile app creation, and Google Cloud technologies, fostering a collaborative learning environment and enhancing participants' technical skills.",
+    },
+    
 ];
 
 export default function Experiences() {
@@ -45,6 +55,8 @@ export default function Experiences() {
             <h3 className="flex items-center gap-2 scroll-m-20 mb-2 text-2xl font-semibold tracking-tight">
                 <PackageOpen /> Experiences
             </h3>
+            <div className="xl:px-3   ">
+
             <Timeline
                 items={timelineItems.map((item, index, array) => {
                     return {
@@ -53,6 +65,7 @@ export default function Experiences() {
                     };
                 })}
             />
+            </div>
             <FlowAppButton
                 leftTitle="Home"
                 leftDescription="see the home page"

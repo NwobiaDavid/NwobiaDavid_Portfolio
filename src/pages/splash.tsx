@@ -47,7 +47,7 @@ const Splash = () => {
           delay: exit ? 0 : 2,
           duration: 0.5,
         }}
-        className="absolute top-[45%] left-[50%] transform -translate-x-1/2 -translate-y-1/2 text-white font-bold text-6xl uppercase"
+        className="absolute top-[50%] left-[49%] transform -translate-x-1/2 -translate-y-1/2 text-white font-bold text-6xl uppercase"
       >
 
         <motion.span
