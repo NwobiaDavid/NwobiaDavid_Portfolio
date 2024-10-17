@@ -28,8 +28,8 @@ export const particleOptionsDark: ISourceOptions = {
     },
     size: {
       value: {
-        min: 1,
-        max: 3,
+        min: 3,
+        max: 6,
       },
     },
     move: {

@@ -51,8 +51,8 @@ const ProjectDetail: React.FC = () => {
       </div>
 
       <div className=" mt-6 mb-5 " >
-        <p className=" p_style font-semibold capitalize " >description</p>
-        <p className="text-lg text-center lg:text-left ">{project.description}</p>
+        <p className=" p_style font-bold capitalize " >description</p>
+        <p className="text-lg body_style capitalize text-center lg:text-left ">{project.description}</p>
       </div>
 
 

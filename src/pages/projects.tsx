@@ -89,7 +89,7 @@ export default function Projects() {
                 <div className="flex h-[55%] flex-col py-2 px-3 lg:px-6 gap-4">
                   <div className="h-[80%]">
                     <p className="text-lg mb-1 font-semibold p_style ">{value.title}</p>
-                    <p className="text-sm line-clamp-3 lg:line-clamp-4">
+                    <p className="text-sm body_style line-clamp-3 lg:line-clamp-4">
                     {truncateText(value.description, 100)}
                     </p>
 
