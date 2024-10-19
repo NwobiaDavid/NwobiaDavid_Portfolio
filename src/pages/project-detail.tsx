@@ -6,6 +6,7 @@ import { Projectss } from "@/constants/data/projects";
 import { Button } from "@/components/ui/button";
 import { Github, LayoutTemplate } from "lucide-react";
 import { useDocumentTitle } from "usehooks-ts";
+import { Dot } from 'lucide-react';
 
 const ProjectDetail: React.FC = () => {
   useDocumentTitle("Nwobia David | Projects");
@@ -72,7 +73,7 @@ const ProjectDetail: React.FC = () => {
       </div>
 
 
-      <div className=" mt-5 relative z-10 flex flex-col justify-center items-center h-[200px] lg:h-[400px] " >
+      <div className=" mt-5 mb-5 relative z-10 flex flex-col justify-center items-center h-[200px] lg:h-[400px] " >
         <div className=" w-[90%] lg:w-[60%] border-2 overflow-hidden rounded-lg h-full ">
           <iframe
             width="100%"
@@ -85,6 +86,33 @@ const ProjectDetail: React.FC = () => {
         </div>
         <div>
           <p className=" mt-4 font-bold opacity-40 " > {project.title} demo video </p>
+        </div>
+      </div>
+
+      <div>
+        
+        <div className=" p-5 w-[40%] bg-slate-100 rounded-md ">
+          <h2 className=" text-3xl " >key features:</h2>
+
+          <div className="mt-3" >
+            {project.keyFeatures.map((item, index)=>(
+              <div key={index} className=" text-lg flex body_style  " >
+                <span>
+                  <Dot />
+                </span>
+                <span className="ml-2" >{item}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+
+        <div className=" w-[50%] " >
+
+          <div className=" h-[300px] border " >
+
+          </div>
+
         </div>
       </div>
 

@@ -103,7 +103,7 @@ export const TopbarContent = () => {
       </div>
 
       <div className="p-4 text-xs lg:text-base flex lg:flex-row flex-col lg:mr-0 mr-2 justify-center items-center  ">
-        <div className=" dark:text-white lg:mr-5 lg:flex justify-center items-center hidden    "><h2 className=" mr-2 font-bold flex items-center justify-center  " >{likeCount > 0 ? likeCount : ( <span className="loader before:bg-black before:dark:bg-white  "></span> )}</h2> <span className=" whitespace-nowrap capitalize " >people like this website</span></div>
+        <div className=" dark:text-white lg:mr-5 lg:flex justify-center items-center hidden    "><h2 className=" mr-2 font-bold flex items-center justify-center  " >{likeCount > 0 ? likeCount : ( <span className="loader before:bg-black before:dark:bg-white  "></span> )}</h2> <span className=" whitespace-nowrap capitalize " >people love this website <span className=" text-sm opacity-50 ">be one of them</span> </span></div>
 
         <Button
           className={` gap-2 justify-start w-full flex bg-white  hover:bg-pink-100 border-red-600 text-black  border hover:text-red-600 ${hasLiked && ' bg-red-600 text-white '} `}
