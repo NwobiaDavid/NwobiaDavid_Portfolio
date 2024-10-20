@@ -97,7 +97,7 @@ export default function Home() {
             </Button>
           </Link>
 
-          <a href={"/files/resume.pdf"}>
+          <a target="_blank" href={"/files/resume.pdf"}>
             <Button
               className={cn(session && "hidden")}
             >

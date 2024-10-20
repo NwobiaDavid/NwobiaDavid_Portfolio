@@ -93,9 +93,6 @@ export default function Hobby() {
               </AlertDialogContent>
             </AlertDialog>
           </TabsList>
-          {/* <TabsContent value="game">
-            <GameHobbyContent />
-          </TabsContent> */}
           <TabsContent value="books">
             <BookHobbyContent />
           </TabsContent>
