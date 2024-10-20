@@ -53,5 +53,103 @@ export const videoUrls: VideoData[] = [
     link: "https://www.youtube.com/watch?v=3aD8OK07iIY&pp=ygUZbG92ZSB0aGVvcnkga2lyayBmcmFua2xpbg%3D%3D",
     artist: "Kirk Franklin",
   },
+  {
+    title: "Love Theory",
+    thumbnail:
+      "https://i.ytimg.com/vi/3aD8OK07iIY/hq720.jpg",
+    link: "https://www.youtube.com/watch?v=3aD8OK07iIY&pp=ygUZbG92ZSB0aGVvcnkga2lyayBmcmFua2xpbg%3D%3D",
+    artist: "Kirk Franklin",
+  },
+  {
+    title: "Love Theory",
+    thumbnail:
+      "https://i.ytimg.com/vi/3aD8OK07iIY/hq720.jpg",
+    link: "https://www.youtube.com/watch?v=3aD8OK07iIY&pp=ygUZbG92ZSB0aGVvcnkga2lyayBmcmFua2xpbg%3D%3D",
+    artist: "Kirk Franklin",
+  },
+  {
+    title: "Love Theory",
+    thumbnail:
+      "https://i.ytimg.com/vi/3aD8OK07iIY/hq720.jpg",
+    link: "https://www.youtube.com/watch?v=3aD8OK07iIY&pp=ygUZbG92ZSB0aGVvcnkga2lyayBmcmFua2xpbg%3D%3D",
+    artist: "Kirk Franklin",
+  },
+  {
+    title: "Love Theory",
+    thumbnail:
+      "https://i.ytimg.com/vi/3aD8OK07iIY/hq720.jpg",
+    link: "https://www.youtube.com/watch?v=3aD8OK07iIY&pp=ygUZbG92ZSB0aGVvcnkga2lyayBmcmFua2xpbg%3D%3D",
+    artist: "Kirk Franklin",
+  },
+  {
+    title: "Love Theory",
+    thumbnail:
+      "https://i.ytimg.com/vi/3aD8OK07iIY/hq720.jpg",
+    link: "https://www.youtube.com/watch?v=3aD8OK07iIY&pp=ygUZbG92ZSB0aGVvcnkga2lyayBmcmFua2xpbg%3D%3D",
+    artist: "Kirk Franklin",
+  },
+  {
+    title: "Love Theory",
+    thumbnail:
+      "https://i.ytimg.com/vi/3aD8OK07iIY/hq720.jpg",
+    link: "https://www.youtube.com/watch?v=3aD8OK07iIY&pp=ygUZbG92ZSB0aGVvcnkga2lyayBmcmFua2xpbg%3D%3D",
+    artist: "Kirk Franklin",
+  },
+  {
+    title: "Love Theory",
+    thumbnail:
+      "https://i.ytimg.com/vi/3aD8OK07iIY/hq720.jpg",
+    link: "https://www.youtube.com/watch?v=3aD8OK07iIY&pp=ygUZbG92ZSB0aGVvcnkga2lyayBmcmFua2xpbg%3D%3D",
+    artist: "Kirk Franklin",
+  },
+  {
+    title: "Love Theory",
+    thumbnail:
+      "https://i.ytimg.com/vi/3aD8OK07iIY/hq720.jpg",
+    link: "https://www.youtube.com/watch?v=3aD8OK07iIY&pp=ygUZbG92ZSB0aGVvcnkga2lyayBmcmFua2xpbg%3D%3D",
+    artist: "Kirk Franklin",
+  },
+  {
+    title: "Love Theory",
+    thumbnail:
+      "https://i.ytimg.com/vi/3aD8OK07iIY/hq720.jpg",
+    link: "https://www.youtube.com/watch?v=3aD8OK07iIY&pp=ygUZbG92ZSB0aGVvcnkga2lyayBmcmFua2xpbg%3D%3D",
+    artist: "Kirk Franklin",
+  },
+  {
+    title: "Love Theory",
+    thumbnail:
+      "https://i.ytimg.com/vi/3aD8OK07iIY/hq720.jpg",
+    link: "https://www.youtube.com/watch?v=3aD8OK07iIY&pp=ygUZbG92ZSB0aGVvcnkga2lyayBmcmFua2xpbg%3D%3D",
+    artist: "Kirk Franklin",
+  },
+  {
+    title: "Love Theory",
+    thumbnail:
+      "https://i.ytimg.com/vi/3aD8OK07iIY/hq720.jpg",
+    link: "https://www.youtube.com/watch?v=3aD8OK07iIY&pp=ygUZbG92ZSB0aGVvcnkga2lyayBmcmFua2xpbg%3D%3D",
+    artist: "Kirk Franklin",
+  },
+  {
+    title: "Love Theory",
+    thumbnail:
+      "https://i.ytimg.com/vi/3aD8OK07iIY/hq720.jpg",
+    link: "https://www.youtube.com/watch?v=3aD8OK07iIY&pp=ygUZbG92ZSB0aGVvcnkga2lyayBmcmFua2xpbg%3D%3D",
+    artist: "Kirk Franklin",
+  },
+  {
+    title: "Love Theory",
+    thumbnail:
+      "https://i.ytimg.com/vi/3aD8OK07iIY/hq720.jpg",
+    link: "https://www.youtube.com/watch?v=3aD8OK07iIY&pp=ygUZbG92ZSB0aGVvcnkga2lyayBmcmFua2xpbg%3D%3D",
+    artist: "Kirk Franklin",
+  },
+  {
+    title: "Love Theory",
+    thumbnail:
+      "https://i.ytimg.com/vi/3aD8OK07iIY/hq720.jpg",
+    link: "https://www.youtube.com/watch?v=3aD8OK07iIY&pp=ygUZbG92ZSB0aGVvcnkga2lyayBmcmFua2xpbg%3D%3D",
+    artist: "Kirk Franklin",
+  },
   
 ];

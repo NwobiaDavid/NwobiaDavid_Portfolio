@@ -107,11 +107,24 @@ body {
 
 /* style the scroll bar */
 
-/* ::-webkit-scrollbar {
-  width: 20px;
-  border-radius: 20px;
+
+/* ::-webkit-scrollbar-track {
+  background: #f1f1f1; 
 } */
-/* 
-::-webkit-scrollbar-thumb {
-  border-radius: 20px;
+ 
+/* Handle */
+/* ::-webkit-scrollbar-thumb {
+  background: #888; 
+} */
+
+/* Handle on hover */
+/* ::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+} */
+
+/* ::-webkit-scrollbar-button {
+  background: #555; 
+}
+::-webkit-scrollbar {
+  width: 10px;
 } */
