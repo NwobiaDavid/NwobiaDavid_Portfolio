@@ -2,11 +2,14 @@
 import { useDocumentTitle } from "usehooks-ts";
 import { motion } from "framer-motion";
 import { FlowAppButton } from "@/components/content/flow-app-button";
-import { Contact, Folder } from "lucide-react";
+import { Contact, Folder, Expand } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 export default function Certifications() {
   useDocumentTitle("Nwobia David | Certificates");
+
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
 
   enum Category {
@@ -73,7 +76,7 @@ export default function Certifications() {
     },
   ]
 
- 
+
   const webdevCerts = Certs.filter(
     (value) => value.category === Category.WEBDEVELOPMENT
   )
@@ -83,6 +86,7 @@ export default function Certifications() {
   const otherCerts = Certs.filter(
     (value) => value.category === Category.OTHERS
   )
+
 
 
   return (
@@ -95,35 +99,41 @@ export default function Certifications() {
       >
         <div>
           <h4 className="scroll-m-20 p_style text-xl font-semibold tracking-tight mb-2">
-          Web Development
+            Web Development
           </h4>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {webdevCerts.map((value, index) => (
-              <Link to={value.link} key={index} >
-                <div className="p-5 rounded-md shadow-lg bg-secondary flex justify-center items-center flex-col gap-2">
+              <div  className=" relative " key={index} >
+                <div className="p-5 relative rounded-md shadow-lg bg-secondary flex justify-center items-center flex-col gap-2">
+                  <div onClick={() => setSelectedImage(value.image)} className="absolute cursor-pointer top-[10px] border border-slate-800 p-1 hover:bg-slate-300 duration-200 opacity-50 hover:opacity-100 bg-slate-200 rounded-md right-[10px] ">
+                    <Expand />
+                  </div>
                   <div>
                     <img src={value.image} loading="lazy" alt={value.title} />
                   </div>
-                  <p  >{value.title}</p>
+                  <Link target="_blank" to={value.link} className=" hover:underline hover:text-slate-500 duration-200  " >{value.title}</Link>
                 </div>
-              </Link>
+              </div>
             ))}
           </div>
         </div>
         <div>
           <h4 className="scroll-m-20 p_style text-xl font-semibold tracking-tight mb-2">
-            Data Science 
+            Data Science
           </h4>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {datasciCerts.map((value, index) => (
-              <Link to={value.link} key={index} >
-              <div className="p-5 rounded-md shadow-lg bg-secondary flex justify-center items-center flex-col gap-2">
-                <div>
-                  <img loading="lazy" src={value.image} alt={value.title} />
+              <div  key={index} >
+                <div className="p-5 relative rounded-md shadow-lg bg-secondary flex justify-center items-center flex-col gap-2">
+                <div onClick={() => setSelectedImage(value.image)} className="absolute top-[10px] border border-slate-800 cursor-pointer p-1 hover:bg-slate-300 duration-200 opacity-50 hover:opacity-100 bg-slate-200 rounded-md right-[10px] ">
+                    <Expand />
+                  </div>
+                  <div>
+                    <img loading="lazy" src={value.image} alt={value.title} />
+                  </div>
+                  <Link className=" hover:underline hover:text-slate-500 duration-200  " target="_blank" to={value.link} >{value.title}</Link>
                 </div>
-                <p>{value.title}</p>
               </div>
-            </Link>
             ))}
           </div>
         </div>
@@ -133,19 +143,41 @@ export default function Certifications() {
           </h4>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {otherCerts.map((value, index) => (
-              <Link to={value.link} key={index} >
-              <div className="p-5 rounded-md shadow-lg bg-secondary flex justify-center items-center flex-col gap-2">
-                <div>
-                  <img src={value.image} loading="lazy" alt={value.title} />
+              <div  key={index} >
+                <div className="p-5 relative rounded-md shadow-lg bg-secondary flex justify-center items-center flex-col gap-2">
+                <div onClick={() => setSelectedImage(value.image)} className="absolute top-[10px] border border-slate-800 cursor-pointer p-1 hover:bg-slate-300 duration-200 opacity-50 hover:opacity-100 bg-slate-200 rounded-md right-[10px] ">
+                    <Expand />
+                  </div>
+                  <div>
+                    <img src={value.image} loading="lazy" alt={value.title} />
+                  </div>
+                  <Link className=" hover:underline hover:text-slate-500 duration-200 " target="_blank" to={value.link} >{value.title}</Link>
                 </div>
-                <p>{value.title}</p>
               </div>
-            </Link>
             ))}
           </div>
         </div>
-       
+
       </motion.div>
+
+
+      {selectedImage && (
+        <motion.div
+          className="fixed inset-0 p-5 bg-black bg-opacity-75 flex justify-center items-center z-50"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          onClick={() => setSelectedImage(null)}
+        >
+          <motion.img
+            src={selectedImage}
+            className="max-w-full max-h-full"
+            initial={{ scale: 0.8 }}
+            animate={{ scale: 1 }}
+          />
+        </motion.div>
+      )}
+
+
       <FlowAppButton
         containerClassName="pt-5"
         leftTitle="Skills"
@@ -155,7 +187,7 @@ export default function Certifications() {
         rightTitle="Say Hi👋"
         rightDescription="reach out tome through this channels"
         rightIcon={<Contact />}
-        
+
       />
     </div>
   );
