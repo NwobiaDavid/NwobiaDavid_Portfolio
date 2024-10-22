@@ -8,12 +8,12 @@ interface FlowAppButtonProps {
   containerClassName?: string;
   leftTitle: string;
   leftDescription: string;
-  leftIcon: JSX.Element;
-  leftRoute: string;
+  leftIcon?: JSX.Element;
+  leftRoute: string | (() => void);
   rightTitle: string;
   rightDescription: string;
-  rightIcon: JSX.Element;
-  rightRoute?: string;
+  rightIcon?: JSX.Element;
+  rightRoute?: string | (() => void);
 }
 
 export const FlowAppButton = ({
@@ -30,6 +30,14 @@ export const FlowAppButton = ({
   const navigate = useNavigate();
   const { open } = useDrawer();
 
+  const handleNavigation = (route: string | (() => void)) => {
+    if (typeof route === "function") {
+      route(); // Call the function if it's a function
+    } else {
+      navigate(route); // Navigate to the route if it's a string
+    }
+  };
+
   return (
     <div
       className={cn(
@@ -40,7 +48,7 @@ export const FlowAppButton = ({
       <Button
         variant="outline"
         className="h-fit flex justify-start md:justify-center gap-3 group"
-        onClick={() => navigate(leftRoute)}
+        onClick={() => handleNavigation(leftRoute)} 
       >
         <ChevronLeft className="group-hover:-translate-x-1 transition-all" />
         {leftIcon}
@@ -48,7 +56,9 @@ export const FlowAppButton = ({
           <h4 className="scroll-m-20 text-md md:text-lg p_style font-semibold tracking-tight">
             {leftTitle}
           </h4>
-          <p className="text-xs md:text-sm text-muted-foreground">{leftDescription}</p>
+          <p className="text-xs md:text-sm text-muted-foreground">
+            {leftDescription}
+          </p>
         </div>
       </Button>
       <Button
@@ -56,9 +66,9 @@ export const FlowAppButton = ({
         className="h-fit flex justify-end md:justify-center gap-3 group"
         onClick={() => {
           if (rightRoute) {
-            navigate(rightRoute);
+            handleNavigation(rightRoute); 
           } else {
-            open();
+            open(); 
           }
         }}
       >
@@ -66,7 +76,9 @@ export const FlowAppButton = ({
           <h4 className="scroll-m-20 text-md md:text-lg p_style font-semibold tracking-tight">
             {rightTitle}
           </h4>
-          <p className="text-xs md:text-sm text-muted-foreground">{rightDescription}</p>
+          <p className="text-xs md:text-sm text-muted-foreground">
+            {rightDescription}
+          </p>
         </div>
         {rightIcon}
         <ChevronRight className="group-hover:translate-x-1 transition-all" />
