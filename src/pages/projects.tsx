@@ -61,7 +61,7 @@ export default function Projects() {
         </h4>
       </div>
       <Separator />
-      <div className="overflow-y-auto pb-7 px-2 gap-5 pt-2 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 h-[73.5%]">
+      <div className="overflow-y-auto pb-7 px-2 gap-5 pt-2 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 h-[73.5%] xl:h-[69%] 2xl:h-[72%] ">
         <AnimatePresence>
           {filteredProjects.map((value) => (
             <div key={value.title} >
@@ -70,7 +70,7 @@ export default function Projects() {
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.8, opacity: 0 }}
                 transition={{ type: "spring", duration: 0.8 }}
-                className="flex md:px-2 px-1 dark:bg-[#0F172A] py-2 flex-col rounded-lg border w-[100%] lg:w-[100%] xl:w-[450px] h-[450px] lg:h-[400px] lg:items-center gap-4 shadow-lg"
+                className="flex md:px-2 px-1 dark:bg-[#0F172A] py-2 flex-col rounded-lg border w-[100%] lg:w-[100%] xl:w-[100%] h-[450px] lg:h-[480px] lg:items-center gap-4 shadow-lg"
               >
                 <Link to={value.id}  className="w-full object-contain border  rounded-lg overflow-hidden h-[45%] " >
                   {/* <div > */}

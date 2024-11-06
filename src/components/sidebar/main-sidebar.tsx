@@ -255,7 +255,7 @@ export const MainSidebar = ({ isMobile = false }: MainSidebarProps) => {
               </DrawerContent>
             </Drawer>
 
-            <a href={"/files/resume.pdf"} >
+            <a target="_blank" href={"/files/resume.pdf"} >
               <Button
                 className={cn(
                   isCertificationsRoute && "bg-muted",
