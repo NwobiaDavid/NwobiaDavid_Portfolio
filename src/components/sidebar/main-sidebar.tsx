@@ -84,13 +84,13 @@ export const MainSidebar = ({ isMobile = false }: MainSidebarProps) => {
         <div>
           <div className="flex items-center gap-1 mb-4">
             <ModeToggle />
-            <p className="font-semibold h_style text-lg">Nwobia David</p>
+            <p className="font-semibold h_style lg:text-xl text-lg">Nwobia David</p>
           </div>
           <div className="flex flex-col gap-2">
             <Dialog onOpenChange={setOpen} open={open}>
               <DialogTrigger asChild>
                 <Button
-                  className="w-full flex gap-4 justify-start pl-2"
+                  className="w-full font-semibold flex gap-4 justify-start pl-2"
                   variant="ghost"
                 >
                   <Search />

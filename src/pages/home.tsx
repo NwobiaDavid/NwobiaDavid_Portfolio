@@ -13,8 +13,8 @@ import { useEffect, useState } from "react";
 import { particleOptionsDark, particleOptionsLight } from "@/config/particles";
 import { useTheme } from "@/components/theme-provider";
 // import { supabase } from "@/database/db";
-import { useSession } from "@/hooks/use-session";
-import { cn } from "@/lib/utils";
+// import { useSession } from "@/hooks/use-session";
+// import { cn } from "@/lib/utils";
 // import { VerifiedAvatar } from "@/components/content/verified-avatar";
 import { isDarkSystem } from "@/lib/theme";
 
@@ -22,7 +22,7 @@ export default function Home() {
   useDocumentTitle("Nwobia David | Home");
   const [init, setInit] = useState<boolean>(false);
   // const navigate = useNavigate();
-  const { session } = useSession();
+  // const { session } = useSession();
   const { theme } = useTheme();
 
   useEffect(() => {
@@ -79,10 +79,10 @@ export default function Home() {
             }}
             onInit={(typewriter) => {
               typewriter
-                .typeString("I'm a Program")
+                .typeString("I'm a Coder")
                 .pauseFor(300)
-                .deleteChars(4)
-                .typeString("grammer")
+                .deleteChars(11)
+                .typeString("I'm a Programmer")
                 .pauseFor(2000)
                 .start();
             }}
@@ -110,7 +110,7 @@ export default function Home() {
 
         <div className="w-fit">
           <Avatar className="w-52 border-gray-300 border-[3px] h-52">
-            <AvatarImage src="/images/profile pic.jpg" />
+            <AvatarImage src="/images/profile.png" />
             <AvatarFallback>Nwobia David</AvatarFallback>
           </Avatar>
           
