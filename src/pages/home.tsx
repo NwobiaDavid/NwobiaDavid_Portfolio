@@ -65,7 +65,7 @@ export default function Home() {
         transition={{ duration: 0.8 }}
         className="flex md:flex-row flex-col-reverse items-center justify-center gap-4 md:mx-4"
       >
-        <div className="flex z-10 flex-col mt-10 md:mt-0 w-[80%] lg:w-[60%] items-start justify-center gap-2">
+        <div className="flex z-10 flex-col h_style mt-10 md:mt-0 w-[80%] lg:w-[60%] items-start justify-center gap-2">
           <h3 className="scroll-m-20 z-10 text-2xl p_style  font-semibold tracking-tight">
             console.log("Hello World");
           </h3>
@@ -79,7 +79,7 @@ export default function Home() {
             }}
             onInit={(typewriter) => {
               typewriter
-                .typeString("I'm a Profram")
+                .typeString("I'm a Program")
                 .pauseFor(300)
                 .deleteChars(4)
                 .typeString("grammer")
@@ -87,11 +87,11 @@ export default function Home() {
                 .start();
             }}
           />
-          <blockquote className="mb-4 mt-2 text-lg md:text-base h_style border-l-2 pl-6 italic">
+          <blockquote className="mb-4 mt-2 text-lg md:text-base p_style border-l-2 pl-6 italic">
             "Frontend-focused software engineer passionate about building sleek, responsive user interfaces. I specialize in creating clean, efficient, and intuitive web experiences using modern technologies like React, JavaScript(ES6+), and Next js."
           </blockquote>
           <Link to="/experiences">
-            <Button className="w-fit group" variant="outline">
+            <Button className="w-fit group p_style " variant="outline">
               Experience{" "}
               <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-all duration-300" />
             </Button>
@@ -99,7 +99,7 @@ export default function Home() {
 
           <a target="_blank" href={"/files/resume.pdf"}>
             <Button
-              className={cn(session && "hidden")}
+              className={"p_style"}
             >
               My Resume
             </Button>
