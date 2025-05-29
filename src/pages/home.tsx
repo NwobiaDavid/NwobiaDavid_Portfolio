@@ -66,7 +66,7 @@ export default function Home() {
         className="flex md:flex-row flex-col-reverse items-center justify-center gap-4 md:mx-4"
       >
         <div className="flex z-10 flex-col h_style mt-10 md:mt-0 w-[80%] lg:w-[60%] items-start justify-center gap-2">
-          <h3 className="scroll-m-20 z-10 text-2xl p_style  font-semibold tracking-tight">
+          <h3 className="scroll-m-20 z-10 text-lg lg:text-2xl p_style  font-semibold tracking-tight">
             console.log("Hello World");
           </h3>
           <Typewriter

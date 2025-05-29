@@ -15,6 +15,8 @@ import { useSheet } from "@/hooks/use-sheet";
 // import { supabase } from "@/database/db";
 // import { useEffect, useState } from "react";
 import "./loader.css"
+import YearCountdown from "../YearCountdown";
+// import { YearCountdown } from "../YearCountdown";
 
 export const TopbarContent = () => {
   const navigate = useNavigate();
@@ -102,12 +104,12 @@ export const TopbarContent = () => {
         <Breadcrumbs />
       </div>
 
-      <div className="p-4 text-xs lg:text-base flex lg:flex-row flex-col lg:mr-0 mr-2 justify-center items-center  ">
+      <div className=" p-0 lg:p-4 text-xs lg:text-base flex lg:flex-row flex-col lg:mr-0 mr-2 justify-center items-center  ">
         {/* <div className=" dark:text-white lg:mr-5 lg:flex justify-center items-center hidden    "><h2 className=" mr-2 font-bold flex items-center justify-center  " >{likeCount > 0 ? likeCount : ( <span className="loader before:bg-black before:dark:bg-white  "></span> )}</h2> <span className=" whitespace-nowrap capitalize " >people love this website <span className=" text-sm opacity-50 ">be one of them</span> </span></div> */}
 
-        <span className=" bg-slate-900 dark:bg-slate-300 rounded-full py-2 px-3 text-white dark:text-black  ">
-          💡 “Stay curious. It’s your superpower.”
-        </span>
+        {/* <span className=" bg-slate-900 dark:bg-slate-300 rounded-full py-2 px-3 text-white dark:text-black  "> */}
+          <YearCountdown />
+        {/* </span> */}
       </div>
 
     </div>
