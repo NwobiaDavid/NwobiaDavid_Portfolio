@@ -88,7 +88,7 @@ export default function Home() {
             }}
           />
           <blockquote className="mb-4 mt-2 text-lg md:text-base p_style border-l-2 pl-6 italic">
-            "Frontend-focused software engineer passionate about building sleek, responsive user interfaces. I specialize in creating clean, efficient, and intuitive web experiences using modern technologies like React, JavaScript(ES6+), and Next js."
+            "I’m a full-stack developer who leans frontend, obsessed with creating web experiences that feel effortless to use. I design clean, modular systems that scale easily and play well with others—whether it’s a new feature, a full app, or an integration into something bigger."
           </blockquote>
           <Link to="/experiences">
             <Button className="w-fit group p_style " variant="outline">

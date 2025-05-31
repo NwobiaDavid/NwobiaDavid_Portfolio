@@ -104,6 +104,7 @@ export const MainSidebar = ({ isMobile = false }: MainSidebarProps) => {
             </Dialog>
 
             <Separator />
+            
             <Link to="/">
               <Button
                 className={cn(
@@ -131,6 +132,7 @@ export const MainSidebar = ({ isMobile = false }: MainSidebarProps) => {
                 Experiences
               </Button>
             </Link>
+
             <Link to="/education">
               <Button
                 className={cn(
@@ -145,6 +147,7 @@ export const MainSidebar = ({ isMobile = false }: MainSidebarProps) => {
                 Education
               </Button>
             </Link>
+
             <Link to="/hobby">
               <Button
                 className={cn(
@@ -172,6 +175,7 @@ export const MainSidebar = ({ isMobile = false }: MainSidebarProps) => {
                 Projects
               </Button>
             </Link>
+
             <Link to="/skills">
               <Button
                 className={cn(
