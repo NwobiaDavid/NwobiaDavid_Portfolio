@@ -67,7 +67,7 @@ export default function Home() {
       >
         <div className="flex z-10 flex-col h_style mt-10 md:mt-0 w-[80%] lg:w-[60%] items-start justify-center gap-2">
           <h3 className="scroll-m-20 z-10 text-lg lg:text-2xl p_style  font-semibold tracking-tight">
-            console.log("Hello World");
+            console.log("Bringing divs to life since 2022");
           </h3>
           <Typewriter
             options={{
@@ -78,17 +78,20 @@ export default function Home() {
               loop: true,
             }}
             onInit={(typewriter) => {
-              typewriter
-                .typeString("I'm a Coder")
-                .pauseFor(300)
-                .deleteChars(11)
-                .typeString("I'm a Programmer")
-                .pauseFor(2000)
-                .start();
+               typewriter
+    .typeString("Googling error messages")
+    .pauseFor(300)
+    .deleteAll()
+    .typeString("StackOverflow copy-paster")
+    .pauseFor(300)
+    .deleteAll()
+    .typeString("Okay fine, 'Software Engineer'")
+    .pauseFor(2000)
+    .start();
             }}
           />
           <blockquote className="mb-4 mt-2 text-lg md:text-base p_style border-l-2 pl-6 italic">
-            "I’m a full-stack developer who leans frontend, obsessed with creating web experiences that feel effortless to use. I design clean, modular systems that scale easily and play well with others—whether it’s a new feature, a full app, or an integration into something bigger."
+             "I'm a developer. I make things work, then make them pretty, then pretend it was easy. Half the time I’m googling solutions, the other half I’m silently judging past me for writing the code I’m now fixing. But hey — the app works, the users smile, and I still get to call it magic."
           </blockquote>
           <Link to="/experiences">
             <Button className="w-fit group p_style " variant="outline">

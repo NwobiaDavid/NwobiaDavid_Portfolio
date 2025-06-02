@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Gamepad, Github, LayoutTemplate, Wrench } from "lucide-react";
+import { Gamepad, Github, LayoutTemplate, Star, Wrench } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useDocumentTitle } from "usehooks-ts";
 import {
@@ -20,19 +20,27 @@ export default function Projects() {
   useDocumentTitle("Nwobia David | Projects");
   const [category, setCategory] = useState<string>("ALL");
 
-  const selectedCategory: Category =
-    Category[category as keyof typeof Category] || Category.FRONTEND;
+  // const selectedCategory: Category =
+  //   Category[category as keyof typeof Category] || Category.FRONTEND;
 
   // Filter projects based on the selected category
-  const filteredProjects =
-    category === "ALL"
-      ? Projectss
-      : Projectss.filter((value) => value.category === selectedCategory);
+   const filteredProjects = (() => {
+    if (category === "ALL") {
+      return Projectss;
+    }
+    
+    const selectedCategory: Category = Category[category as keyof typeof Category];
+    if (selectedCategory === undefined) {
+      return Projectss;
+    }
+    
+    return Projectss.filter((value) => value.categories.includes(selectedCategory));
+  })();
 
-      function truncateText(text: string, maxLength: number) {
-        if (text.length <= maxLength) return text;
-        return text.slice(0, maxLength) + '...';
-      }
+  function truncateText(text: string, maxLength: number) {
+    if (text.length <= maxLength) return text;
+    return text.slice(0, maxLength) + '...';
+  }
 
   return (
     <div className="p-2 md:p-5 w-screen md:w-full h-full overflow-auto">
@@ -50,6 +58,7 @@ export default function Projects() {
             </SelectTrigger>
             <SelectContent className=" p_style " >
               <SelectItem value="ALL">All</SelectItem>
+              <SelectItem value="FEATURED"><div className="flex items-center gap-2"> <Star size={20} className="text-yellow-500 " /> Featured</div></SelectItem>
               <SelectItem value="FRONTEND">Frontend</SelectItem>
               <SelectItem value="BACKEND">Backend</SelectItem>
               <SelectItem value="FULLSTACK">Full Stack</SelectItem>
@@ -72,25 +81,23 @@ export default function Projects() {
                 transition={{ type: "spring", duration: 0.8 }}
                 className="flex md:px-2 px-1 dark:bg-[#0F172A] py-2 flex-col rounded-lg border w-[100%] lg:w-[100%] xl:w-[100%] h-[450px] lg:h-[480px] lg:items-center gap-4 shadow-lg"
               >
-                <Link to={value.id}  className="w-full object-contain border  rounded-lg overflow-hidden h-[45%] " >
-                  {/* <div > */}
-                    <motion.img
-                     initial={{ scale: 0, opacity: 0 }}
-                     animate={{ scale: 1, opacity: 1 }}
-                     whileHover={{ scale: 1.1 }}
-                     transition={{ duration: 0.3 }}
-                      src={value.imgUrl}
-                      alt={value.title}
-                      className=" h-full  w-full "
-                    />
-                  {/* </div> */}
+                <Link to={value.id} className="w-full object-contain border  rounded-lg overflow-hidden h-[45%] " >
+                  <motion.img
+                    initial={{ scale: 0, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    whileHover={{ scale: 1.1 }}
+                    transition={{ duration: 0.3 }}
+                    src={value.imgUrl}
+                    alt={value.title}
+                    className=" h-full  w-full "
+                  />
                 </Link>
                 <Separator />
                 <div className="flex h-[55%] flex-col py-2 px-3 lg:px-6 gap-4">
                   <div className="h-[80%]">
                     <p className="text-lg mb-1 font-semibold p_style ">{value.title}</p>
                     <p className="text-sm body_style line-clamp-3 lg:line-clamp-4">
-                    {truncateText(value.description, 100)}
+                      {truncateText(value.description, 100)}
                     </p>
 
                     <div className="py-2 flex-wrap p_style flex gap-2">
