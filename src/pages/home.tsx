@@ -100,7 +100,7 @@ export default function Home() {
             </Button>
           </Link>
 
-          <a target="_blank" href={"/files/resume.pdf"}>
+          <a target="_blank" href={"/files/my-resume-2025.pdf"}>
             <Button
               className={"p_style"}
             >
