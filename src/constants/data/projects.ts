@@ -17,7 +17,7 @@ export interface Project {
   thoughtProcess: string;
   challenges: string;
   solutions: string;
-  video: string;
+  video?: string;
   githubUrl?: string;
   liveDemo?: string;
   categories: Category[];
@@ -46,7 +46,6 @@ export const Projectss: Project[] = [
     imgUrl: '/images/projects/speechify.png',
     githubUrl: 'https://github.com/NwobiaDavid/speechify',
     liveDemo: 'https://speechifyy.vercel.app/',
-    video: 'https://youtu.be/KjsFCFAY1TE',
     categories: [Category.FRONTEND],
   },
   {
@@ -70,7 +69,6 @@ export const Projectss: Project[] = [
       'I implemented token-based authentication using JWT, which provided secure access control without compromising performance.',
     imgUrl: '/images/projects/notebk.png',
     githubUrl: 'https://github.com/NwobiaDavid/notebook',
-    video: 'https://youtu.be/KjsFCFAY1TE',
     liveDemo: 'https://notebook-nglu.onrender.com/',
     categories: [Category.FEATURED, Category.FULLSTACK],
   },
@@ -95,7 +93,6 @@ export const Projectss: Project[] = [
       'I utilized MongoDB’s scalability features along with efficient querying techniques and optimized the API calls to reduce latency.',
     imgUrl: '/images/projects/hebron.png',
     githubUrl: 'https://github.com/NwobiaDavid/Hebron-Hub',
-    video: 'https://youtu.be/KjsFCFAY1TE',
     liveDemo: 'https://threads-murex-nine.vercel.app/',
     categories: [Category.FULLSTACK],
   },
@@ -119,7 +116,6 @@ export const Projectss: Project[] = [
     solutions:
       'I integrated NextAuth for authentication and MongoDB for managing secure data at scale. I also utilized efficient API architecture to handle increasing data load.',
     imgUrl: '/images/projects/pally.png',
-    video: 'https://youtu.be/KjsFCFAY1TE',
     liveDemo: 'https://pallly-online.vercel.app/',
     categories: [Category.FEATURED, Category.FULLSTACK],
   },
@@ -142,7 +138,7 @@ export const Projectss: Project[] = [
       'Handling real-time updates for product listings and ensuring a seamless user experience with multiple API integrations was tricky.',
     solutions:
       'React Query enabled efficient data fetching, while MongoDB provided the necessary scalability. I also fine-tuned the backend APIs to improve performance.',
-    imgUrl: '/images/projects/bnc_webapp.png',
+    imgUrl: '/images/projects/bnc-webapp.png',
     video: 'https://www.youtube.com/embed/K8GEqIIJz84',
     liveDemo: 'https://byteandcrunch.onrender.com/',
     categories: [Category.FULLSTACK],
@@ -166,9 +162,33 @@ export const Projectss: Project[] = [
       'Handling real-time updates in a bot environment while maintaining secure user access was a key challenge.',
     solutions:
       'Using JWT for secure authentication and MongoDB for quick data retrieval, I ensured that the bot could handle multiple user requests efficiently while maintaining data security.',
-    imgUrl: '/images/projects/bnc_bot.png',
+    imgUrl: '/images/projects/bnc-bot.png',
     video: 'https://www.youtube.com/embed/KjsFCFAY1TE',
     githubUrl: 'https://github.com/NwobiaDavid/BnC_bot',
     categories: [Category.BACKEND],
+  },
+  {
+    id: '7',
+    stack: ['React', 'Vite', 'React Router', 'GSAP', 'Zustand'],
+    title: 'Kelani.ng - Engineering, Power & Consulting',
+    description:
+      'Kelani.ng is a corporate website showcasing the company\'s engineering, power, and consulting services. I built a single template that powers all three sections, demonstrating efficient code reuse and modular design. The site features smooth animations and state management for an engaging user experience.',
+    keyFeatures: [
+      'Single template reused across multiple sections',
+      'Smooth animations powered by GSAP',
+      'Efficient state management with Zustand',
+      'Responsive design for all devices',
+      'Fast performance with Vite build tool',
+    ],
+    thoughtProcess:
+      'The goal was to create a cohesive corporate website with consistent design across different service sections. By building a single, flexible template, I was able to maintain design consistency while minimizing code duplication.',
+    challenges:
+      'Creating a template flexible enough to accommodate different content structures while maintaining consistent animations and interactions.',
+    solutions:
+      'I designed a modular component system with configurable props and used Zustand for shared state management. GSAP animations were parameterized to work with varying content lengths.',
+    imgUrl: '/images/projects/img-kelani.PNG',
+    liveDemo: 'https://kelani.ng/',
+    githubUrl: 'https://github.com/NwobiaDavid/Kelani-Engineering',
+    categories: [Category.FRONTEND],
   },
 ];

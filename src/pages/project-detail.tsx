@@ -34,6 +34,9 @@ const ProjectDetail: React.FC = () => {
     }
   };
 
+  // Check if project has a valid video URL
+  const hasVideo = project.video && project.video.trim() !== '';
+
   return (
     <div className="py-5 px-3 xl:px-20 ">
 
@@ -91,17 +94,27 @@ const ProjectDetail: React.FC = () => {
 
       <div className=" mt-5 mb-5 relative z-10 flex flex-col justify-center items-center h-[200px] lg:h-[400px] " >
         <div className=" w-[90%] lg:w-[60%] border-2 overflow-hidden rounded-lg h-full ">
-          <iframe
-            width="100%"
-            height="100%"
-            src={project.video}
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          ></iframe>
+          {hasVideo ? (
+            <iframe
+              width="100%"
+              height="100%"
+              src={project.video}
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+          ) : (
+            <img
+              src={project.imgUrl}
+              alt={project.title}
+              className="w-full h-full object-cover"
+            />
+          )}
         </div>
         <div>
-          <p className=" mt-4 font-bold opacity-40 " > {project.title} demo video </p>
+          <p className=" mt-4 font-bold opacity-40 " > 
+            {hasVideo ? `${project.title} demo video` : `${project.title} project preview`}
+          </p>
         </div>
       </div>
 
