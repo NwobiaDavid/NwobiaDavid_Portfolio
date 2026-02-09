@@ -19,7 +19,7 @@ import { useTheme } from "@/components/theme-provider";
 import { isDarkSystem } from "@/lib/theme";
 
 export default function Home() {
-  useDocumentTitle("Nwobia David | Home");
+  useDocumentTitle("David Nwobia | Home");
   const [init, setInit] = useState<boolean>(false);
   // const navigate = useNavigate();
   // const { session } = useSession();
@@ -48,7 +48,7 @@ export default function Home() {
             ? particleOptionsLight
             : undefined;
 
-            
+
 
   return (
     <div className="md:h-full w-screen relative md:w-full flex items-center justify-center">
@@ -78,20 +78,20 @@ export default function Home() {
               loop: true,
             }}
             onInit={(typewriter) => {
-               typewriter
-    .typeString("Googling error messages")
-    .pauseFor(300)
-    .deleteAll()
-    .typeString("StackOverflow copy-paster")
-    .pauseFor(300)
-    .deleteAll()
-    .typeString("Okay fine, 'Software Engineer'")
-    .pauseFor(2000)
-    .start();
+              typewriter
+                .typeString("Googling error messages")
+                .pauseFor(300)
+                .deleteAll()
+                .typeString("StackOverflow copy-paster")
+                .pauseFor(300)
+                .deleteAll()
+                .typeString("Okay fine, 'Software Engineer'")
+                .pauseFor(2000)
+                .start();
             }}
           />
           <blockquote className="mb-4 mt-2 text-lg md:text-base p_style border-l-2 pl-6 italic">
-             "I'm a developer. I make things work, then make them pretty, then pretend it was easy. Half the time I’m googling solutions, the other half I’m silently judging past me for writing the code I’m now fixing. But hey — the app works, the users smile, and I still get to call it magic."
+            "I'm a developer. I make things work, then make them pretty, then pretend it was easy. Half the time I’m googling solutions, the other half I’m silently judging past me for writing the code I’m now fixing. But hey — the app works, the users smile, and I still get to call it magic."
           </blockquote>
           <Link to="/experiences">
             <Button className="w-fit group p_style " variant="outline">
@@ -114,9 +114,9 @@ export default function Home() {
         <div className="w-fit">
           <Avatar className="w-52 border-gray-300 border-[3px] h-52">
             <AvatarImage src="/images/profile.png" />
-            <AvatarFallback>Nwobia David</AvatarFallback>
+            <AvatarFallback>David Nwobia</AvatarFallback>
           </Avatar>
-          
+
         </div>
       </motion.div>
     </div>

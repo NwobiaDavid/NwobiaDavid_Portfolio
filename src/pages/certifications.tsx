@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 
 export default function Certifications() {
-  useDocumentTitle("Nwobia David | Certificates");
+  useDocumentTitle("David Nwobia | Certificates");
 
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
@@ -103,7 +103,7 @@ export default function Certifications() {
           </h4>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {webdevCerts.map((value, index) => (
-              <div  className=" relative " key={index} >
+              <div className=" relative " key={index} >
                 <div className="p-5 relative rounded-md shadow-lg bg-secondary flex justify-center items-center flex-col gap-2">
                   <div onClick={() => setSelectedImage(value.image)} className="absolute cursor-pointer top-[10px] border border-slate-800 dark:bg-[#0F172A] p-1 hover:bg-slate-300 duration-200 opacity-50 hover:opacity-100 bg-slate-200 rounded-md right-[10px] ">
                     <Expand />
@@ -123,9 +123,9 @@ export default function Certifications() {
           </h4>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {datasciCerts.map((value, index) => (
-              <div  key={index} >
+              <div key={index} >
                 <div className="p-5 relative rounded-md shadow-lg bg-secondary flex justify-center items-center flex-col gap-2">
-                <div onClick={() => setSelectedImage(value.image)} className="absolute top-[10px] border border-slate-800 cursor-pointer p-1 dark:bg-[#0F172A]  hover:bg-slate-300 duration-200 opacity-50 hover:opacity-100 bg-slate-200 rounded-md right-[10px] ">
+                  <div onClick={() => setSelectedImage(value.image)} className="absolute top-[10px] border border-slate-800 cursor-pointer p-1 dark:bg-[#0F172A]  hover:bg-slate-300 duration-200 opacity-50 hover:opacity-100 bg-slate-200 rounded-md right-[10px] ">
                     <Expand />
                   </div>
                   <div>
@@ -143,9 +143,9 @@ export default function Certifications() {
           </h4>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {otherCerts.map((value, index) => (
-              <div  key={index} >
+              <div key={index} >
                 <div className="p-5 relative rounded-md shadow-lg bg-secondary flex justify-center items-center flex-col gap-2">
-                <div onClick={() => setSelectedImage(value.image)} className="absolute top-[10px] border border-slate-800 dark:bg-[#0F172A]  cursor-pointer p-1 hover:bg-slate-300 duration-200 opacity-50 hover:opacity-100 bg-slate-200 rounded-md right-[10px] ">
+                  <div onClick={() => setSelectedImage(value.image)} className="absolute top-[10px] border border-slate-800 dark:bg-[#0F172A]  cursor-pointer p-1 hover:bg-slate-300 duration-200 opacity-50 hover:opacity-100 bg-slate-200 rounded-md right-[10px] ">
                     <Expand />
                   </div>
                   <div>

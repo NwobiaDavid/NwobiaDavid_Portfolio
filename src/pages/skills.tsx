@@ -18,7 +18,7 @@ import IconCplusjs from "@/components/svg/cplusplus-svg";
 import IconNpm from "@/components/svg/npm-svg";
 
 export default function Skills() {
-  useDocumentTitle("Nwobia David | Skills");
+  useDocumentTitle("David Nwobia | Skills");
 
   enum Categoty {
     LANGUAGE,
@@ -44,7 +44,7 @@ export default function Skills() {
       title: "Typescript",
       icon: <IconTypescript className="h-10 w-10" />,
       category: Categoty.LANGUAGE,
-    },{
+    }, {
       title: "C++",
       icon: <IconCplusjs className="h-10 w-10" />,
       category: Categoty.LANGUAGE,
@@ -135,7 +135,7 @@ export default function Skills() {
             Programming Language
           </h4>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {skillsLanguage.map((value,index) => (
+            {skillsLanguage.map((value, index) => (
               <div key={index} className="p-5 rounded-md shadow-lg bg-secondary flex justify-center items-center flex-col gap-2">
                 {value.icon}
                 <p>{value.title}</p>

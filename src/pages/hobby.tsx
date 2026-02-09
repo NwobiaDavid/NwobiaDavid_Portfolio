@@ -30,7 +30,7 @@ import { steps } from "@/constants/steps";
 import { usePlay } from "@/hooks/use-play";
 
 export default function Hobby() {
-  useDocumentTitle("Nwobia David | Hobby");
+  useDocumentTitle("David Nwobia | Hobby");
   const [tabState, setTabState] = useState("books");
   const play = usePlay();
 

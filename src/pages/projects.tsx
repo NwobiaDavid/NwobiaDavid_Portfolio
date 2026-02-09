@@ -17,23 +17,23 @@ import { Badge } from "@/components/ui/badge";
 import { Projectss, Category } from "@/constants/data/projects";
 
 export default function Projects() {
-  useDocumentTitle("Nwobia David | Projects");
+  useDocumentTitle("David Nwobia | Projects");
   const [category, setCategory] = useState<string>("ALL");
 
   // const selectedCategory: Category =
   //   Category[category as keyof typeof Category] || Category.FRONTEND;
 
   // Filter projects based on the selected category
-   const filteredProjects = (() => {
+  const filteredProjects = (() => {
     if (category === "ALL") {
       return Projectss;
     }
-    
+
     const selectedCategory: Category = Category[category as keyof typeof Category];
     if (selectedCategory === undefined) {
       return Projectss;
     }
-    
+
     return Projectss.filter((value) => value.categories.includes(selectedCategory));
   })();
 

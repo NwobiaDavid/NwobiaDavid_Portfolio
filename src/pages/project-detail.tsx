@@ -10,7 +10,7 @@ import { Dot } from 'lucide-react';
 import { FlowAppButton } from "@/components/content/flow-app-button";
 
 const ProjectDetail: React.FC = () => {
-  useDocumentTitle("Nwobia David | Projects");
+  useDocumentTitle("David Nwobia | Projects");
 
   const navigate = useNavigate();
 
@@ -22,13 +22,13 @@ const ProjectDetail: React.FC = () => {
   }
 
   const currentIndex = Projectss.findIndex((proj) => proj.id === id);
-  
+
   const nextProjectIndex = (currentIndex + 1) % Projectss.length;
   const nextProject = Projectss[nextProjectIndex];
 
   const handleBackClick = () => {
     if (window.history.length > 2) {
-      navigate(-1); 
+      navigate(-1);
     } else {
       navigate('/projects');
     }
@@ -112,19 +112,19 @@ const ProjectDetail: React.FC = () => {
           )}
         </div>
         <div>
-          <p className=" mt-4 font-bold opacity-40 " > 
+          <p className=" mt-4 font-bold opacity-40 " >
             {hasVideo ? `${project.title} demo video` : `${project.title} project preview`}
           </p>
         </div>
       </div>
 
       <div className=" flex lg:flex-row mt-[90px] flex-col pb-16  gap-5 " >
-        
+
         <div className=" p-5 w-[40%] bg-[#F8FAFC] dark:bg-[#0F172A] border-2 rounded-md ">
           <h2 className=" text-3xl uppercase " >key features:</h2>
 
           <div className="mt-3" >
-            {project.keyFeatures.map((item, index)=>(
+            {project.keyFeatures.map((item, index) => (
               <div key={index} className=" text-lg flex body_style  " >
                 <span>
                   <Dot />

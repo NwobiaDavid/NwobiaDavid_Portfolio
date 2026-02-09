@@ -44,11 +44,11 @@ const timelineItems: TimelineItemProps[] = [
         description:
             "Co-led the Google Developer Student Club Frontend track, organizing workshops, hackathons, and coding bootcamps to promote hands-on learning in software development and cloud computing. Mentored over 100 students in areas such as web development, mobile app creation, and Google Cloud technologies, fostering a collaborative learning environment and enhancing participants' technical skills.",
     },
-    
+
 ];
 
 export default function Experiences() {
-    useDocumentTitle("Nwobia David | Experiences");
+    useDocumentTitle("David Nwobia | Experiences");
 
     return (
         <div className="p-5 w-screen md:w-full overflow-y-auto">
@@ -57,14 +57,14 @@ export default function Experiences() {
             </h3>
             <div className="xl:px-3   ">
 
-            <Timeline
-                items={timelineItems.map((item, index, array) => {
-                    return {
-                        ...item,
-                        isCurrent: index === array.length - 1,
-                    };
-                })}
-            />
+                <Timeline
+                    items={timelineItems.map((item, index, array) => {
+                        return {
+                            ...item,
+                            isCurrent: index === array.length - 1,
+                        };
+                    })}
+                />
             </div>
             <FlowAppButton
                 leftTitle="Home"
