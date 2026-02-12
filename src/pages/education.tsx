@@ -12,14 +12,8 @@ const timelineItems: TimelineItemProps[] = [
       "Excelled in core science subjects while fostering creativity and critical thinking. As an active member of the literary club, developed strong communication and analytical skills, contributing to a supportive and intellectually stimulating environment. Gained a foundation in STEM and cultivated leadership through extracurricular activities.",
   },
   {
-    date: "Mar 2024 - Sep 2024",
-    title: "Oceanz Robotics - Robotics Engineer Intern",
-    description:
-      "Designed and developed mini robots using Arduino platforms, employing embedded C++ for task automation and functionality. Collaborated with a multidisciplinary team to prototype and test robotics systems, enhancing automation and efficiency in client operations. Gained hands-on experience in hardware-software integration, sensor interfacing, and troubleshooting for real-world applications.",
-  },
-  {
-    date: "2020 - Present",
-    title: "Covenant University - B.Sc. Physics | Tech Community Leader",
+    date: "Sept 2021 - Oct 2025",
+    title: "Covenant University - B.Sc. Physics | Community Leader",
     description:
       "Active participant in the Hebron Startup Lab, where I spearheaded various tech projects and built innovative solutions, demonstrating leadership and teamwork. Co-lead of the Frontend Track for the Google Developer Student Club (Covenant University), mentoring peers in modern web technologies and fostering community growth. Additionally, served as the Financial Secretary for the National Association of Physics Students (NAPS), managing budgets and financial records with precision and accountability.",
   },
@@ -34,12 +28,12 @@ export default function Education() {
         <GraduationCap /> Education
       </h3>
       <div className=" xl:px-3">
-
         <Timeline
-          items={timelineItems.map((item, index, array) => {
+          items={[...timelineItems].reverse().map((item, index) => {
             return {
               ...item,
-              isCurrent: index === array.length - 1,
+              // Mark the latest (now first) education entry as current
+              isCurrent: index === 0,
             };
           })}
         />

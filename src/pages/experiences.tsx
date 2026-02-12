@@ -39,7 +39,7 @@ const timelineItems: TimelineItemProps[] = [
             "Developed innovative robotics solutions and designed custom business applications to improve operational efficiency for clients in various industries. Utilized a blend of software development, IoT integration, and robotics engineering to deliver high-impact technological solutions. Focused on automation, prototyping, and optimizing client workflows through agile methodologies.",
     },
     {
-        date: "Sept 2024 - present",
+        date: "Sept 2024 - July 2025",
         title: "Google Developer Student Club - Covenant University, Nigeria | Co-lead",
         description:
             "Co-led the Google Developer Student Club Frontend track, organizing workshops, hackathons, and coding bootcamps to promote hands-on learning in software development and cloud computing. Mentored over 100 students in areas such as web development, mobile app creation, and Google Cloud technologies, fostering a collaborative learning environment and enhancing participants' technical skills.",
@@ -58,10 +58,11 @@ export default function Experiences() {
             <div className="xl:px-3   ">
 
                 <Timeline
-                    items={timelineItems.map((item, index, array) => {
+                    items={[...timelineItems].reverse().map((item, index) => {
                         return {
                             ...item,
-                            isCurrent: index === array.length - 1,
+                            // Mark the latest (now first) experience as current
+                            isCurrent: index === 0,
                         };
                     })}
                 />

@@ -47,7 +47,7 @@ export const FlowAppButton = ({
     >
       <Button
         variant="outline"
-        className="h-fit flex justify-start md:justify-center gap-3 group"
+        className="h-fit flex justify-start md:justify-center gap-3 group order-2 md:order-1"
         onClick={() => handleNavigation(leftRoute)} 
       >
         <ChevronLeft className="group-hover:-translate-x-1 transition-all" />
@@ -63,7 +63,7 @@ export const FlowAppButton = ({
       </Button>
       <Button
         variant="outline"
-        className="h-fit flex justify-end md:justify-center gap-3 group"
+        className="h-fit flex justify-end md:justify-center gap-3 group order-1 md:order-2"
         onClick={() => {
           if (rightRoute) {
             handleNavigation(rightRoute); 

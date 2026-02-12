@@ -52,11 +52,11 @@ export const MainSidebar = ({ isMobile = false }: MainSidebarProps) => {
 
   const isHomeRoute = location.pathname === "/";
   const isEducationRoute = location.pathname === "/education";
-  const isHobbyRoute = location.pathname === "/hobby";
+  // const isHobbyRoute = location.pathname === "/hobby";
   const isProjectsRoute = location.pathname === "/projects";
   const isExperiencesRoute = location.pathname === "/experiences";
   const isCertificationsRoute = location.pathname === "/certifications";
-  const isSkillsRoute = location.pathname === "/skills";
+  // const isSkillsRoute = location.pathname === "/skills";
 
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
