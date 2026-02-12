@@ -20,6 +20,7 @@ const GithubLink = () => {
     //     <span>GitHub</span>
     //   </a>
     // </div>
+    <a target="_blank" href={"https://github.com/NwobiaDavid"}>
     <Button className="w-fit group p_style " >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -32,6 +33,7 @@ const GithubLink = () => {
 
       <span>GitHub</span>
     </Button>
+    </a>
   );
 };
 

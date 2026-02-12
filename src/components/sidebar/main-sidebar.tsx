@@ -109,7 +109,7 @@ export const MainSidebar = ({ isMobile = false }: MainSidebarProps) => {
               <Button
                 className={cn(
                   isHomeRoute && "bg-muted",
-                  "w-full flex gap-4 justify-start pl-2"
+                  "w-full semibold flex gap-4 justify-start pl-2"
                 )}
                 variant="ghost"
                 onClick={close}
@@ -133,6 +133,22 @@ export const MainSidebar = ({ isMobile = false }: MainSidebarProps) => {
               </Button>
             </Link>
 
+            <Link to="/projects">
+              <Button
+                className={cn(
+                  isProjectsRoute && "bg-muted",
+                  "w-full flex gap-4 justify-start pl-2"
+                )}
+                variant="ghost"
+                onClick={close}
+              >
+                <Folder />
+                Projects
+              </Button>
+            </Link>
+
+           
+            <Separator />
             <Link to="/education">
               <Button
                 className={cn(
@@ -148,35 +164,7 @@ export const MainSidebar = ({ isMobile = false }: MainSidebarProps) => {
               </Button>
             </Link>
 
-            <Link to="/hobby">
-              <Button
-                className={cn(
-                  isHobbyRoute && "bg-muted",
-                  "w-full flex gap-4 justify-start pl-2"
-                )}
-                variant="ghost"
-                onClick={close}
-              >
-                <Laugh />
-                Hobby
-              </Button>
-            </Link>
-            <Separator />
-            <Link to="/projects">
-              <Button
-                className={cn(
-                  isProjectsRoute && "bg-muted",
-                  "w-full flex gap-4 justify-start pl-2"
-                )}
-                variant="ghost"
-                onClick={close}
-              >
-                <Folder />
-                Projects
-              </Button>
-            </Link>
-
-            <Link to="/skills">
+            {/* <Link to="/skills">
               <Button
                 className={cn(
                   isSkillsRoute && "bg-muted",
@@ -188,7 +176,8 @@ export const MainSidebar = ({ isMobile = false }: MainSidebarProps) => {
                 <Wrench />
                 Skills
               </Button>
-            </Link>
+            </Link> */}
+
             <Link to="/certifications">
               <Button
                 className={cn(
@@ -202,6 +191,21 @@ export const MainSidebar = ({ isMobile = false }: MainSidebarProps) => {
                 Certifications
               </Button>
             </Link>
+            
+
+            {/* <Link to="/hobby">
+              <Button
+                className={cn(
+                  isHobbyRoute && "bg-muted",
+                  "w-full flex gap-4 justify-start pl-2"
+                )}
+                variant="ghost"
+                onClick={close}
+              >
+                <Laugh />
+                Hobby
+              </Button>
+            </Link> */}
             <Separator />
             <Drawer open={drawer.isOpen} onRelease={drawer.close}>
               <DrawerTrigger onClick={drawer.open}>
@@ -210,7 +214,7 @@ export const MainSidebar = ({ isMobile = false }: MainSidebarProps) => {
                   variant="ghost"
                 >
                   <Contact />
-                  Say Hi👋
+                  Contacts
                 </Button>
               </DrawerTrigger>
               <DrawerContent>

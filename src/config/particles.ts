@@ -4,13 +4,13 @@ export const particleOptionsDark: ISourceOptions = {
   name: "NASA",
   particles: {
     number: {
-      value: 60,
+      value: 50,
       density: {
         enable: true,
       },
     },
     color: {
-      value: "#ffffff",
+      value: "#F5F5F5",
     },
     shape: {
       type: "square",
@@ -98,7 +98,7 @@ export const particleOptionsLight: ISourceOptions = {
       },
     },
     color: {
-      value: "#000000",
+      value: "#D3D3D3",
     },
     shape: {
       type: "square",
