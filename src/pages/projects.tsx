@@ -1,5 +1,5 @@
 // import { Button } from "@/components/ui/button";
-import { Gamepad, LayoutTemplate, Wrench } from "lucide-react";
+import { Gamepad, GraduationCap, LayoutTemplate, PackageOpen, Wrench } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useDocumentTitle } from "usehooks-ts";
 import { Separator } from "@/components/ui/separator";
@@ -125,14 +125,14 @@ export default function Projects() {
       <div className="md:fixed bottom-[15px]">
         <FlowAppButton
           containerClassName="p-5"
-          leftTitle="Hobby"
-          leftDescription="see at the games and music that I like"
-          leftIcon={<Gamepad />}
-          leftRoute="/hobby"
-          rightTitle="Skills"
-          rightDescription="see what my skills are"
-          rightIcon={<Wrench />}
-          rightRoute="/skills"
+          leftTitle="Experiences"
+          leftDescription="timeline of my work experiences"
+          leftIcon={<PackageOpen />}
+          leftRoute="/experiences"
+          rightTitle="Education"
+          rightDescription="history of my academics timeline"
+          rightIcon={<GraduationCap />}
+          rightRoute="/education"
         />
       </div>
     </div>

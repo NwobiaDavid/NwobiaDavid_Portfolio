@@ -2,7 +2,7 @@
 import { useDocumentTitle } from "usehooks-ts";
 import { motion } from "framer-motion";
 import { FlowAppButton } from "@/components/content/flow-app-button";
-import { Contact, Folder, Expand } from "lucide-react";
+import { Contact, Folder, Expand, GraduationCap } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
@@ -201,10 +201,10 @@ export default function Certifications() {
 
       <FlowAppButton
         containerClassName="pt-5"
-        leftTitle="Skills"
-        leftDescription="see what I'm working on"
-        leftIcon={<Folder />}
-        leftRoute="/skills"
+        leftTitle="Education"
+        leftDescription="history of my academics timeline"
+        leftIcon={<GraduationCap />}
+        leftRoute="/education"
         rightTitle="Say Hi👋"
         rightDescription="reach out tome through this channels"
         rightIcon={<Contact />}

@@ -1,7 +1,7 @@
 import { FlowAppButton } from "@/components/content/flow-app-button";
 import { Timeline } from "@/components/timeline/timeline";
 import { TimelineItemProps } from "@/components/timeline/timeline-item";
-import { GraduationCap, Home, PackageOpen } from "lucide-react";
+import { Folder, GraduationCap, Home, PackageOpen } from "lucide-react";
 import { useDocumentTitle } from "usehooks-ts";
 
 
@@ -72,10 +72,10 @@ export default function Experiences() {
                 leftDescription="see the home page"
                 leftIcon={<Home />}
                 leftRoute="/"
-                rightTitle="Education"
-                rightDescription="history of my academics timeline"
-                rightIcon={<GraduationCap />}
-                rightRoute="/education"
+                rightTitle="Projects"
+                rightDescription="see what i've worked on"
+                rightIcon={<Folder />}
+                rightRoute="/projects"
             />
         </div>
     );

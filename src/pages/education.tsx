@@ -1,7 +1,7 @@
 import { FlowAppButton } from "@/components/content/flow-app-button";
 import { Timeline } from "@/components/timeline/timeline";
 import { TimelineItemProps } from "@/components/timeline/timeline-item";
-import { GraduationCap, Laugh, PackageOpen } from "lucide-react";
+import { Folder, GraduationCap, Laugh, PackageOpen, Shield, ShieldCheck } from "lucide-react";
 import { useDocumentTitle } from "usehooks-ts";
 
 const timelineItems: TimelineItemProps[] = [
@@ -39,14 +39,14 @@ export default function Education() {
         />
       </div>
       <FlowAppButton
-        leftTitle="Experiences"
-        leftDescription="timeline of my work experiences"
-        leftIcon={<PackageOpen />}
-        leftRoute="/experiences"
-        rightTitle="Hobby"
-        rightDescription="see what I like"
-        rightIcon={<Laugh />}
-        rightRoute="/hobby"
+        leftTitle="Projects"
+        leftDescription="see what I've worked on"
+        leftIcon={<Folder />}
+        leftRoute="/projects"
+        rightTitle="Certifications"
+        rightDescription="see institutions backing up my skills"
+        rightIcon={<ShieldCheck />}
+        rightRoute="/certifications"
       />
     </div>
   );
