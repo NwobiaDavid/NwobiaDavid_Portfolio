@@ -11,6 +11,7 @@ export const Timeline: React.FC<TimelineProps> = ({ items }) => {
       {items.map((item, index) => (
         <motion.li
           key={index}
+          data-no-blobity
           className=" xl:w-[80%] md:w-[90%] w-full  "
           initial={{ opacity: 0, translateX: 50 }}
           animate={{ opacity: 1, translateX: 0 }}

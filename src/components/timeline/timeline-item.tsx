@@ -15,7 +15,7 @@ export interface TimelineItemProps {
 
 export const TimelineItem: React.FC<TimelineItemProps> = ({ date, title, description, link, isCurrent = false }) => {
   return (
-    <li className="mb-10 ms-4">
+    <li data-no-blobity className="mb-10 ms-4">
       <div className={cn(isCurrent ? "bg-primary/80 border-none" : "bg-gray-200 dark:border-gray-900 dark:bg-gray-700", "absolute w-3 h-3  rounded-full mt-1.5 -start-1.5 border border-white ")}></div>
       <div className={cn(isCurrent ? "bg-primary/80 border-none animate-ping" : "bg-gray-200 dark:border-gray-900 dark:bg-gray-700", "absolute w-3 h-3  rounded-full mt-1.5 -start-1.5 border border-white")}></div>
       <time className="mb-1 text-sm font-normal leading-none text-gray-400 p_style  dark:text-gray-500">{date}</time>

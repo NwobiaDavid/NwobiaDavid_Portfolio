@@ -63,9 +63,9 @@ export default function Home() {
         initial={{ opacity: 0, translateY: -10 }}
         animate={{ opacity: 1, translateY: 0 }}
         transition={{ duration: 0.8 }}
-        className="flex my-20 w-full h-full md:flex-row flex-col-reverse items-center justify-center lg:justify-start gap-4 md:mx-4 md:ml-[20%] md:mb-[10%] "
+        className="flex my-20 w-full h-full md:flex-row flex-col-reverse items-center justify-center lg:justify-start gap-4 md:mx-4 md:ml-[20%] md:my-[10%] "
       >
-        <div className="flex z-10 flex-col h_style mt-10 md:mt-0 w-[80%] lg:w-[42%] items-start justify-center lg:justify-start gap-2">
+        <div className="flex z-10 flex-col h_style mt-10 md:mt-0 mb-[10%] w-[80%] lg:w-[42%] items-start justify-center lg:justify-start gap-2">
           <h3 className="scroll-m-20 z-10 text-lg lg:text-2xl p_style  font-semibold tracking-tight">
             {/* console.log("Bringing divs to life since 2022"); */}
             David Nwobia
@@ -95,7 +95,7 @@ export default function Home() {
             Software Engineer
           </h1>
           <blockquote className="mb-4 mt-2 text-lg md:text-base p_style border-l-2 pl-6 italic">
-          I build things that work. Then I make them fast.
+            I build things that work. Then I make them fast.
           </blockquote>
           <Link to="/experiences">
             <Button className="w-fit group font-semibold p_style " variant="outline">
@@ -113,9 +113,13 @@ export default function Home() {
           {/* <VerifiedAvatar /> */}
         </div>
 
-        <div className="w-fit">
-          <Avatar className="w-56 rounded-xl border-gray-300 border-[3px] h-56">
-            <AvatarImage className=" " src="/images/profile.png" />
+        <div className="w-fit  mb-[10%]">
+          <Avatar className="w-56 rounded-xl border-gray-300 border-[3px] duration-500 h-56" data-blobity-tooltip="Always Active!"
+              data-blobity-invert="false">
+            <AvatarImage
+              className=" "
+              
+              src="/images/profile.png" />
             <AvatarFallback>David Nwobia</AvatarFallback>
           </Avatar>
 
