@@ -35,7 +35,7 @@ export const VerifiedAvatar = () => {
 
     setData(data);
     if (
-      data?.filter((value) => value.user_id === session?.user.id).length ||
+      data?.filter((value) => value === session?.user.id).length ||
       0 !== 0
     ) {
       toast(

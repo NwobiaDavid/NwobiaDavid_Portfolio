@@ -26,7 +26,7 @@ import {
   // Laugh,
   PackageOpen,
   // Grip,
-  FileText,
+  // FileText,
 } from "lucide-react";
 import { ModeToggle } from "../mode-toggle";
 import { Button } from "../ui/button";
