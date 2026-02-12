@@ -30,7 +30,7 @@ export const TopbarContent = () => {
                 variant="ghost"
                 onClick={open}
               >
-                <Menu className="h-4 w-4" />
+                <Menu className="w-6 h-6 md:w-4 md:h-4 " />
               </Button>
             </SheetTrigger>
             <SheetContent side="left" className="p-0">
@@ -38,14 +38,17 @@ export const TopbarContent = () => {
             </SheetContent>
           </Sheet>
           <ArrowLeft
-            className="w-4 h-4 cursor-pointer"
+            className="w-6 h-6 md:w-4 md:h-4 cursor-pointer"
             onClick={() => navigate(-1)}
           />
           <ArrowRight
-            className="w-4 h-4 cursor-pointer"
+            className="w-6 h-6 md:w-4 md:h-4 cursor-pointer"
             onClick={() => navigate(1)}
           />
-          <ArrowUpIcon className="w-4 h-4 cursor-pointer" onClick={() => navigate("/")} />
+          <ArrowUpIcon
+            className="w-6 h-6 md:w-4 md:h-4 cursor-pointer"
+            onClick={() => navigate("/")}
+          />
         </div>
         <Breadcrumbs />
       </div>
