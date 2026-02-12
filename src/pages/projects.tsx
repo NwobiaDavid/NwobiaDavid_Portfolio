@@ -1,90 +1,72 @@
-import { Button } from "@/components/ui/button";
-import { Gamepad, Github, LayoutTemplate, Star, Wrench } from "lucide-react";
+// import { Button } from "@/components/ui/button";
+import { Gamepad, LayoutTemplate, Wrench } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useDocumentTitle } from "usehooks-ts";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { useState } from "react";
 import { Separator } from "@/components/ui/separator";
 import { AnimatePresence, motion } from "framer-motion";
 import { FlowAppButton } from "@/components/content/flow-app-button";
 import { Badge } from "@/components/ui/badge";
-import { Projectss, Category } from "@/constants/data/projects";
+import { MainProjects } from "@/constants/data/projects";
 
 export default function Projects() {
   useDocumentTitle("David Nwobia | Projects");
-  const [category, setCategory] = useState<string>("ALL");
 
-  // const selectedCategory: Category =
-  //   Category[category as keyof typeof Category] || Category.FRONTEND;
+  // Pick 4 best projects across Frontend, Full Stack and Backend (data-related) categories
+  // const bestProjects = Projectss.filter((value) =>
+  //   value.categories.includes(Category.FRONTEND) ||
+  //   value.categories.includes(Category.FULLSTACK) ||
+  //   value.categories.includes(Category.BACKEND)
+  // ).slice(0, 4);
 
-  // Filter projects based on the selected category
-  const filteredProjects = (() => {
-    if (category === "ALL") {
-      return Projectss;
-    }
-
-    const selectedCategory: Category = Category[category as keyof typeof Category];
-    if (selectedCategory === undefined) {
-      return Projectss;
-    }
-
-    return Projectss.filter((value) => value.categories.includes(selectedCategory));
-  })();
 
   function truncateText(text: string, maxLength: number) {
     if (text.length <= maxLength) return text;
     return text.slice(0, maxLength) + '...';
   }
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.08, when: "beforeChildren" },
+    },
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 24 },
+    visible: { opacity: 1, y: 0 },
+  };
+
   return (
     <div className="p-2 md:p-5 w-screen md:w-full h-full overflow-auto">
-      <div className="h-[14%] md:mb-2">
+      <div className=" md:mb-2">
         <div className="flex justify-between p_style">
           <h3 className="scroll-m-20 p_style text-2xl font-semibold tracking-tight">
             Projects
           </h3>
-          <Select
-            defaultValue={category}
-            onValueChange={(value) => setCategory(value)}
-          >
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="All" />
-            </SelectTrigger>
-            <SelectContent className=" p_style " >
-              <SelectItem value="ALL">All</SelectItem>
-              <SelectItem value="FEATURED"><div className="flex items-center gap-2"> <Star size={20} className="text-yellow-500 " /> Featured</div></SelectItem>
-              <SelectItem value="FRONTEND">Frontend</SelectItem>
-              <SelectItem value="BACKEND">Backend</SelectItem>
-              <SelectItem value="FULLSTACK">Full Stack</SelectItem>
-            </SelectContent>
-          </Select>
         </div>
         <h4 className="scroll-m-20 p_style text-lg text-muted-foreground font-semibold tracking-tight mt-6">
-          {category} ({filteredProjects.length})
+          Featured Projects ({MainProjects.length})
         </h4>
       </div>
       <Separator />
-      <div className="overflow-y-auto pb-7 px-2 gap-5 pt-2 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 h-[73.5%] xl:h-[69%] 2xl:h-[72%] ">
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="overflow-y-auto pb-7 px-2 gap-5 pt-5 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 h-[73.5%] xl:h-[69%] 2xl:h-[72%] "
+      >
         <AnimatePresence>
-          {filteredProjects.map((value) => (
-            <div key={value.title} >
+          {MainProjects.map((value) => (
+            <motion.div
+              key={value.title}
+              variants={cardVariants}
+            >
               <motion.div
-                initial={{ scale: 0, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 0.8, opacity: 0 }}
-                transition={{ type: "spring", duration: 0.8 }}
-                className="flex md:px-2 px-1 dark:bg-[#0F172A] py-2 flex-col rounded-lg border w-[100%] lg:w-[100%] xl:w-[100%] h-[450px] lg:h-[480px] lg:items-center gap-4 shadow-lg"
+                className="flex md:px-4 px-1 dark:bg-[#0F172A] py-4 flex-col rounded-lg border w-[100%] lg:w-[100%] xl:w-[100%] h-[450px] lg:h-[480px] lg:items-center gap-4 shadow-lg"
               >
                 <Link to={value.id} className="w-full object-contain border  rounded-lg overflow-hidden h-[45%] " >
                   <motion.img
-                    initial={{ scale: 0, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
                     whileHover={{ scale: 1.1 }}
                     transition={{ duration: 0.3 }}
                     src={value.imgUrl}
@@ -93,7 +75,7 @@ export default function Projects() {
                   />
                 </Link>
                 <Separator />
-                <div className="flex h-[55%] flex-col py-2 px-3 lg:px-6 gap-4">
+                <div className="flex h-[55%] flex-col py-2 px-3 lg:px-0 gap-4">
                   <div className="h-[80%]">
                     <p className="text-lg mb-1 font-semibold p_style ">{value.title}</p>
                     <p className="text-sm body_style line-clamp-3 lg:line-clamp-4">
@@ -107,30 +89,39 @@ export default function Projects() {
                     </div>
 
                   </div>
-                  <div className="flex h-[20%] p_style items-center gap-2">
+                  <div className="flex h-[20%] w-full p_style items-center gap-2">
                     {value.githubUrl && (
-                      <Link to={value.githubUrl} target="_blank" >
-                        <Button variant="outline">
-                          <Github className="h-4 w-4 mr-2" />
+                      <Link to={value.githubUrl} className="w-1/2" target="_blank" >
+                        <div className="w-full p-3 group rounded-lg flex items-center justify-center border duration-200 dark:bg-background bg-secondary hover:bg-accent dark:hover:bg-secondary active:scale-95 " >
+                          {/* <Github className="h-4 w-4 mr-2" /> */}
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            aria-hidden="true"
+                            className="w-4 h-4 mr-2 md:w-5 md:h-5 fill-current"
+                          >
+                            <path d="M12 0.5C5.37 0.5 0 5.87 0 12.5c0 5.29 3.438 9.773 8.205 11.366.6.111.82-.261.82-.58 0-.287-.011-1.244-.017-2.257-3.338.726-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.756-1.333-1.756-1.09-.745.083-.73.083-.73 1.205.085 1.84 1.237 1.84 1.237 1.07 1.833 2.807 1.304 3.492.997.108-.776.418-1.305.762-1.605-2.665-.303-5.466-1.333-5.466-5.931 0-1.31.469-2.381 1.236-3.221-.124-.303-.536-1.523.117-3.176 0 0 1.008-.322 3.301 1.23a11.5 11.5 0 0 1 3.004-.404c1.019.005 2.047.138 3.004.404 2.291-1.552 3.297-1.23 3.297-1.23.655 1.653.243 2.873.12 3.176.77.84 1.235 1.911 1.235 3.221 0 4.61-2.805 5.625-5.476 5.922.43.37.823 1.102.823 2.222 0 1.606-.015 2.898-.015 3.293 0 .322.216.697.825.579C20.565 22.27 24 17.788 24 12.5 24 5.87 18.627 0.5 12 0.5z" />
+                          </svg>
+
                           Github
-                        </Button>
+                        </div>
                       </Link>
                     )}
                     {value.liveDemo && (
-                      <Link to={value.liveDemo} target="_blank" >
-                        <Button variant="outline">
+                      <Link className="w-1/2" to={value.liveDemo} target="_blank" >
+                        <div className="w-full p-3 group rounded-lg flex items-center justify-center border duration-200 dark:bg-background bg-secondary hover:bg-accent dark:hover:bg-secondary  active:scale-95 ">
                           <LayoutTemplate className="h-4 w-4 mr-2" />
                           Live Demo
-                        </Button>
+                        </div>
                       </Link>
                     )}
                   </div>
                 </div>
               </motion.div>
-            </div>
+            </motion.div>
           ))}
         </AnimatePresence>
-      </div>
+      </motion.div>
       <div className="md:fixed bottom-[15px]">
         <FlowAppButton
           containerClassName="p-5"

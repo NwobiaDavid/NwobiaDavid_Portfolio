@@ -87,14 +87,25 @@ export default function Certifications() {
     (value) => value.category === Category.OTHERS
   )
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.08, when: "beforeChildren" },
+    },
+  };
 
+  const cardVariants = {
+    hidden: { opacity: 0, y: 24 },
+    visible: { opacity: 1, y: 0 },
+  };
 
   return (
     <div className="p-5 h-screen overflow-auto w-screen md:w-full">
       <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ type: "spring", duration: 0.8 }}
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
         className="flex flex-col gap-6"
       >
         <div>
@@ -103,7 +114,11 @@ export default function Certifications() {
           </h4>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {webdevCerts.map((value, index) => (
-              <div className=" relative " key={index} >
+              <motion.div
+                key={index}
+                variants={cardVariants}
+                className="relative"
+              >
                 <div className="p-5 relative rounded-md shadow-lg bg-secondary flex justify-center items-center flex-col gap-2">
                   <div onClick={() => setSelectedImage(value.image)} className="absolute cursor-pointer top-[10px] border border-slate-800 dark:bg-[#0F172A] p-1 hover:bg-slate-300 duration-200 opacity-50 hover:opacity-100 bg-slate-200 rounded-md right-[10px] ">
                     <Expand />
@@ -113,7 +128,7 @@ export default function Certifications() {
                   </div>
                   <Link target="_blank" to={value.link} className=" hover:underline hover:text-slate-500 duration-200  " >{value.title}</Link>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -123,7 +138,10 @@ export default function Certifications() {
           </h4>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {datasciCerts.map((value, index) => (
-              <div key={index} >
+              <motion.div
+                key={index}
+                variants={cardVariants}
+              >
                 <div className="p-5 relative rounded-md shadow-lg bg-secondary flex justify-center items-center flex-col gap-2">
                   <div onClick={() => setSelectedImage(value.image)} className="absolute top-[10px] border border-slate-800 cursor-pointer p-1 dark:bg-[#0F172A]  hover:bg-slate-300 duration-200 opacity-50 hover:opacity-100 bg-slate-200 rounded-md right-[10px] ">
                     <Expand />
@@ -133,7 +151,7 @@ export default function Certifications() {
                   </div>
                   <Link className=" hover:underline hover:text-slate-500 duration-200  " target="_blank" to={value.link} >{value.title}</Link>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -143,7 +161,10 @@ export default function Certifications() {
           </h4>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {otherCerts.map((value, index) => (
-              <div key={index} >
+              <motion.div
+                key={index}
+                variants={cardVariants}
+              >
                 <div className="p-5 relative rounded-md shadow-lg bg-secondary flex justify-center items-center flex-col gap-2">
                   <div onClick={() => setSelectedImage(value.image)} className="absolute top-[10px] border border-slate-800 dark:bg-[#0F172A]  cursor-pointer p-1 hover:bg-slate-300 duration-200 opacity-50 hover:opacity-100 bg-slate-200 rounded-md right-[10px] ">
                     <Expand />
@@ -153,7 +174,7 @@ export default function Certifications() {
                   </div>
                   <Link className=" hover:underline hover:text-slate-500 duration-200 " target="_blank" to={value.link} >{value.title}</Link>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
