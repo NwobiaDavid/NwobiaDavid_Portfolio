@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import React, { useEffect, useState } from "react";
+import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import MainLayout from "./hooks/layouts/main-layout.tsx";
@@ -14,7 +14,7 @@ import Login from "./pages/login.tsx";
 import Certifications from "./pages/certifications.tsx";
 import Experiences from "./pages/experiences.tsx";
 import ProjectDetail from "./pages/project-detail.tsx";
-import Splash from "./pages/splash.tsx";
+// import Splash from "./pages/splash.tsx";
 
 const router = createBrowserRouter([
   {
@@ -59,19 +59,19 @@ const router = createBrowserRouter([
 ]);
 
 const App = () => {
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 8000); 
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     setLoading(false);
+  //   }, 8000); 
 
-    return () => clearTimeout(timer);
-  }, []);
+  //   return () => clearTimeout(timer);
+  // }, []);
 
-  if (loading) {
-    return <Splash />; 
-  }
+  // if (loading) {
+  //   return <Splash />; 
+  // }
 
   return <RouterProvider router={router} />; 
 
