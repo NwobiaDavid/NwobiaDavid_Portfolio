@@ -1,5 +1,5 @@
 // import { Button } from "@/components/ui/button";
-import { Gamepad, GraduationCap, LayoutTemplate, PackageOpen, Wrench } from "lucide-react";
+import { GraduationCap, LayoutTemplate, PackageOpen } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useDocumentTitle } from "usehooks-ts";
 import { Separator } from "@/components/ui/separator";

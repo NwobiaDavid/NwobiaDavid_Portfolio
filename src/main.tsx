@@ -1,6 +1,6 @@
 // main.tsx
 /* eslint-disable react-refresh/only-export-components */
-import React, { useEffect } from "react";
+import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import MainLayout from "./hooks/layouts/main-layout.tsx";

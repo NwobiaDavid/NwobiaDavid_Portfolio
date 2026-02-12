@@ -2,7 +2,7 @@
 import { useDocumentTitle } from "usehooks-ts";
 import { motion } from "framer-motion";
 import { FlowAppButton } from "@/components/content/flow-app-button";
-import { Contact, Folder, Expand, GraduationCap } from "lucide-react";
+import { Contact, Expand, GraduationCap } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 

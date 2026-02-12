@@ -17,6 +17,7 @@ import { useTheme } from "@/components/theme-provider";
 // import { cn } from "@/lib/utils";
 // import { VerifiedAvatar } from "@/components/content/verified-avatar";
 import { isDarkSystem } from "@/lib/theme";
+import { ResumeViewer } from "@/components/resume-viewer";
 
 export default function Home() {
   useDocumentTitle("David Nwobia | Home");
@@ -104,21 +105,26 @@ export default function Home() {
             </Button>
           </Link>
 
-          <a target="_blank" href={"/files/my-resume-2025.pdf"}>
+          {/* <a target="_blank" href={"/files/my-resume-2025.pdf"}>
             <Button className="p_style font-semibold" >
               My Resume
             </Button>
-          </a>
+          </a> */}
+          <ResumeViewer
+            buttonVariant="default"
+            buttonClassName="p_style font-semibold"
+            showIcon={false}
+          />
 
           {/* <VerifiedAvatar /> */}
         </div>
 
         <div className="w-fit  mb-[10%]">
           <Avatar className="w-56 rounded-xl border-gray-300 border-[3px] duration-500 h-56" data-blobity-tooltip="Always Active!"
-              data-blobity-invert="false">
+            data-blobity-invert="false">
             <AvatarImage
               className=" "
-              
+
               src="/images/profile.png" />
             <AvatarFallback>David Nwobia</AvatarFallback>
           </Avatar>

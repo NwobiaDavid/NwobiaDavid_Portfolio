@@ -1,7 +1,7 @@
 import { FlowAppButton } from "@/components/content/flow-app-button";
 import { Timeline } from "@/components/timeline/timeline";
 import { TimelineItemProps } from "@/components/timeline/timeline-item";
-import { Folder, GraduationCap, Home, PackageOpen } from "lucide-react";
+import { Folder, Home, PackageOpen } from "lucide-react";
 import { useDocumentTitle } from "usehooks-ts";
 
 

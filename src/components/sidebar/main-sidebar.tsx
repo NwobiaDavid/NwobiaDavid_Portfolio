@@ -25,7 +25,8 @@ import {
   Contact,
   // Laugh,
   PackageOpen,
-  Grip,
+  // Grip,
+  FileText,
 } from "lucide-react";
 import { ModeToggle } from "../mode-toggle";
 import { Button } from "../ui/button";
@@ -38,6 +39,7 @@ import IconGithub from "../svg/github-svg";
 import IconLinkedin from "../svg/linkedin-svg";
 import IconGmail from "../svg/gmail-svg";
 import { useDrawer } from "@/hooks/use-drawer";
+import { ResumeViewer } from "../resume-viewer";
 
 interface MainSidebarProps {
   isMobile?: boolean;
@@ -104,7 +106,7 @@ export const MainSidebar = ({ isMobile = false }: MainSidebarProps) => {
             </Dialog>
 
             <Separator />
-            
+
             <Link to="/">
               <Button
                 className={cn(
@@ -147,7 +149,7 @@ export const MainSidebar = ({ isMobile = false }: MainSidebarProps) => {
               </Button>
             </Link>
 
-           
+
             <Separator />
             <Link to="/education">
               <Button
@@ -158,7 +160,7 @@ export const MainSidebar = ({ isMobile = false }: MainSidebarProps) => {
                 variant="ghost"
                 onClick={close}
               >
-                
+
                 <GraduationCap />
                 Education
               </Button>
@@ -191,7 +193,7 @@ export const MainSidebar = ({ isMobile = false }: MainSidebarProps) => {
                 Certifications
               </Button>
             </Link>
-            
+
 
             {/* <Link to="/hobby">
               <Button
@@ -263,19 +265,22 @@ export const MainSidebar = ({ isMobile = false }: MainSidebarProps) => {
               </DrawerContent>
             </Drawer>
 
-            <a target="_blank" href={"/files/my-resume-2025.pdf"} >
+            {/* <a target="_blank" href={"/files/my-resume-2025.pdf"} >
               <Button
-                className={cn(
-                  isCertificationsRoute && "bg-muted",
-                  "w-full flex gap-4 justify-start pl-2"
-                )}
+                className={"w-full flex gap-4 justify-start pl-2"}
                 variant="ghost"
                 onClick={close}
               >
-                <Grip />
+                <FileText />
                 Resume
               </Button>
-            </a>
+            </a> */}
+            <ResumeViewer
+              onClose={close}
+              buttonVariant="ghost"
+              buttonClassName="w-full flex gap-4 justify-start pl-2"
+              showIcon={true}
+            />
 
             <Separator />
           </div>
