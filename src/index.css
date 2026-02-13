@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400..800&display=swap');
-/* @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap'); */
 
 @tailwind base;
 @tailwind components;
@@ -7,114 +6,98 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Light theme - Sophisticated navy and warm neutrals */
+    --background: 60 41% 90%; /* Cream #F0F0DB */
+    --foreground: 228 24% 25%; /* Dark Navy #30364F */
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 60 41% 90%; /* Cream */
+    --card-foreground: 228 24% 25%; /* Dark Navy */
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 60 41% 90%; /* Cream */
+    --popover-foreground: 228 24% 25%; /* Dark Navy */
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 228 24% 25%; /* Dark Navy - strong contrast */
+    --primary-foreground: 60 41% 90%; /* Cream text on navy */
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 47 38% 81%; /* Warm Beige #E1D9BC */
+    --secondary-foreground: 228 24% 25%; /* Dark Navy */
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 47 38% 81%; /* Warm Beige */
+    --muted-foreground: 228 24% 35%; /* Slightly lighter navy */
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 205 17% 72%; /* Dusty Blue #ACBAC4 */
+    --accent-foreground: 228 24% 25%; /* Dark Navy */
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 70% 55%;
+    --destructive-foreground: 60 41% 90%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 47 38% 75%; /* Slightly darker beige */
+    --input: 47 38% 85%; /* Light beige */
+    --ring: 228 24% 25%; /* Dark Navy */
 
     --radius: 0.5rem;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    /* Dark theme - Deep slate with warm amber accents */
+    --background: 215 28% 12%;
+    --foreground: 30 25% 92%;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 215 25% 16%;
+    --card-foreground: 30 25% 92%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 215 25% 16%;
+    --popover-foreground: 30 25% 92%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 35 90% 65%; /* Warm amber gold */
+    --primary-foreground: 215 28% 12%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 215 22% 22%;
+    --secondary-foreground: 30 25% 92%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 215 22% 22%;
+    --muted-foreground: 30 15% 65%;
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 175 35% 55%; /* Muted teal accent for contrast */
+    --accent-foreground: 215 28% 12%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 65% 55%;
+    --destructive-foreground: 30 25% 92%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    --border: 215 20% 24%;
+    --input: 215 20% 20%;
+    --ring: 35 90% 65%;
   }
 
   .fun {
-    --background: 0 0% 0%; /* true black */
-    --foreground: 87, 97%, 53%; /* neon green text */
+    /* Fun theme - Dreamy gradient aesthetic with purples and teals */
+    --background: 260 60% 8%; /* Deep purple-black */
+    --foreground: 180 40% 85%; /* Soft cyan */
 
-    --secondary: 280 100% 70%; /* neon purple */
-    --primary-foreground: 0 0% 0%; /* black text on neon */
+    --card: 265 50% 14%; /* Rich purple */
+    --card-foreground: 180 40% 85%;
 
-    --primary: 87, 97%, 53%; /* bright green */
-    --secondary-foreground: 0 0% 0%;
+    --popover: 265 50% 14%;
+    --popover-foreground: 180 40% 85%;
 
-    --accent: 280 100% 70%;  /* magenta neon */
-    --accent-foreground: 0 0% 0%;
+    --primary: 180 60% 55%; /* Vibrant cyan-teal */
+    --primary-foreground: 260 60% 8%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --secondary: 290 60% 50%; /* Rich magenta */
+    --secondary-foreground: 180 40% 95%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 265 40% 20%;
+    --muted-foreground: 260 20% 70%;
 
-    --card: 280 100% 70%;  /* dark purple background */
-    --card-foreground: 300 100% 85%; /* light neon purple text */
+    --accent: 320 70% 60%; /* Hot pink */
+    --accent-foreground: 260 60% 8%;
 
-    --border: 280 100% 60%; /* neon purple border */
-    --input: 120 100% 65%; /* neon green input */
-    --ring: 300 100% 70%; /* neon pink glow */
-  }
+    --destructive: 0 75% 60%;
+    --destructive-foreground: 260 60% 8%;
 
-  .warm {
-    --background: 34 100% 92%; /* Light orange */
-    --foreground: 24 90% 20%; /* Deep brown */
-    --primary: 24 100% 50%; /* Orange */
-    --secondary: 10 80% 60%; /* Coral */
-    
-    --accent: 45 100% 50%; /* Gold */
-    --card: 34 100% 97%;
-    --border: 24 50% 80%;
-  }
-
-  .earth {
-    --background: 40 20% 90%; /* Sand */
-    --foreground: 120 20% 20%; /* Dark green/brown */
-    --primary: 120 30% 40%; /* Forest green */
-    --secondary: 30 50% 50%; /* Clay orange */
-    --accent: 60 30% 40%; /* Olive */
-    --card: 40 20% 95%;
-    --border: 120 10% 60%;
-    
+    --border: 265 50% 30%; /* Subtle purple glow */
+    --input: 265 45% 18%;
+    --ring: 180 60% 55%;
   }
 }
 
@@ -126,8 +109,6 @@
     @apply bg-background text-foreground;
   }
 }
-
-/* @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap'); */
 
 .h_style {
   font-family: "Syne", sans-serif;
@@ -152,34 +133,6 @@ body {
   font-optical-sizing: auto;
   font-style: normal;
 }
-
-.solarized {
-  --background: 45 60% 90%;
-  --foreground: 200 30% 20%;
-}
-
-/* style the scroll bar */
-
-/* ::-webkit-scrollbar-track {
-  background: #f1f1f1; 
-} */
-
-/* Handle */
-/* ::-webkit-scrollbar-thumb {
-  background: #888; 
-} */
-
-/* Handle on hover */
-/* ::-webkit-scrollbar-thumb:hover {
-  background: #555; 
-} */
-
-/* ::-webkit-scrollbar-button {
-  background: #555; 
-}
-::-webkit-scrollbar {
-  width: 10px;
-} */
 
 .slot-digit {
   background: #000;

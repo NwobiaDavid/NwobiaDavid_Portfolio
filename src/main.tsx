@@ -15,9 +15,7 @@ import Login from "./pages/login.tsx";
 import Certifications from "./pages/certifications.tsx";
 import Experiences from "./pages/experiences.tsx";
 import ProjectDetail from "./pages/project-detail.tsx";
-// import Blobity from "blobity";
 import BlobProviders from "./components/blobity-provider.tsx";
-// import Splash from "./pages/splash.tsx";
 
 const router = createBrowserRouter([
   {
@@ -62,54 +60,6 @@ const router = createBrowserRouter([
 ]);
 
 const App = () => {
-
-  // Initialize Blobity
-  // useEffect(() => {
-  //   // Wait for body to be fully loaded
-  //   const initBlobity = () => {
-  //     new Blobity({
-  //       // License key - use 'opensource' for open source projects
-  //       // or your GitHub username if you're a sponsor
-  //       licenseKey: 'opensource',
-        
-  //       // Cursor appearance
-  //       color: 'rgb(180, 180, 180)',
-  //       dotColor: 'rgb(100, 100, 100)',
-  //       dotSize: 6,
-  //       size: 40,
-        
-  //       // Magnetic effect on buttons/links
-  //       magnetic: true,
-        
-  //       // Smooth animations
-  //       mode: 'normal', // Options: 'normal', 'slow', 'bouncy'
-  //       kineticMorphing: true,
-        
-  //       // Elements that Blobity will interact with
-  //       focusableElements: '[data-blobity], a:not([data-no-blobity]), button:not([data-no-blobity]), [data-blobity-tooltip]',
-        
-  //       // Visual styling
-  //       radius: 8,
-  //       opacity: 0.8,
-        
-  //       // Offset for hover effects
-  //       focusableElementsOffsetX: 0,
-  //       focusableElementsOffsetY: 0,
-        
-  //       // Z-index (set to -1 to keep it behind content)
-  //       zIndex: 9999,
-  //     });
-  //   };
-
-  //   // Initialize after a small delay to ensure DOM is ready
-  //   const timer = setTimeout(initBlobity, 100);
-    
-  //   return () => clearTimeout(timer);
-  // }, []);
-
-  // if (loading) {
-  //   return <Splash />; 
-  // }
 
   return <RouterProvider router={router} />; 
 };

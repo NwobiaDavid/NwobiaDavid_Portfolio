@@ -1,4 +1,4 @@
-import { Moon, Sun, PartyPopper, EarthIcon, Heater } from "lucide-react"
+import { Moon, Sun, PartyPopper } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -40,22 +40,6 @@ export function ModeToggle() {
                 : "rotate-90 scale-0"
             }`}
           />
-           {/* Show PartyPopper when theme is fun */}
-           <Heater
-            className={`absolute h-[1.2rem] w-[1.2rem] transition-all ${
-              theme === "warm"
-                ? "rotate-0 scale-100"
-                : "rotate-90 scale-0"
-            }`}
-          />
-           {/* Show PartyPopper when theme is earth */}
-           <EarthIcon
-            className={`absolute h-[1.2rem] w-[1.2rem] transition-all ${
-              theme === "earth"
-                ? "rotate-0 scale-100"
-                : "rotate-90 scale-0"
-            }`}
-          />
           <span className="sr-only">Toggle theme</span>
         </Button>
       </DropdownMenuTrigger>
@@ -65,12 +49,6 @@ export function ModeToggle() {
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme("dark")}>
           Dark
-        </DropdownMenuItem>
-         <DropdownMenuItem onClick={() => setTheme("warm")}>
-          Warm
-        </DropdownMenuItem>
-         <DropdownMenuItem onClick={() => setTheme("earth")}>
-          Earth
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme("fun")}>
           Fun
