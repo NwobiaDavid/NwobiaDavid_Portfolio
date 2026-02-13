@@ -241,7 +241,7 @@ export const MainSidebar = ({ isMobile = false }: MainSidebarProps) => {
                     </Button>
                   </Link>
                   <Link
-                    to="https://www.linkedin.com/in/nwobia-david-a17693237/"
+                    to="https://www.linkedin.com/in/david-nwobia/"
                     replace
                     target="_blank"
                   >
