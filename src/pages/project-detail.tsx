@@ -4,7 +4,7 @@ import { MainProjects } from "@/constants/data/projects";
 import { Button } from "@/components/ui/button";
 import { Github, LayoutTemplate } from "lucide-react";
 import { useDocumentTitle } from "usehooks-ts";
-import { Dot } from 'lucide-react';
+// import { Dot } from 'lucide-react';
 import { FlowAppButton } from "@/components/content/flow-app-button";
 import { motion } from "framer-motion";
 
@@ -158,16 +158,16 @@ const ProjectDetail: React.FC = () => {
       </motion.div>
 
       {/* Content grid */}
-      <motion.div
+      {/* <motion.div
         variants={sectionVariants}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: false, amount: 0.25 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
         className="grid gap-6 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1.6fr)] pb-16"
-      >
+      > */}
         {/* Key features */}
-        <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-[#F8FAFC] dark:bg-[#0F172A] p-5 md:p-6 shadow-sm">
+        {/* <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-[#F8FAFC] dark:bg-[#0F172A] p-5 md:p-6 shadow-sm">
           <h2 className="text-sm font-semibold uppercase tracking-[0.25em] text-muted-foreground mb-4 p_style">
             Key features
           </h2>
@@ -181,10 +181,10 @@ const ProjectDetail: React.FC = () => {
               </div>
             ))}
           </div>
-        </div>
+        </div> */}
 
         {/* Challenges, solutions, thought process */}
-        <div className="space-y-5">
+        {/* <div className="space-y-5">
           <div className="w-full grid gap-4 md:grid-cols-2 overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800 bg-[#F8FAFC] dark:bg-[#0F172A] shadow-sm">
             <div className="bg-black dark:bg-gray-100 dark:text-slate-900 text-white p-4 md:p-5">
               <h3 className="text-xs font-semibold uppercase tracking-[0.25em] mb-3">
@@ -214,7 +214,7 @@ const ProjectDetail: React.FC = () => {
             </p>
           </div>
         </div>
-      </motion.div>
+      </motion.div> */}
 
       <FlowAppButton
         containerClassName="pt-3"
