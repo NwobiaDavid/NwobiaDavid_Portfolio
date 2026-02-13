@@ -98,8 +98,9 @@ export default function Home() {
           <blockquote className="mb-4 mt-2 text-lg md:text-base p_style border-l-2 pl-6 italic">
             I build things that work. Then I make them fast.
           </blockquote>
+          <div className="flex flex-col lg:flex-row gap-3 lg:gap-5 ">
           <Link to="/experiences">
-            <Button className="w-fit group font-semibold p_style " variant="outline">
+            <Button className="w-fit group font-semibold border-2 p_style " variant="outline">
               Experience{" "}
               <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-all duration-300" />
             </Button>
@@ -115,6 +116,8 @@ export default function Home() {
             buttonClassName="p_style font-semibold"
             showIcon={false}
           />
+
+          </div>
 
           {/* <VerifiedAvatar /> */}
         </div>
