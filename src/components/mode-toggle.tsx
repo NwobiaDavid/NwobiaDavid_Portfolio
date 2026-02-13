@@ -12,22 +12,32 @@ import { useTheme } from "@/components/theme-provider"
 export function ModeToggle() {
   const { theme, setTheme } = useTheme()
 
+  // Determine the resolved theme (what's actually displayed)
+  const getResolvedTheme = () => {
+    if (theme === "system") {
+      return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"
+    }
+    return theme
+  }
+
+  const resolvedTheme = getResolvedTheme()
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="icon">
-          {/* Show Sun when theme is light */}
+          {/* Show Sun when resolved theme is light */}
           <Sun
             className={`h-[1.2rem] w-[1.2rem] transition-all ${
-              theme === "light"
+              resolvedTheme === "light"
                 ? "rotate-0 scale-100"
                 : "rotate-90 scale-0"
             }`}
           />
-          {/* Show Moon when theme is dark */}
+          {/* Show Moon when resolved theme is dark */}
           <Moon
             className={`absolute h-[1.2rem] w-[1.2rem] transition-all ${
-              theme === "dark"
+              resolvedTheme === "dark"
                 ? "rotate-0 scale-100"
                 : "rotate-90 scale-0"
             }`}
@@ -35,7 +45,7 @@ export function ModeToggle() {
           {/* Show PartyPopper when theme is fun */}
           <PartyPopper
             className={`absolute h-[1.2rem] w-[1.2rem] transition-all ${
-              theme === "fun"
+              resolvedTheme === "fun"
                 ? "rotate-0 scale-100"
                 : "rotate-90 scale-0"
             }`}
