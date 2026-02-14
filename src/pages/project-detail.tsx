@@ -110,7 +110,7 @@ const ProjectDetail: React.FC = () => {
 
         <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-[#F8FAFC] dark:bg-[#0F172A] p-4 md:p-5 shadow-sm">
           <h3 className="text-xs font-semibold uppercase tracking-[0.25em] text-muted-foreground mb-3 p_style">
-            Tech stack
+            Technologies
           </h3>
           <div className="flex flex-wrap gap-2">
             {project.stack.map((item, index) => (
@@ -148,7 +148,7 @@ const ProjectDetail: React.FC = () => {
             <img
               src={project.imgUrl}
               alt={project.title}
-              className="w-full h-full object-cover"
+              className=" bg-background w-full h-full object-contain"
             />
           )}
         </div>

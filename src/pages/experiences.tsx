@@ -10,39 +10,33 @@ import { useDocumentTitle } from "usehooks-ts";
 const timelineItems: TimelineItemProps[] = [
     {
         date: "2021 - 2023",
-        title: "Byte&Crunch - Full-stack Developer | Contract",
+        title: "Byte&Crunch — Full-Stack Developer",
         description:
-            "Led the development of Byte&Crunch's e-commerce platform using the MERN stack (MongoDB, Express, React, Node.js). Delivered a high-performing, scalable, and secure online store with an optimized user interface, resulting in improved customer satisfaction and operational efficiency. Integrated payment gateways, implemented user authentication, and enhanced website performance through front-end optimization.",
-    },
-    {
-        date: "2022 - 2024",
-        title: "Freelance Web Developer",
-        description:
-            "Developed custom websites and web applications for a diverse portfolio of clients, including individuals and agencies. Leveraged expertise in full-stack development, responsive design, and content management systems (CMS) to deliver tailored solutions that meet business objectives. Focused on delivering clean code, improved SEO, and cross-browser compatibility. Managed all aspects of project lifecycle from client communication to final deployment.",
+            "Led the end-to-end development of an e-commerce platform using the MERN stack (MongoDB, Express, React, Node.js). Built a scalable and secure system with integrated payments and authentication. Improved performance through front-end optimization and delivered a clean, conversion-focused user experience."
     },
     {
         date: "2023 - 2024",
-        title: "Transcend Agency - Front-end Developer | Contract",
+        title: "Transcend Agency — Frontend Developer | Contract",
         description:
-            "Collaborated with cross-functional teams to build dynamic, user-centric websites for global brands, focusing on UI/UX design improvements and front-end performance optimization. Utilized modern front-end technologies (React, HTML5, CSS3, JavaScript) to enhance user engagement and improve page load speed, contributing to increased site traffic and customer retention.",
+            "Built high-performance, user-centric websites for global brands using React and Next.JS. Worked closely with designers and backend teams to refine UI/UX and improve load speed, contributing to stronger engagement and retention."
     },
     {
         date: "April 2024 - July 2024",
-        title: "Pally - Front-end Developer | Contract",
+        title: "Pally — Full-Stack Developer",
         description:
-            "Designed and developed the front-end of Pally’s web app, from initial wireframes to final deployment. Played a key role in ensuring a seamless and intuitive user experience while aligning with company goals and user requirements. Employed modern JavaScript frameworks (Next JS, Redux, PWA) to optimize performance and scalability.",
+            "Led the development of Pally’s web application from wireframes to production. Built and integrated both frontend and backend systems using Next.js, Node.js and MongoDB, implemented state management and API architecture, and ensured performance, scalability, and seamless user experience across devices."
     },
     {
         date: "March 2024 - Sept 2024",
-        title: "Oceanz Robotics - Robotics engineer | Internship",
+        title: "Oceanz Robotics — Robotics Engineer Intern",
         description:
-            "Developed innovative robotics solutions and designed custom business applications to improve operational efficiency for clients in various industries. Utilized a blend of software development, IoT integration, and robotics engineering to deliver high-impact technological solutions. Focused on automation, prototyping, and optimizing client workflows through agile methodologies.",
+              "Designed and prototyped robotics and IoT-based solutions to improve client operations. Programmed Arduino-based systems using Embedded C++, integrating sensors and actuators for real-world automation tasks. Built supporting software tools and optimized workflows through rapid prototyping and iterative testing."
     },
     {
         date: "Sept 2024 - July 2025",
-        title: "Google Developer Student Club - Covenant University, Nigeria | Co-lead",
+        title: "Google Developer Student Club — Covenant University | Frontend Co-Lead",
         description:
-            "Co-led the Google Developer Student Club Frontend track, organizing workshops, hackathons, and coding bootcamps to promote hands-on learning in software development and cloud computing. Mentored over 100 students in areas such as web development, mobile app creation, and Google Cloud technologies, fostering a collaborative learning environment and enhancing participants' technical skills.",
+            "Co-led the Frontend track, organizing workshops and technical sessions for over 50 students. Mentored students in modern web development and cloud fundamentals, helping build a stronger developer community on campus."
     },
 
 ];

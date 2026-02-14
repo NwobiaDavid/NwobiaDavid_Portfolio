@@ -96,7 +96,8 @@ export default function Home() {
             Software Engineer
           </h1>
           <blockquote className="mb-4 mt-2 text-lg md:text-base p_style border-l-2 pl-6 italic">
-            I build things that work. Then I make them fast.
+            {/* I build things that work. Then I make them fast. */}
+            Building things that work, then making them fast is my philosophy, shaped by four years of coding and a 4.68 GPA Industrial Physics degree from Covenant University.
           </blockquote>
           <div className="flex flex-col lg:flex-row gap-3 lg:gap-5 ">
           <Link to="/experiences">
@@ -122,13 +123,13 @@ export default function Home() {
           {/* <VerifiedAvatar /> */}
         </div>
 
-        <div className="w-fit  mb-[10%]">
-          <Avatar className="w-56 rounded-xl border-gray-300 border-[3px] duration-500 h-56" data-blobity-tooltip="Always Active!"
+        <div className="w-fit  lg:mb-[10%]">
+          <Avatar className="w-64 h-64 rounded-xl border-gray-300 border-[3px] duration-500 " data-blobity-tooltip="Always Active!"
             data-blobity-invert="false">
             <AvatarImage
-              className=" "
+              className="object-cover  "
 
-              src="/images/profile.png" />
+              src="/images/pfpmain-comp.jpg" />
             <AvatarFallback>David Nwobia</AvatarFallback>
           </Avatar>
 
