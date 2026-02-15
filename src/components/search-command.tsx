@@ -204,7 +204,7 @@ export const SearchCommand = ({ setOpen }: SearchCommandProps) => {
                 value="resume"
                 onSelect={() => {
                   setOpen(false);
-                  window.open("/files/my-resume-2025.pdf", "_blank");
+                  window.open("/files/David_Nwobia_Fullstack.pdf", "_blank");
                 }}
                 className="relative group cursor-pointer py-3 px-3 aria-selected:bg-accent"
               >

@@ -27,8 +27,9 @@ export const ResumeViewer = ({
   const handleDownload = () => {
     // Create a temporary link to download the file
     const link = document.createElement("a");
-    link.href = "/files/my-resume-2025.pdf";
-    link.download = "David_Nwobia_Resume_2025.pdf";
+    // link.href = "/files/my-resume-2025.pdf";
+    link.href = "/files/David_Nwobia_Fullstack.pdf";
+    link.download = "David_Nwobia_Fullstack.pdf";
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -71,7 +72,8 @@ export const ResumeViewer = ({
         </DialogHeader>
         <div className="flex-1 overflow-hidden">
           <iframe
-            src="/files/my-resume-2025.pdf"
+            src="/files/David_Nwobia_Fullstack.pdf"
+            // src="/files/my-resume-2025.pdf"
             className="w-full h-full border-0"
             title="Resume PDF Viewer"
           />
