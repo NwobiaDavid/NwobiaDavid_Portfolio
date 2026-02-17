@@ -41,7 +41,7 @@ export const MainProjects: Project[] = [
       'Balancing performance with secure authentication and increasing data load.',
     solutions:
       'Integrated NextAuth for authentication and optimized backend APIs with MongoDB to support growth.',
-    imgUrl: '/images/projects/pally-online.png',
+    imgUrl: '/images/projects/pallly1.png',
     liveDemo: 'https://pallly-online.vercel.app/',
   },
 
@@ -88,7 +88,7 @@ export const MainProjects: Project[] = [
       'Designing a fair feedback loop while preventing spam and low-quality submissions.',
     solutions:
       'Built a structured submission-review flow with Supabase handling authentication and data management.',
-    imgUrl: '/images/projects/thumbble.png',
+    imgUrl: '/images/projects/thumbble1.png',
     liveDemo: 'https://thumbble.vercel.app/',
   },
 
