@@ -52,8 +52,12 @@ export const TimelineItem: React.FC<TimelineItemProps> = ({ date, title, company
       {bullets && bullets.length > 0 ? (
         <ul className="mb-3 mt-2 space-y-1.5">
           {bullets.map((bullet, index) => (
+            // Opted out of the blob cursor: the global config treats every `li` as
+            // focusable, which swallowed each key point in a full-width rectangle.
+            // These are body text, not targets.
             <li
               key={index}
+              data-no-blobity
               className="flex gap-2 text-base body_style font-normal text-gray-500 dark:text-gray-400"
             >
               <span aria-hidden className="mt-[0.6em] h-1 w-1 shrink-0 rounded-full bg-gray-400 dark:bg-gray-600" />
