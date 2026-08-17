@@ -18,7 +18,7 @@ import {
   Folder,
   Home,
   Search,
-  // Wrench,
+  Wrench,
   GraduationCap,
   ShieldCheck,
   X,
@@ -58,7 +58,7 @@ export const MainSidebar = ({ isMobile = false }: MainSidebarProps) => {
   const isProjectsRoute = location.pathname === "/projects";
   const isExperiencesRoute = location.pathname === "/experiences";
   const isCertificationsRoute = location.pathname === "/certifications";
-  // const isSkillsRoute = location.pathname === "/skills";
+  const isSkillsRoute = location.pathname === "/skills";
 
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -166,7 +166,7 @@ export const MainSidebar = ({ isMobile = false }: MainSidebarProps) => {
               </Button>
             </Link>
 
-            {/* <Link to="/skills">
+            <Link to="/skills">
               <Button
                 className={cn(
                   isSkillsRoute && "bg-muted",
@@ -178,7 +178,7 @@ export const MainSidebar = ({ isMobile = false }: MainSidebarProps) => {
                 <Wrench />
                 Skills
               </Button>
-            </Link> */}
+            </Link>
 
             <Link to="/certifications">
               <Button

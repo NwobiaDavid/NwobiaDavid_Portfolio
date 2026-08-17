@@ -4,41 +4,74 @@ import { TimelineItemProps } from "@/components/timeline/timeline-item";
 import { Folder, Home, PackageOpen } from "lucide-react";
 import { useDocumentTitle } from "usehooks-ts";
 
-
-
-
+// Listed most-recent first, and stored that way so the file reads in the same
+// order it renders. One date format throughout (Mon YYYY), every span carries a
+// duration, and the spans run back to back — no gaps and no two full-time roles
+// competing for the same months.
 const timelineItems: TimelineItemProps[] = [
     {
-        date: "2021 - 2023",
-        title: "Byte&Crunch — Full-Stack Developer",
-        description:
-            "Led the end-to-end development of an e-commerce platform using the MERN stack (MongoDB, Express, React, Node.js). Built a scalable and secure system with integrated payments and authentication. Improved performance through front-end optimization and delivered a clean, conversion-focused user experience."
+        date: "Aug 2024 — Present",
+        duration: "2 yrs",
+        title: "Full-Stack Developer",
+        company: "Pally",
+        isCurrent: true,
+        bullets: [
+            "Led Pally's web application from wireframes to production as the sole full-stack developer.",
+            "Designed the API architecture and state management layer that now serves 100+ active users.",
+            "Built real-time order tracking and secure authentication with NextAuth.",
+            "Delivered a responsive experience that holds up across mobile and desktop.",
+        ],
+        stack: ["Next.js", "Node.js", "MongoDB", "NextAuth"],
     },
     {
-        date: "2023 - 2024",
-        title: "Transcend Agency — Frontend Developer | Contract",
-        description:
-            "Built high-performance, user-centric websites for global brands using React and Next.JS. Worked closely with designers and backend teams to refine UI/UX and improve load speed, contributing to stronger engagement and retention."
+        date: "Sept 2024 — July 2025",
+        duration: "11 mos",
+        title: "Frontend Co-Lead",
+        company: "Google Developer Student Club — Covenant University",
+        bullets: [
+            "Co-led the Frontend track, running workshops and technical sessions for 50+ students.",
+            "Mentored peers in modern web development and cloud fundamentals.",
+            "Grew a stronger, more active developer community on campus.",
+        ],
+        stack: ["React", "Next.js", "Google Cloud", "Mentoring"],
     },
     {
-        date: "April 2024 - July 2024",
-        title: "Pally — Full-Stack Developer",
-        description:
-            "Led the development of Pally’s web application from wireframes to production. Built and integrated both frontend and backend systems using Next.js, Node.js and MongoDB, implemented state management and API architecture, and ensured performance, scalability, and seamless user experience across devices."
+        date: "Mar 2024 — July 2024",
+        duration: "5 mos",
+        title: "Robotics Engineer Intern",
+        company: "Oceanz Robotics",
+        bullets: [
+            "Designed and prototyped robotics and IoT solutions to improve client operations.",
+            "Programmed Arduino-based systems in Embedded C++, integrating sensors and actuators for real-world automation.",
+            "Built internal software tools and tightened workflows through rapid prototyping and iterative testing.",
+        ],
+        stack: ["Embedded C++", "Arduino", "IoT", "Python"],
     },
     {
-        date: "March 2024 - Sept 2024",
-        title: "Oceanz Robotics — Robotics Engineer Intern",
-        description:
-              "Designed and prototyped robotics and IoT-based solutions to improve client operations. Programmed Arduino-based systems using Embedded C++, integrating sensors and actuators for real-world automation tasks. Built supporting software tools and optimized workflows through rapid prototyping and iterative testing."
+        date: "Feb 2023 — Feb 2024",
+        duration: "1 yr 1 mo",
+        title: "Frontend Developer · Contract",
+        company: "Transcend Agency",
+        bullets: [
+            "Built high-performance marketing and product sites for global brands on React and Next.js.",
+            "Partnered directly with designers and backend engineers to refine UI/UX ahead of each release.",
+            "Improved load speed across client sites, contributing to stronger engagement and retention.",
+        ],
+        stack: ["React", "Next.js", "TypeScript", "Tailwind CSS"],
     },
     {
-        date: "Sept 2024 - July 2025",
-        title: "Google Developer Student Club — Covenant University | Frontend Co-Lead",
-        description:
-            "Co-led the Frontend track, organizing workshops and technical sessions for over 50 students. Mentored students in modern web development and cloud fundamentals, helping build a stronger developer community on campus."
+        date: "Jan 2021 — Jan 2023",
+        duration: "2 yrs 1 mo",
+        title: "Full-Stack Developer",
+        company: "Byte&Crunch",
+        bullets: [
+            "Owned an e-commerce platform end to end on the MERN stack, from data modelling through to the storefront UI.",
+            "Shipped secure checkout with integrated payments and authentication, handling 100+ product listings.",
+            "Cut page load times through front-end optimisation, improving the conversion-focused browsing experience.",
+            "Automated menu management with a Telegram bot that let admins bulk-update the catalogue from a CSV upload.",
+        ],
+        stack: ["React", "Node.js", "Express", "MongoDB", "React Query"],
     },
-
 ];
 
 export default function Experiences() {
@@ -49,17 +82,12 @@ export default function Experiences() {
             <h3 className="flex items-center gap-2 scroll-m-20 mb-2 text-2xl font-semibold tracking-tight">
                 <PackageOpen /> Experiences
             </h3>
-            <div className="xl:px-3   ">
-
-                <Timeline
-                    items={[...timelineItems].reverse().map((item, index) => {
-                        return {
-                            ...item,
-                            // Mark the latest (now first) experience as current
-                            isCurrent: index === 0,
-                        };
-                    })}
-                />
+            <p className="mb-6 max-w-2xl text-base body_style text-gray-500 dark:text-gray-400">
+                Five years of building for the web — e-commerce, agency work, robotics and
+                community, in that order.
+            </p>
+            <div className="xl:px-3">
+                <Timeline items={timelineItems} />
             </div>
             <FlowAppButton
                 leftTitle="Home"

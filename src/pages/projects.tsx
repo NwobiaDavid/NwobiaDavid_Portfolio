@@ -19,11 +19,6 @@ export default function Projects() {
   // ).slice(0, 4);
 
 
-  function truncateText(text: string, maxLength: number) {
-    if (text.length <= maxLength) return text;
-    return text.slice(0, maxLength) + '...';
-  }
-
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -78,8 +73,13 @@ export default function Projects() {
                 <div className="flex h-[55%] flex-col py-2 px-3 lg:px-0 gap-4">
                   <div className="h-[80%]">
                     <p className="text-lg mb-1 font-semibold p_style ">{value.title}</p>
-                    <p className="text-sm body_style line-clamp-3 lg:line-clamp-4">
-                      {truncateText(value.description, 100)}
+                    {value.impact && (
+                      <p className="mb-1.5 text-xs font-medium p_style text-primary/80">
+                        {value.impact}
+                      </p>
+                    )}
+                    <p className="text-sm body_style text-muted-foreground line-clamp-3">
+                      {value.description}
                     </p>
 
                     <div className="py-2 flex-wrap p_style flex gap-2">

@@ -13,9 +13,11 @@ export const Timeline: React.FC<TimelineProps> = ({ items }) => {
           key={index}
           data-no-blobity
           className=" xl:w-[80%] md:w-[90%] w-full  "
-          initial={{ opacity: 0, translateX: 50 }}
-          animate={{ opacity: 1, translateX: 0 }}
-          transition={{ duration: index !== 0 ? index * 0.4 : 0.3 }}
+          initial={{ opacity: 0, translateY: 12 }}
+          animate={{ opacity: 1, translateY: 0 }}
+          // Uniform duration with a small, capped stagger — a per-index duration
+          // makes lower entries crawl in and the whole column feel unsteady.
+          transition={{ duration: 0.35, delay: Math.min(index * 0.07, 0.35), ease: "easeOut" }}
         >
           <TimelineItem {...item} />
         </motion.li>
