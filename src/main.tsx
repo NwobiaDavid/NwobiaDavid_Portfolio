@@ -4,6 +4,8 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import MainLayout from "./hooks/layouts/main-layout.tsx";
+import "@fontsource-variable/geist";
+import "@fontsource-variable/syne";
 import "./index.css";
 import { ThemeProvider } from "./components/theme-provider.tsx";
 import Home from "./pages/home.tsx";
@@ -16,6 +18,7 @@ import Certifications from "./pages/certifications.tsx";
 import Experiences from "./pages/experiences.tsx";
 import ProjectDetail from "./pages/project-detail.tsx";
 import BlobProviders from "./components/blobity-provider.tsx";
+import { MotionConfig } from "framer-motion";
 
 const router = createBrowserRouter([
   {
@@ -68,7 +71,11 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <BlobProviders>
     <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
-      <App />
+      {/* Framer motion follows the OS reduced-motion setting: movement drops out,
+          opacity changes stay so state changes remain legible. */}
+      <MotionConfig reducedMotion="user">
+        <App />
+      </MotionConfig>
     </ThemeProvider>
     </BlobProviders>
   </React.StrictMode>,
