@@ -10,6 +10,11 @@ export default {
     './src/**/*.{ts,tsx}',
   ],
   prefix: "",
+  // Touch screens fire :hover on tap and leave it stuck. Only apply hover styles
+  // where a real pointer can hover.
+  future: {
+    hoverOnlyWhenSupported: true,
+  },
   theme: {
     container: {
       center: true,
@@ -19,12 +24,17 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        sans: ['"Geist Variable"', "ui-sans-serif", "system-ui", "sans-serif"],
+        display: ['"Syne Variable"', '"Geist Variable"', "ui-sans-serif", "system-ui", "sans-serif"],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        sidebar: "hsl(var(--sidebar))",
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
@@ -58,6 +68,11 @@ export default {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+      },
+      transitionTimingFunction: {
+        out: "var(--ease-out)",
+        "in-out": "var(--ease-in-out)",
+        drawer: "var(--ease-drawer)",
       },
       keyframes: {
         "accordion-down": {
