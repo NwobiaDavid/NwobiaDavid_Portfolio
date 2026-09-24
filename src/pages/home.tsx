@@ -1,30 +1,25 @@
 import { Link } from "react-router-dom";
-// import Typewriter from "typewriter-effect";
-import { motion } from "framer-motion";
+import { useReducedMotion } from "framer-motion";
 import { useDocumentTitle } from "usehooks-ts";
-import { type Container } from "@tsparticles/engine";
 import Particles, { initParticlesEngine } from "@tsparticles/react";
 import { loadSlim } from "@tsparticles/slim";
 
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useEffect, useState } from "react";
-import { particleOptionsDark, particleOptionsLight } from "@/config/particles";
+import { useEffect, useMemo, useState } from "react";
+import { particleOptionsFor } from "@/config/particles";
 import { useTheme } from "@/components/theme-provider";
-// import { supabase } from "@/database/db";
-// import { useSession } from "@/hooks/use-session";
-// import { cn } from "@/lib/utils";
-// import { VerifiedAvatar } from "@/components/content/verified-avatar";
-import { isDarkSystem } from "@/lib/theme";
 import { ResumeViewer } from "@/components/resume-viewer";
+
+// Delay, in ms, for each beat of the hero entrance. The name leads, the two headline
+// lines follow on the same rhythm, then the supporting copy and actions settle in.
+const beat = (ms: number) => ({ "--delay": `${ms}ms` }) as React.CSSProperties;
 
 export default function Home() {
   useDocumentTitle("David Nwobia | Home");
   const [init, setInit] = useState<boolean>(false);
-  // const navigate = useNavigate();
-  // const { session } = useSession();
-  const { theme } = useTheme();
+  const { resolvedTheme } = useTheme();
+  const reduceMotion = useReducedMotion() ?? false;
 
   useEffect(() => {
     initParticlesEngine(async (engine) => {
@@ -34,107 +29,81 @@ export default function Home() {
     });
   }, []);
 
-  const particlesLoaded = async (container?: Container): Promise<void> => {
-    console.log(container);
-  };
-
-  const particleOptions =
-    theme === "dark"
-      ? particleOptionsDark
-      : theme === "light"
-        ? particleOptionsLight
-        : theme === "system" && isDarkSystem
-          ? particleOptionsDark
-          : theme === "system" && !isDarkSystem
-            ? particleOptionsLight
-            : undefined;
-
-
+  const particleOptions = useMemo(
+    () => particleOptionsFor(resolvedTheme, reduceMotion),
+    [resolvedTheme, reduceMotion]
+  );
 
   return (
-    <div className="md:h-full w-screen relative md:w-full flex items-center justify-center h-full">
+    <div className="relative flex flex-1 items-center overflow-hidden">
       {init && (
         <Particles
+          // Remount on theme change so the new colour applies to every square at once.
+          key={`${resolvedTheme}-${reduceMotion}`}
           id="tsparticles"
-          particlesLoaded={particlesLoaded}
           options={particleOptions}
         />
       )}
-      <motion.div
-        initial={{ opacity: 0, translateY: -10 }}
-        animate={{ opacity: 1, translateY: 0 }}
-        transition={{ duration: 0.8 }}
-        className="flex my-20 w-full h-full md:flex-row flex-col-reverse items-center justify-center lg:justify-start gap-4 md:mx-4 md:ml-[20%] md:my-[10%] "
-      >
-        <div className="flex z-10 flex-col h_style mt-10 md:mt-0 mb-[10%] w-[80%] lg:w-[42%] items-start justify-center lg:justify-start gap-2">
-          <h3 className="scroll-m-20 z-10 text-lg lg:text-2xl p_style  font-semibold tracking-tight">
-            {/* console.log("Bringing divs to life since 2022"); */}
-            David Nwobia
-          </h3>
-          {/* <Typewriter
-            options={{
-              cursorClassName: " text-4xl",
-              autoStart: true,
-              wrapperClassName:
-                "scroll-m-20  text-4xl opacity-80 font-extrabold tracking-tight lg:text-5xl",
-              loop: true,
-            }}
-            onInit={(typewriter) => {
-              typewriter
-                .typeString("Googling error messages")
-                .pauseFor(300)
-                .deleteAll()
-                .typeString("StackOverflow copy-paster")
-                .pauseFor(300)
-                .deleteAll()
-                .typeString("Okay fine, 'Software Engineer'")
-                .pauseFor(2000)
-                .start();
-            }}
-          /> */}
-          <h1 className="text-3xl opacity-80 font-bold lg:text-5xl">
-            Software Engineer
+
+      <section className="relative z-10 mx-auto grid w-full max-w-[60rem] items-center gap-8 px-5 pb-16 pt-6 md:grid-cols-[minmax(0,1fr)_auto] md:gap-12 md:px-10 md:py-16 lg:gap-20">
+        <div className="flex flex-col items-start">
+          <h1 className="font-display text-lg font-medium text-muted-foreground lg:text-xl">
+            <span className="hero-line">
+              <span style={beat(0)}>David Nwobia</span>
+            </span>
           </h1>
-          <blockquote className="mb-4 mt-2 text-lg md:text-base p_style border-l-2 pl-6 italic">
-            {/* I build things that work. Then I make them fast. */}
-            Building things that work, then making them fast is my philosophy, shaped by four years of coding and a 4.68 GPA Industrial Physics degree from Covenant University.
-          </blockquote>
-          <div className="flex flex-col lg:flex-row gap-3 lg:gap-5 ">
-          <Link to="/experiences">
-            <Button className="w-fit group font-semibold border-2 p_style " variant="outline">
-              Experience{" "}
-              <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-all duration-300" />
-            </Button>
-          </Link>
+          <p
+            aria-label="Software Engineer"
+            className="mt-2 font-display text-[clamp(2.75rem,7vw,4.75rem)] font-bold leading-[0.95] tracking-[-0.035em]"
+          >
+            <span className="hero-line" aria-hidden>
+              <span style={beat(90)}>Software</span>
+            </span>
+            <span className="hero-line" aria-hidden>
+              <span style={beat(170)}>Engineer</span>
+            </span>
+          </p>
 
-          {/* <a target="_blank" href={"/files/my-resume-2025.pdf"}>
-            <Button className="p_style font-semibold" >
-              My Resume
-            </Button>
-          </a> */}
-          <ResumeViewer
-            buttonVariant="default"
-            buttonClassName="p_style font-semibold"
-            showIcon={false}
-          />
+          <p
+            className="hero-fade mt-6 max-w-[44ch] text-lg leading-relaxed text-muted-foreground"
+            style={beat(380)}
+          >
+            Building things that work, then making them fast is my philosophy, shaped by four
+            years of coding and a 4.68 GPA Industrial Physics degree from Covenant University.
+          </p>
 
+          <div className="hero-fade mt-8 flex flex-wrap gap-3" style={beat(470)}>
+            <Button asChild variant="outline" size="lg" className="group gap-2 px-5 font-display font-semibold">
+              <Link to="/experiences">
+                Experience
+                <ArrowRight className="h-4 w-4 transition-transform duration-200 ease-out group-hover:translate-x-0.5" />
+              </Link>
+            </Button>
+            <ResumeViewer
+              buttonVariant="default"
+              buttonClassName="h-11 px-5 font-display font-semibold"
+              showIcon={false}
+            />
           </div>
-
-          {/* <VerifiedAvatar /> */}
         </div>
 
-        <div className="w-fit  lg:mb-[10%]">
-          <Avatar className="w-64 h-64 rounded-xl border-gray-300 border-[3px] duration-500 " data-blobity-tooltip="Always Active!"
-            data-blobity-invert="false">
-            <AvatarImage
-              className="object-cover  "
-
-              src="/images/pfpmain-comp.jpg" />
-            <AvatarFallback>David Nwobia</AvatarFallback>
-          </Avatar>
-
+        <div className="order-first md:order-none">
+          <div
+            className="hero-portrait w-40 overflow-hidden rounded-2xl bg-muted shadow-[0_24px_48px_-24px_hsl(var(--foreground)/0.45)] ring-1 ring-foreground/10 sm:w-52 md:w-64 lg:w-72"
+            data-blobity-tooltip="Always Active!"
+            data-blobity-invert="false"
+          >
+            <img
+              src="/images/pfpmain-comp.jpg"
+              alt="David Nwobia"
+              width={576}
+              height={576}
+              decoding="async"
+              className="aspect-square h-full w-full object-cover"
+            />
+          </div>
         </div>
-      </motion.div>
+      </section>
     </div>
   );
 }

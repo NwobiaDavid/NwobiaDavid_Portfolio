@@ -29,8 +29,8 @@ export const MainProjects: Project[] = [
     stack: ['Next.js 16', 'React 19', 'Supabase', 'Korapay', 'Tailwind CSS v4'],
     title: 'SendSawa',
     description:
-      'SendSawa turns an Instagram or TikTok account into a real shop. Nigerian sellers get one link — customers browse, pick, and pay on their own, so orders stop living in the DMs.',
-    impact: 'Live product at sendsawa.com — 0% fees on sales',
+      'SendSawa turns an Instagram or TikTok account into a real shop. Nigerian sellers get one link: customers browse, pick, and pay on their own, so orders stop living in the DMs.',
+    impact: 'Live product at sendsawa.com, 0% fees on sales',
     keyFeatures: [
       'One storefront link per seller at sendsawa.com/<store>',
       'Checkout and payouts wired through Korapay',
@@ -40,7 +40,7 @@ export const MainProjects: Project[] = [
       'Seller analytics with Recharts and PostHog tracking',
     ],
     thoughtProcess:
-      'Nigerian sellers were running whole businesses out of Instagram DMs — price lists retyped for every customer, account numbers pasted by hand, orders lost in the scroll. The goal was to collapse all of that into a single link the seller drops in their bio.',
+      'Nigerian sellers were running whole businesses out of Instagram DMs: price lists retyped for every customer, account numbers pasted by hand, orders lost in the scroll. The goal was to collapse all of that into a single link the seller drops in their bio.',
     challenges:
       'Payments were the hard part: the platform had to move from Paystack to Korapay without disturbing live sellers, and reviews had to be trustworthy without forcing customers to create accounts.',
     solutions:
@@ -57,14 +57,14 @@ export const MainProjects: Project[] = [
       'A literature review accelerator for researchers. Point it at any topic and Paper Web pulls real papers from arXiv, then maps the foundational work, the co-authorship links, and how the field\'s priorities shifted over time.',
     impact: 'Maps up to 200 real arXiv papers and 1,400+ links per topic',
     keyFeatures: [
-      'Live arXiv search — up to 200 papers per topic',
+      'Live arXiv search, up to 200 papers per topic',
       'Force-directed citation and co-authorship graph in D3',
-      'Keyword trend analysis across 2012–2025',
+      'Keyword trend analysis across 2012-2025',
       'Top papers ranked by how heavily they are linked',
       'Filters by edge type, publication year, title and author',
     ],
     thoughtProcess:
-      'Starting a literature review means guessing which papers matter. Rendering the field as a network makes the answer visible — the heavily connected nodes are the papers everyone builds on.',
+      'Starting a literature review means guessing which papers matter. Rendering the field as a network makes the answer visible: the heavily connected nodes are the papers everyone builds on.',
     challenges:
       'Laying out a 200-node, 1,400-edge graph in the browser without the frame rate collapsing, and deriving citation structure from arXiv metadata that carries no citation field.',
     solutions:
@@ -104,7 +104,7 @@ export const MainProjects: Project[] = [
     title: 'Kelani.ng - Engineering, Power & Consulting',
     description:
       'A corporate website showcasing engineering and consulting services, built using a reusable modular template system with smooth animations and strong performance.',
-    impact: 'Live client site — one template powers three service divisions',
+    impact: 'Live client site: one template powers three service divisions',
     keyFeatures: [
       'Reusable modular template architecture',
       'Smooth animations powered by GSAP',
@@ -129,7 +129,7 @@ export const MainProjects: Project[] = [
     title: 'Thumbble',
     description:
       'Thumbble is a web platform that allows content creators to upload video ideas, titles, and thumbnails to receive structured peer feedback before publishing.',
-    impact: 'Full product build — auth, database and feedback loop',
+    impact: 'Full product build: auth, database and feedback loop',
     keyFeatures: [
       'Supabase authentication and database',
       'Real-time feedback system',

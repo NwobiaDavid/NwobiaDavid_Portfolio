@@ -1,16 +1,17 @@
 import { FlowAppButton } from "@/components/content/flow-app-button";
 import { Timeline } from "@/components/timeline/timeline";
 import { TimelineItemProps } from "@/components/timeline/timeline-item";
-import { Folder, Home, PackageOpen } from "lucide-react";
+import { Folder, Home } from "lucide-react";
+import { PageHeader, PageShell } from "@/components/page-header";
 import { useDocumentTitle } from "usehooks-ts";
 
 // Listed most-recent first, and stored that way so the file reads in the same
 // order it renders. One date format throughout (Mon YYYY), every span carries a
-// duration, and the spans run back to back — no gaps and no two full-time roles
+// duration, and the spans run back to back: no gaps and no two full-time roles
 // competing for the same months.
 const timelineItems: TimelineItemProps[] = [
     {
-        date: "Aug 2024 — Present",
+        date: "Aug 2024 - Present",
         duration: "2 yrs",
         title: "Full-Stack Developer",
         company: "Pally",
@@ -24,10 +25,10 @@ const timelineItems: TimelineItemProps[] = [
         stack: ["Next.js", "Node.js", "MongoDB", "NextAuth"],
     },
     {
-        date: "Sept 2024 — July 2025",
+        date: "Sept 2024 - July 2025",
         duration: "11 mos",
         title: "Frontend Co-Lead",
-        company: "Google Developer Student Club — Covenant University",
+        company: "Google Developer Student Club, Covenant University",
         bullets: [
             "Co-led the Frontend track, running workshops and technical sessions for 50+ students.",
             "Mentored peers in modern web development and cloud fundamentals.",
@@ -36,7 +37,7 @@ const timelineItems: TimelineItemProps[] = [
         stack: ["React", "Next.js", "Google Cloud", "Mentoring"],
     },
     {
-        date: "Mar 2024 — July 2024",
+        date: "Mar 2024 - July 2024",
         duration: "5 mos",
         title: "Robotics Engineer Intern",
         company: "Oceanz Robotics",
@@ -48,7 +49,7 @@ const timelineItems: TimelineItemProps[] = [
         stack: ["Embedded C++", "Arduino", "IoT", "Python"],
     },
     {
-        date: "Feb 2023 — Feb 2024",
+        date: "Feb 2023 - Feb 2024",
         duration: "1 yr 1 mo",
         title: "Frontend Developer · Contract",
         company: "Transcend Agency",
@@ -60,7 +61,7 @@ const timelineItems: TimelineItemProps[] = [
         stack: ["React", "Next.js", "TypeScript", "Tailwind CSS"],
     },
     {
-        date: "Jan 2021 — Jan 2023",
+        date: "Jan 2021 - Jan 2023",
         duration: "2 yrs 1 mo",
         title: "Full-Stack Developer",
         company: "Byte&Crunch",
@@ -78,17 +79,12 @@ export default function Experiences() {
     useDocumentTitle("David Nwobia | Experiences");
 
     return (
-        <div className="p-5 w-screen md:w-full overflow-y-auto">
-            <h3 className="flex items-center gap-2 scroll-m-20 mb-2 text-2xl font-semibold tracking-tight">
-                <PackageOpen /> Experiences
-            </h3>
-            <p className="mb-6 max-w-2xl text-base body_style text-gray-500 dark:text-gray-400">
-                Five years of building for the web — e-commerce, agency work, robotics and
-                community, in that order.
-            </p>
-            <div className="xl:px-3">
-                <Timeline items={timelineItems} />
-            </div>
+        <PageShell>
+            <PageHeader
+                title="Experiences"
+                description="Five years of building for the web: e-commerce, agency work, robotics and community, in that order."
+            />
+            <Timeline items={timelineItems} />
             <FlowAppButton
                 leftTitle="Home"
                 leftDescription="see the home page"
@@ -99,6 +95,6 @@ export default function Experiences() {
                 rightIcon={<Folder />}
                 rightRoute="/projects"
             />
-        </div>
+        </PageShell>
     );
 }

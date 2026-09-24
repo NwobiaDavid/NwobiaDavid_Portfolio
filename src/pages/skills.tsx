@@ -10,194 +10,94 @@ import IconReact from "@/components/svg/react-svg";
 import IconSupabase from "@/components/svg/supabase-svg";
 import IconTailwind from "@/components/svg/tailwind-svg";
 import IconTypescript from "@/components/svg/typescript-svg";
-import { useDocumentTitle } from "usehooks-ts";
-import { motion } from "framer-motion";
-import { FlowAppButton } from "@/components/content/flow-app-button";
-import { Folder, ShieldCheckIcon } from "lucide-react";
 import IconCplusjs from "@/components/svg/cplusplus-svg";
 import IconNpm from "@/components/svg/npm-svg";
+import { useDocumentTitle } from "usehooks-ts";
+import { FlowAppButton } from "@/components/content/flow-app-button";
+import { Folder, ShieldCheckIcon } from "lucide-react";
+import { PageHeader, PageShell } from "@/components/page-header";
+
+type IconComponent = (props: React.SVGProps<SVGSVGElement>) => JSX.Element;
+
+interface SkillGroup {
+  title: string;
+  skills: { title: string; icon: IconComponent }[];
+}
+
+const skillGroups: SkillGroup[] = [
+  {
+    title: "Languages",
+    skills: [
+      { title: "JavaScript", icon: IconBrandJavascript },
+      { title: "TypeScript", icon: IconTypescript },
+      { title: "C++", icon: IconCplusjs },
+      { title: "Python", icon: IconPython },
+    ],
+  },
+  {
+    title: "Frontend",
+    skills: [
+      { title: "React", icon: IconReact },
+      { title: "Tailwind", icon: IconTailwind },
+    ],
+  },
+  {
+    title: "Backend",
+    skills: [
+      { title: "Express", icon: IconExpress },
+      { title: "MySQL", icon: IconMysql },
+      { title: "MongoDB", icon: IconMongodb },
+      { title: "Firebase", icon: IconFirebase },
+      { title: "Supabase", icon: IconSupabase },
+    ],
+  },
+  {
+    title: "Full stack",
+    skills: [{ title: "Next.js", icon: IconNextjs }],
+  },
+  {
+    title: "Tooling",
+    skills: [
+      { title: "npm", icon: IconNpm },
+      { title: "Git", icon: IconGit },
+    ],
+  },
+];
 
 export default function Skills() {
   useDocumentTitle("David Nwobia | Skills");
 
-  enum Categoty {
-    LANGUAGE,
-    FRONTEND,
-    BACKEND,
-    FULLSTACK,
-    OTHER,
-  }
-
-  interface Skill {
-    title: string;
-    icon: JSX.Element;
-    category: Categoty;
-  }
-
-  const Skills: Skill[] = [
-    {
-      title: "Javascript",
-      icon: <IconBrandJavascript className="h-14 w-14" />,
-      category: Categoty.LANGUAGE,
-    },
-    {
-      title: "Typescript",
-      icon: <IconTypescript className="h-10 w-10" />,
-      category: Categoty.LANGUAGE,
-    }, {
-      title: "C++",
-      icon: <IconCplusjs className="h-10 w-10" />,
-      category: Categoty.LANGUAGE,
-    },
-    {
-      title: "Npm",
-      icon: <IconNpm className="h-10 w-10" />,
-      category: Categoty.OTHER,
-    },
-    {
-      title: "Python",
-      icon: <IconPython className="h-10 w-10" />,
-      category: Categoty.LANGUAGE,
-    },
-    {
-      title: "React",
-      icon: <IconReact className="h-10 w-10" />,
-      category: Categoty.FRONTEND,
-    },
-    {
-      title: "Express",
-      icon: <IconExpress className="h-10 w-10" />,
-      category: Categoty.BACKEND,
-    },
-    {
-      title: "Git",
-      icon: <IconGit className="h-10 w-10" />,
-      category: Categoty.OTHER,
-    },
-    {
-      title: "NextJS",
-      icon: <IconNextjs className="h-10 w-10" />,
-      category: Categoty.FULLSTACK,
-    },
-    {
-      title: "Tailwind",
-      icon: <IconTailwind className="h-10 w-10" />,
-      category: Categoty.FRONTEND,
-    },
-    {
-      title: "MySQL",
-      icon: <IconMysql className="h-10 w-10" />,
-      category: Categoty.BACKEND,
-    },
-    {
-      title: "MongoDB",
-      icon: <IconMongodb className="h-10 w-10" />,
-      category: Categoty.BACKEND,
-    },
-    {
-      title: "Firebase",
-      icon: <IconFirebase className="h-10 w-10" />,
-      category: Categoty.BACKEND,
-    },
-    {
-      title: "Supabase",
-      icon: <IconSupabase className="h-10 w-10" />,
-      category: Categoty.BACKEND,
-    },
-  ];
-
-  const skillsLanguage = Skills.filter(
-    (value) => value.category === Categoty.LANGUAGE
-  );
-  const skillsFrontend = Skills.filter(
-    (value) => value.category === Categoty.FRONTEND
-  );
-  const skillsBackend = Skills.filter(
-    (value) => value.category === Categoty.BACKEND
-  );
-  const skillsFullstack = Skills.filter(
-    (value) => value.category === Categoty.FULLSTACK
-  );
-  const skillsOther = Skills.filter(
-    (value) => value.category === Categoty.OTHER
-  );
-
   return (
-    <div className="p-5 h-screen overflow-auto w-screen md:w-full">
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ type: "spring", duration: 0.8 }}
-        className="flex flex-col gap-6"
-      >
-        <div>
-          <h4 className="scroll-m-20 p_style text-xl font-semibold tracking-tight mb-2">
-            Programming Language
-          </h4>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {skillsLanguage.map((value, index) => (
-              <div key={index} className="p-5 rounded-md shadow-lg bg-secondary flex justify-center items-center flex-col gap-2">
-                {value.icon}
-                <p>{value.title}</p>
-              </div>
-            ))}
+    <PageShell>
+      <PageHeader title="Skills" />
+
+      <dl className="stagger divide-y border-y">
+        {skillGroups.map((group, index) => (
+          <div
+            key={group.title}
+            className="grid gap-3 py-5 md:grid-cols-[10rem_minmax(0,1fr)] md:gap-6"
+            style={{ "--i": index } as React.CSSProperties}
+          >
+            <dt className="pt-2 font-display text-base font-semibold">{group.title}</dt>
+            <dd>
+              <ul className="flex flex-wrap gap-2">
+                {group.skills.map(({ title, icon: Icon }) => (
+                  <li
+                    key={title}
+                    data-no-blobity
+                    className="flex h-10 items-center gap-2.5 rounded-lg border bg-background/40 pl-2.5 pr-3.5 text-[0.95rem]"
+                  >
+                    <Icon className="h-5 w-5 shrink-0" aria-hidden />
+                    {title}
+                  </li>
+                ))}
+              </ul>
+            </dd>
           </div>
-        </div>
-        <div>
-          <h4 className="scroll-m-20 p_style text-xl font-semibold tracking-tight mb-2">
-            Front-End Frameworks
-          </h4>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {skillsFrontend.map((value, index) => (
-              <div key={index} className="p-5 rounded-md shadow-lg bg-secondary flex justify-center items-center flex-col gap-2">
-                {value.icon}
-                <p>{value.title}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-        <div>
-          <h4 className="scroll-m-20 p_style text-xl font-semibold tracking-tight mb-2">
-            Back-End Frameworks
-          </h4>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {skillsBackend.map((value, index) => (
-              <div key={index} className="p-5 rounded-md shadow-lg bg-secondary flex justify-center items-center flex-col gap-2">
-                {value.icon}
-                <p>{value.title}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-        <div>
-          <h4 className="scroll-m-20 p_style text-xl font-semibold tracking-tight mb-2">
-            Full Stack Frameworks
-          </h4>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {skillsFullstack.map((value, index) => (
-              <div key={index} className="p-5 rounded-md shadow-lg bg-secondary flex justify-center items-center flex-col gap-2">
-                {value.icon}
-                <p>{value.title}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-        <div>
-          <h4 className="scroll-m-20 p_style text-xl font-semibold tracking-tight mb-2">
-            Others
-          </h4>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {skillsOther.map((value) => (
-              <div className="p-5 rounded-md shadow-lg bg-secondary flex justify-center items-center flex-col gap-2">
-                {value.icon}
-                <p>{value.title}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </motion.div>
+        ))}
+      </dl>
+
       <FlowAppButton
-        containerClassName="pt-5"
         leftTitle="Projects"
         leftDescription="see what I'm working on"
         leftIcon={<Folder />}
@@ -207,6 +107,6 @@ export default function Skills() {
         rightIcon={<ShieldCheckIcon />}
         rightRoute="/certifications"
       />
-    </div>
+    </PageShell>
   );
 }
