@@ -1,66 +1,107 @@
-import {
-  ArrowLeft,
-  ArrowRight,
-  ArrowUpIcon,
-  // Heart,
-  Menu,
-} from "lucide-react";
+import { useEffect, useRef, useState, type RefObject } from "react";
+import { ArrowLeft, ArrowRight, ArrowUp, Menu } from "lucide-react";
+import { useLocation, useNavigate } from "react-router-dom";
 import Breadcrumbs from "../breadcrumbs";
-import { useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { MainSidebar } from "../sidebar/main-sidebar";
 import { useSheet } from "@/hooks/use-sheet";
-import "./loader.css"
 import GithubLink from "../github-link";
+import { cn } from "@/lib/utils";
 
-export const TopbarContent = () => {
+interface TopbarContentProps {
+  /** The scrolling pane this bar floats over. */
+  scrollRoot: RefObject<HTMLElement>;
+}
+
+const iconButton = "h-9 w-9 text-muted-foreground hover:text-foreground";
+
+export const TopbarContent = ({ scrollRoot }: TopbarContentProps) => {
   const navigate = useNavigate();
-  const { isOpen, open } = useSheet();
+  const { pathname } = useLocation();
+  const { isOpen, setOpen } = useSheet();
+  const sentinelRef = useRef<HTMLDivElement>(null);
+  const [scrolled, setScrolled] = useState(false);
+
+  // The bar only draws an edge once content is actually passing underneath it.
+  useEffect(() => {
+    const sentinel = sentinelRef.current;
+    if (!sentinel) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setScrolled(!entry.isIntersecting),
+      { root: scrollRoot.current, threshold: 0 }
+    );
+    observer.observe(sentinel);
+    return () => observer.disconnect();
+  }, [scrollRoot]);
+
+  // "Up" goes to the parent page, like a file browser: /projects/6 -> /projects -> /.
+  const parent = pathname.replace(/\/[^/]+\/?$/, "") || "/";
+  const atRoot = pathname === "/";
+  // React Router records the position in its own history stack.
+  const canGoBack = ((window.history.state as { idx?: number } | null)?.idx ?? 0) > 0;
 
   return (
-    <div className="w-screen md:w-full flex items-center justify-between">
-      <div className="p-4 flex items-center gap-4 md:gap-8">
-        <div className="flex items-center gap-2 md:gap-4">
-          <Sheet open={isOpen}>
+    <>
+      <div ref={sentinelRef} aria-hidden className="h-px w-full shrink-0" />
+      <header
+        className={cn(
+          "material sticky top-0 z-30 -mt-px flex shrink-0 items-center justify-between gap-3 px-3 py-2.5 md:px-5",
+          "bg-background/75 backdrop-blur-xl backdrop-saturate-150",
+          "border-b transition-[border-color] duration-200",
+          scrolled ? "border-border" : "border-transparent"
+        )}
+      >
+        <nav aria-label="History" className="flex min-w-0 items-center gap-1 md:gap-3">
+          <Sheet open={isOpen} onOpenChange={setOpen}>
             <SheetTrigger asChild>
-              <Button
-                size="icon"
-                className="md:hidden"
-                variant="ghost"
-                onClick={open}
-              >
-                <Menu className="w-6 h-6 md:w-4 md:h-4 " />
+              <Button size="icon" variant="ghost" className={cn(iconButton, "md:hidden")} aria-label="Open menu">
+                <Menu className="h-5 w-5" />
               </Button>
             </SheetTrigger>
-            <SheetContent side="left" className="p-0">
+            <SheetContent side="left" className="w-[18rem] p-0 sm:max-w-[18rem]">
+              <SheetTitle className="sr-only">Navigation</SheetTitle>
               <MainSidebar isMobile />
             </SheetContent>
           </Sheet>
-          <ArrowLeft
-            className="w-6 h-6 md:w-4 md:h-4 cursor-pointer"
-            onClick={() => navigate(-1)}
-          />
-          <ArrowRight
-            className="w-6 h-6 md:w-4 md:h-4 cursor-pointer"
-            onClick={() => navigate(1)}
-          />
-          <ArrowUpIcon
-            className="w-6 h-6 md:w-4 md:h-4 cursor-pointer"
-            onClick={() => navigate("/")}
-          />
-        </div>
-        <Breadcrumbs />
-      </div>
 
-      <div className=" p-0 lg:p-4 text-xs lg:text-base flex lg:flex-row flex-col lg:mr-0 mr-2 justify-center items-center  ">
-        {/* <div className=" dark:text-white lg:mr-5 lg:flex justify-center items-center hidden    "><h2 className=" mr-2 font-bold flex items-center justify-center  " >{likeCount > 0 ? likeCount : ( <span className="loader before:bg-black before:dark:bg-white  "></span> )}</h2> <span className=" whitespace-nowrap capitalize " >people love this website <span className=" text-sm opacity-50 ">be one of them</span> </span></div> */}
+          <div className="flex items-center">
+            <Button
+              size="icon"
+              variant="ghost"
+              className={iconButton}
+              onClick={() => navigate(-1)}
+              disabled={!canGoBack}
+              aria-label="Go back"
+            >
+              <ArrowLeft className="h-[18px] w-[18px]" />
+            </Button>
+            <Button
+              size="icon"
+              variant="ghost"
+              className={iconButton}
+              onClick={() => navigate(1)}
+              aria-label="Go forward"
+            >
+              <ArrowRight className="h-[18px] w-[18px]" />
+            </Button>
+            <Button
+              size="icon"
+              variant="ghost"
+              className={iconButton}
+              onClick={() => navigate(parent)}
+              disabled={atRoot}
+              aria-label="Go up one level"
+            >
+              <ArrowUp className="h-[18px] w-[18px]" />
+            </Button>
+          </div>
 
-        {/* <span className=" bg-slate-900 dark:bg-slate-300 rounded-full py-2 px-3 text-white dark:text-black  "> */}
-          <GithubLink />
-        {/* </span> */}
-      </div>
+          <Breadcrumbs />
+        </nav>
 
-    </div>
+        <GithubLink />
+      </header>
+    </>
   );
 };
