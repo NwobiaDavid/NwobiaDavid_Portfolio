@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
+import { LayoutGroup, motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { useTheme } from "../theme-provider";
 import { useSheet } from "@/hooks/use-sheet";
 
 import {
@@ -14,25 +14,19 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import {
-  ArrowDown,
   Folder,
   Home,
   Search,
   Wrench,
   GraduationCap,
   ShieldCheck,
-  X,
   Contact,
-  // Laugh,
   PackageOpen,
-  // Grip,
-  // FileText,
+  type LucideIcon,
 } from "lucide-react";
 import { ModeToggle } from "../mode-toggle";
 import { Button } from "../ui/button";
-import { CommandShortcut } from "../ui/command";
-import { Separator } from "../ui/separator";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { SearchCommand } from "../search-command";
 import { useEffect, useState } from "react";
 import IconGithub from "../svg/github-svg";
@@ -45,22 +39,44 @@ interface MainSidebarProps {
   isMobile?: boolean;
 }
 
+interface NavEntry {
+  to: string;
+  label: string;
+  icon: LucideIcon;
+}
+
+// Grouped by proximity rather than divider lines: the work first, the record second.
+const navGroups: NavEntry[][] = [
+  [
+    { to: "/", label: "Home", icon: Home },
+    { to: "/experiences", label: "Experiences", icon: PackageOpen },
+    { to: "/projects", label: "Projects", icon: Folder },
+  ],
+  [
+    { to: "/education", label: "Education", icon: GraduationCap },
+    { to: "/skills", label: "Skills", icon: Wrench },
+    { to: "/certifications", label: "Certifications", icon: ShieldCheck },
+  ],
+];
+
+const isMac = typeof navigator !== "undefined" && /Mac|iPhone|iPad/.test(navigator.platform);
+
+// Shared by nav links and the action rows below them so every row lines up.
+const sidebarRow =
+  "relative flex h-9 w-full items-center gap-3 rounded-lg px-2.5 font-display text-[0.9rem] font-medium transition-[color,transform] duration-150 ease-out active:scale-[0.98]";
+
+const isActive = (pathname: string, to: string) =>
+  to === "/" ? pathname === "/" : pathname === to || pathname.startsWith(`${to}/`);
+
 export const MainSidebar = ({ isMobile = false }: MainSidebarProps) => {
-  const location = useLocation();
-  const { theme } = useTheme();
+  const { pathname } = useLocation();
   const { close } = useSheet();
   const drawer = useDrawer();
   const [open, setOpen] = useState(false);
 
-  const isHomeRoute = location.pathname === "/";
-  const isEducationRoute = location.pathname === "/education";
-  // const isHobbyRoute = location.pathname === "/hobby";
-  const isProjectsRoute = location.pathname === "/projects";
-  const isExperiencesRoute = location.pathname === "/experiences";
-  const isCertificationsRoute = location.pathname === "/certifications";
-  const isSkillsRoute = location.pathname === "/skills";
-
   useEffect(() => {
+    // The mobile copy lives inside the sheet; only the desktop copy owns the shortcut.
+    if (isMobile) return;
     const down = (e: KeyboardEvent) => {
       if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
         e.preventDefault();
@@ -70,230 +86,153 @@ export const MainSidebar = ({ isMobile = false }: MainSidebarProps) => {
 
     document.addEventListener("keydown", down);
     return () => document.removeEventListener("keydown", down);
-  }, []);
+  }, [isMobile]);
 
   return (
-    <div
+    <aside
       className={cn(
-        theme === "light" && "border-r-2",
-        !isMobile
-          ? "hidden md:block sm:w-[25%] md:w-[25%] lg:w-[20%]"
-          : "w-full",
-        "p-4 h-full overflow-hidden bg-primary-foreground"
+        !isMobile ? "hidden w-64 shrink-0 border-r md:flex lg:w-72" : "flex w-full",
+        "h-full flex-col overflow-y-auto bg-sidebar px-3 py-4"
       )}
     >
-      <div className="flex flex-col h-full justify-between">
-        <div>
-          <div className="flex items-center gap-1 mb-4">
-            <ModeToggle />
-            <p className="font-semibold h_style lg:text-xl text-lg">David Nwobia</p>
-          </div>
-          <div className="flex flex-col gap-2">
-            <Dialog onOpenChange={setOpen} open={open}>
-              <DialogTrigger asChild>
-                <Button
-                  className="w-full font-semibold flex gap-4 justify-start pl-2"
-                  variant="ghost"
-                >
-                  <Search />
-                  Search
-                  <CommandShortcut>⌘ k</CommandShortcut>
-                </Button>
-              </DialogTrigger>
-              <DialogContent className="p-0 border-none w-[80%] md:w-full">
-                <SearchCommand setOpen={setOpen} />
-              </DialogContent>
-            </Dialog>
-
-            <Separator />
-
-            <Link to="/">
-              <Button
-                className={cn(
-                  isHomeRoute && "bg-muted",
-                  "w-full semibold flex gap-4 justify-start pl-2"
-                )}
-                variant="ghost"
-                onClick={close}
-                type="submit"
-              >
-                <Home />
-                Home
-              </Button>
-            </Link>
-            <Link to="/experiences">
-              <Button
-                className={cn(
-                  isExperiencesRoute && "bg-muted",
-                  "w-full flex gap-4 justify-start pl-2"
-                )}
-                variant="ghost"
-                onClick={close}
-              >
-                <PackageOpen />
-                Experiences
-              </Button>
-            </Link>
-
-            <Link to="/projects">
-              <Button
-                className={cn(
-                  isProjectsRoute && "bg-muted",
-                  "w-full flex gap-4 justify-start pl-2"
-                )}
-                variant="ghost"
-                onClick={close}
-              >
-                <Folder />
-                Projects
-              </Button>
-            </Link>
-
-
-            <Separator />
-            <Link to="/education">
-              <Button
-                className={cn(
-                  isEducationRoute && "bg-muted",
-                  "w-full flex gap-4 justify-start pl-2"
-                )}
-                variant="ghost"
-                onClick={close}
-              >
-
-                <GraduationCap />
-                Education
-              </Button>
-            </Link>
-
-            <Link to="/skills">
-              <Button
-                className={cn(
-                  isSkillsRoute && "bg-muted",
-                  "w-full flex gap-4 justify-start pl-2"
-                )}
-                variant="ghost"
-                onClick={close}
-              >
-                <Wrench />
-                Skills
-              </Button>
-            </Link>
-
-            <Link to="/certifications">
-              <Button
-                className={cn(
-                  isCertificationsRoute && "bg-muted",
-                  "w-full flex gap-4 justify-start pl-2"
-                )}
-                variant="ghost"
-                onClick={close}
-              >
-                <ShieldCheck />
-                Certifications
-              </Button>
-            </Link>
-
-
-            {/* <Link to="/hobby">
-              <Button
-                className={cn(
-                  isHobbyRoute && "bg-muted",
-                  "w-full flex gap-4 justify-start pl-2"
-                )}
-                variant="ghost"
-                onClick={close}
-              >
-                <Laugh />
-                Hobby
-              </Button>
-            </Link> */}
-            <Separator />
-            <Drawer open={drawer.isOpen} onRelease={drawer.close}>
-              <DrawerTrigger onClick={drawer.open}>
-                <Button
-                  className="w-full flex gap-4 justify-start pl-2"
-                  variant="ghost"
-                >
-                  <Contact />
-                  Contacts
-                </Button>
-              </DrawerTrigger>
-              <DrawerContent>
-                <DrawerHeader>
-                  <DrawerTitle className="text-center xl:text-3xl md:text-2xl text-xl  " >Get in Touch</DrawerTitle>
-                  <DrawerDescription className=" xl:px-20 xl:text-lg md:text-base text-center md:px-10 px-0 " >
-                    Feel free to reach out to me for any freelancing request, collaboration, project
-                    inquiries, or just to say hello! I'm always open to new
-                    opportunities and discussions. Use the contact options below
-                    to connect with me directly. I am looking forward to hearing from
-                    you!
-                  </DrawerDescription>
-                </DrawerHeader>
-                <div className="w-full flex flex-wrap justify-center items-center gap-2 py-4">
-                  <Link
-                    to="https://github.com/NwobiaDavid"
-                    replace
-                    target="_blank"
-                  >
-                    <Button variant="outline" size="lg">
-                      <IconGithub className="h-6 w-6 mr-2" /> Github
-                    </Button>
-                  </Link>
-                  <Link
-                    to="https://www.linkedin.com/in/david-nwobia/"
-                    replace
-                    target="_blank"
-                  >
-                    <Button variant="outline" size="lg">
-                      <IconLinkedin className="h-6 w-6 mr-2" /> Linkedin
-                    </Button>
-                  </Link>
-                  <Link to="mailto:dnwobia@gmail.com">
-                    <Button variant="outline" size="lg">
-                      <IconGmail className="h-6 w-6 mr-2" /> Email
-                    </Button>
-                  </Link>
-                </div>
-                <DrawerFooter>
-                  <DrawerClose>
-                    <Button variant="outline" className="w-full" onClick={drawer.close}>
-                      <ArrowDown className="h-4 w-4 mr-2" /> Close
-                    </Button>
-                  </DrawerClose>
-                </DrawerFooter>
-              </DrawerContent>
-            </Drawer>
-
-            {/* <a target="_blank" href={"/files/my-resume-2025.pdf"} >
-              <Button
-                className={"w-full flex gap-4 justify-start pl-2"}
-                variant="ghost"
-                onClick={close}
-              >
-                <FileText />
-                Resume
-              </Button>
-            </a> */}
-            <ResumeViewer
-              onClose={close}
-              buttonVariant="ghost"
-              buttonClassName="w-full flex gap-4 justify-start pl-2"
-              showIcon={true}
-            />
-
-            <Separator />
-          </div>
-        </div>
+      <div className="flex items-center justify-between gap-2 px-2.5 pb-4 pr-1">
+        <Link
+          to="/"
+          onClick={close}
+          className="truncate font-display text-lg font-semibold tracking-[-0.01em] lg:text-xl"
+        >
+          David Nwobia
+        </Link>
+        {/* In the sheet the top-right corner belongs to the sheet's own close button. */}
+        {!isMobile && <ModeToggle />}
       </div>
-      <Button
-        variant="ghost"
-        size="icon"
-        className="absolute md:hidden top-1 right-1 z-50"
-        onClick={close}
-      >
-        <X className="w-4 h-4" />
-      </Button>
-    </div>
+
+      <Dialog onOpenChange={setOpen} open={open}>
+        <DialogTrigger asChild>
+          <button
+            type="button"
+            className="group mb-5 flex h-9 w-full items-center gap-2.5 rounded-lg border bg-background/60 px-2.5 text-sm text-muted-foreground transition-[color,border-color,transform] duration-150 ease-out hover:border-foreground/20 hover:text-foreground active:scale-[0.98]"
+          >
+            <Search className="h-4 w-4" />
+            <span className="flex-1 text-left">Search</span>
+            {!isMobile && (
+              <kbd className="rounded border bg-muted/60 px-1.5 py-0.5 font-sans text-[11px] font-medium leading-none text-muted-foreground">
+                {isMac ? "⌘K" : "Ctrl K"}
+              </kbd>
+            )}
+          </button>
+        </DialogTrigger>
+        <DialogContent instant hideClose className="w-[calc(100%-2rem)] max-w-xl gap-0 overflow-hidden rounded-xl border p-0">
+          <DialogTitle className="sr-only">Search pages</DialogTitle>
+          <SearchCommand setOpen={setOpen} />
+        </DialogContent>
+      </Dialog>
+
+      {/* One shared highlight glides between links. Each copy of the sidebar gets its
+          own group so the desktop and mobile highlights never fly to each other. */}
+      <LayoutGroup id={isMobile ? "sidebar-mobile" : "sidebar-desktop"}>
+        <nav aria-label="Main" className="flex flex-col gap-5">
+          {navGroups.map((group, i) => (
+            <ul key={i} className="flex flex-col gap-0.5">
+              {group.map(({ to, label, icon: Icon }) => {
+                const active = isActive(pathname, to);
+                return (
+                  <li key={to} data-no-blobity>
+                    <Link
+                      to={to}
+                      onClick={close}
+                      aria-current={active ? "page" : undefined}
+                      className={cn(
+                        sidebarRow,
+                        active ? "text-foreground" : "text-muted-foreground hover:text-foreground"
+                      )}
+                    >
+                      {active && (
+                        <motion.span
+                          layoutId="sidebar-active"
+                          aria-hidden
+                          className="absolute inset-0 rounded-lg bg-muted shadow-[inset_0_0_0_1px_hsl(var(--foreground)/0.04)]"
+                          transition={{ type: "spring", bounce: 0, duration: 0.35 }}
+                        />
+                      )}
+                      <Icon className="relative h-[18px] w-[18px]" strokeWidth={1.75} />
+                      <span className="relative">{label}</span>
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          ))}
+
+          <ul className="flex flex-col gap-0.5">
+            <li data-no-blobity>
+              <Drawer open={drawer.isOpen} onOpenChange={drawer.setOpen}>
+                <DrawerTrigger asChild>
+                  <button
+                    type="button"
+                    className={cn(sidebarRow, "text-muted-foreground hover:bg-muted/60 hover:text-foreground")}
+                  >
+                    <Contact className="h-[18px] w-[18px]" strokeWidth={1.75} />
+                    Contacts
+                  </button>
+                </DrawerTrigger>
+                <DrawerContent>
+                  <div className="mx-auto w-full max-w-xl">
+                    <DrawerHeader className="text-center sm:text-center">
+                      <DrawerTitle className="text-2xl md:text-3xl">Get in touch</DrawerTitle>
+                      <DrawerDescription className="mx-auto max-w-[52ch] text-base leading-relaxed">
+                        Feel free to reach out to me for any freelancing request, collaboration, project
+                        inquiries, or just to say hello! I'm always open to new opportunities and
+                        discussions. Use the contact options below to connect with me directly. I am
+                        looking forward to hearing from you!
+                      </DrawerDescription>
+                    </DrawerHeader>
+                    <div className="grid gap-2 px-4 py-2 sm:grid-cols-3">
+                      <Button asChild variant="outline" size="lg" className="gap-2 px-4">
+                        <a href="https://github.com/NwobiaDavid" target="_blank" rel="noopener noreferrer">
+                          <IconGithub className="h-5 w-5" /> GitHub
+                        </a>
+                      </Button>
+                      <Button asChild variant="outline" size="lg" className="gap-2 px-4">
+                        <a href="https://www.linkedin.com/in/david-nwobia/" target="_blank" rel="noopener noreferrer">
+                          <IconLinkedin className="h-5 w-5" /> LinkedIn
+                        </a>
+                      </Button>
+                      <Button asChild variant="outline" size="lg" className="gap-2 px-4">
+                        <a href="mailto:dnwobia@gmail.com">
+                          <IconGmail className="h-5 w-5" /> Email
+                        </a>
+                      </Button>
+                    </div>
+                    <DrawerFooter>
+                      <DrawerClose asChild>
+                        <Button variant="ghost" className="w-full text-muted-foreground">
+                          Close
+                        </Button>
+                      </DrawerClose>
+                    </DrawerFooter>
+                  </div>
+                </DrawerContent>
+              </Drawer>
+            </li>
+            <li data-no-blobity>
+              <ResumeViewer
+                onClose={close}
+                buttonVariant="ghost"
+                buttonClassName={cn(sidebarRow, "justify-start text-muted-foreground hover:bg-muted/60 hover:text-foreground [&_svg]:h-[18px] [&_svg]:w-[18px] [&_svg]:stroke-[1.75]")}
+                showIcon={true}
+              />
+            </li>
+          </ul>
+        </nav>
+      </LayoutGroup>
+
+      {isMobile && (
+        <div className="mt-auto flex items-center justify-between border-t px-2.5 pt-3 text-sm text-muted-foreground">
+          Theme
+          <ModeToggle />
+        </div>
+      )}
+    </aside>
   );
 };
