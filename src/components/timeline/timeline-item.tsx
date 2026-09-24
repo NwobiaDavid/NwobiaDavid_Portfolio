@@ -1,3 +1,4 @@
+import { ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface LinkProps {
@@ -24,33 +25,47 @@ export interface TimelineItemProps {
   link?: LinkProps;
 }
 
+// Rendered inside the Timeline's <li>; this component owns the contents only.
 export const TimelineItem: React.FC<TimelineItemProps> = ({ date, title, company, duration, location, description, bullets, stack, link, isCurrent = false }) => {
   return (
-    <li data-no-blobity className="mb-10 ms-4">
-      <div className={cn(isCurrent ? "bg-primary/80 border-none" : "bg-gray-200 dark:border-gray-900 dark:bg-gray-700", "absolute w-3 h-3  rounded-full mt-1.5 -start-1.5 border border-white ")}></div>
-      <div className={cn(isCurrent ? "bg-primary/80 border-none animate-ping" : "bg-gray-200 dark:border-gray-900 dark:bg-gray-700", "absolute w-3 h-3  rounded-full mt-1.5 -start-1.5 border border-white")}></div>
-      <div className="mb-1 flex flex-wrap items-center gap-x-2 gap-y-1">
-        <time className="text-sm font-normal leading-none text-gray-400 p_style  dark:text-gray-500">{date}</time>
+    <>
+      <span
+        aria-hidden
+        className={cn(
+          "absolute -start-[5px] top-[0.4rem] h-[9px] w-[9px] rounded-full ring-4 ring-background",
+          isCurrent ? "bg-primary" : "bg-muted-foreground/40"
+        )}
+      >
+        {/* A live indicator for the role that is still running. Still under reduced motion. */}
+        {isCurrent && (
+          <span className="absolute inset-0 rounded-full bg-primary/70 motion-safe:animate-ping" />
+        )}
+      </span>
+
+      <div className="mb-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-muted-foreground tabular-nums">
+        <time>{date}</time>
         {duration && (
           <>
-            <span aria-hidden className="leading-none text-gray-300 dark:text-gray-600">·</span>
-            <span className="text-sm font-normal leading-none text-gray-400 p_style dark:text-gray-500">{duration}</span>
+            <span aria-hidden className="text-muted-foreground/50">·</span>
+            <span>{duration}</span>
           </>
         )}
         {isCurrent && (
-          <span className="rounded-full bg-primary/10 px-2 py-0.5 text-[11px] font-medium leading-none text-primary">Current</span>
+          <span className="ms-1 rounded-full bg-primary/10 px-2 py-0.5 text-xs font-medium leading-none text-primary">
+            Current
+          </span>
         )}
       </div>
-      <h3 className="text-lg font-semibold text-gray-900 p_style  dark:text-white">{title}</h3>
+      <h3 className="text-lg font-semibold tracking-[-0.01em] md:text-xl">{title}</h3>
       {company && (
-        <p className="mt-0.5 text-sm font-medium p_style text-gray-600 dark:text-gray-300">
+        <p className="mt-0.5 text-[0.95rem] font-medium text-foreground/80">
           {company}
-          {location && <span className="font-normal text-gray-400 dark:text-gray-500"> · {location}</span>}
+          {location && <span className="font-normal text-muted-foreground"> · {location}</span>}
         </p>
       )}
 
       {bullets && bullets.length > 0 ? (
-        <ul className="mb-3 mt-2 space-y-1.5">
+        <ul className="mt-3 space-y-2">
           {bullets.map((bullet, index) => (
             // Opted out of the blob cursor: the global config treats every `li` as
             // focusable, which swallowed each key point in a full-width rectangle.
@@ -58,46 +73,41 @@ export const TimelineItem: React.FC<TimelineItemProps> = ({ date, title, company
             <li
               key={index}
               data-no-blobity
-              className="flex gap-2 text-base body_style font-normal text-gray-500 dark:text-gray-400"
+              className="flex gap-3 text-[0.95rem] leading-relaxed text-muted-foreground"
             >
-              <span aria-hidden className="mt-[0.6em] h-1 w-1 shrink-0 rounded-full bg-gray-400 dark:bg-gray-600" />
+              <span aria-hidden className="mt-[0.7em] h-1 w-1 shrink-0 rounded-full bg-muted-foreground/50" />
               <span>{bullet}</span>
             </li>
           ))}
         </ul>
       ) : (
-        <p className="mb-4 text-base body_style font-normal text-gray-500  dark:text-gray-400">{description}</p>
+        description && (
+          <p className="mt-3 max-w-[68ch] text-[0.95rem] leading-relaxed text-muted-foreground">{description}</p>
+        )
       )}
 
       {stack && stack.length > 0 && (
-        <div className="mb-4 flex flex-wrap gap-1.5">
-          {stack.map((tech, index) => (
-            <span
-              key={index}
-              className="rounded-full border border-slate-200 bg-slate-50 px-2.5 py-0.5 text-xs p_style text-slate-600 dark:border-slate-700 dark:bg-slate-900/60 dark:text-slate-300"
+        <ul aria-label="Stack" className="mt-4 flex flex-wrap gap-1.5">
+          {stack.map((tech) => (
+            <li
+              key={tech}
+              data-no-blobity
+              className="rounded-md border bg-background/50 px-2 py-0.5 text-xs text-muted-foreground"
             >
               {tech}
-            </span>
+            </li>
           ))}
-        </div>
+        </ul>
       )}
       {link && (
         <a
           href={link.href}
-          className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-gray-200 focus:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700"
+          className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium underline-offset-4 hover:underline"
         >
-          {link.text}{' '}
-          <svg
-            className="w-3 h-3 ms-2 rtl:rotate-180"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 14 10"
-          >
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
-          </svg>
+          {link.text}
+          <ArrowRight className="h-3.5 w-3.5" />
         </a>
       )}
-    </li>
+    </>
   );
 };
