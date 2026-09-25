@@ -26,13 +26,14 @@ export interface Project {
 export const MainProjects: Project[] = [
   {
     id: '6',
-    stack: ['Next.js 16', 'React 19', 'Supabase', 'Korapay', 'Tailwind CSS v4'],
+    stack: ['Next.js 16', 'TypeScript', 'Supabase', 'Korapay', 'Vercel'],
     title: 'SendSawa',
     description:
       'SendSawa turns an Instagram or TikTok account into a real shop. Nigerian sellers get one link: customers browse, pick, and pay on their own, so orders stop living in the DMs.',
-    impact: 'Live product at sendsawa.com, 0% fees on sales',
+    impact: 'Serving 100+ merchants in Nigeria, 0% fees on sales',
     keyFeatures: [
       'One storefront link per seller at sendsawa.com/<store>',
+      'SSR, dynamic sitemaps and subdomain storefronts that rank in Google Search and AI Overviews',
       'Checkout and payouts wired through Korapay',
       'Order, product and customer management dashboard',
       'Verified-purchase reviews tied to the order ID',
@@ -48,112 +49,37 @@ export const MainProjects: Project[] = [
     imgUrl: '/images/projects/sendsawa.png',
     liveDemo: 'https://sendsawa.com',
   },
-
   {
-    id: '7',
-    stack: ['Next.js 16', 'TypeScript', 'D3 v7', 'Chart.js 4', 'Tailwind CSS v4'],
-    title: 'Paper Web',
+    id: '8',
+    stack: ['Next.js 16', 'TypeScript', 'Gemini Live', 'Supabase', 'Tailwind CSS v4'],
+    title: 'Gwahm',
     description:
-      'A literature review accelerator for researchers. Point it at any topic and Paper Web pulls real papers from arXiv, then maps the foundational work, the co-authorship links, and how the field\'s priorities shifted over time.',
-    impact: 'Maps up to 200 real arXiv papers and 1,400+ links per topic',
+      'AI customer interviews that follow The Mom Test. Founders send customers a link, Gwahm runs a live voice interview in the browser, then analyses each call and synthesises what all of them add up to.',
+    impact: 'Live voice interviews with per-call and cross-call insights',
     keyFeatures: [
-      'Live arXiv search, up to 200 papers per topic',
-      'Force-directed citation and co-authorship graph in D3',
-      'Keyword trend analysis across 2012-2025',
-      'Top papers ranked by how heavily they are linked',
-      'Filters by edge type, publication year, title and author',
+      'Real-time voice interviews in the browser over Gemini Live',
+      'Interviewer and analyst prompts built on Mom Test rules',
+      'Recording and transcript saved for every call',
+      'Per-call summaries plus insights synthesised across all calls',
+      'Founder dashboard with a shareable interview link per project',
+      'Demo call to try an interview without signing up',
     ],
     thoughtProcess:
-      'Starting a literature review means guessing which papers matter. Rendering the field as a network makes the answer visible: the heavily connected nodes are the papers everyone builds on.',
+      'Customer interviews are the best way to validate an idea, but founders rarely run enough of them and often ask leading questions. An AI interviewer that follows The Mom Test can run every call the same way and at any hour.',
     challenges:
-      'Laying out a 200-node, 1,400-edge graph in the browser without the frame rate collapsing, and deriving citation structure from arXiv metadata that carries no citation field.',
+      'Keeping a live voice session stable in the browser, and letting customers talk to the interviewer without ever seeing the founder\'s idea or API keys.',
     solutions:
-      'Built the network in a separate pass from rendering, loaded the D3 graph panel client-side only to keep it out of SSR, and inferred links from shared authorship and term overlap between papers.',
-    imgUrl: '/images/projects/paperweb.png',
-    liveDemo: 'https://paperweb-five.vercel.app',
-    githubUrl: 'https://github.com/NwobiaDavid/PaperWeb',
+      'The server mints a short-lived Gemini token with the interview prompt locked in, so the idea never reaches the participant. An audio worklet handles mic capture and recording, the call hook reconnects on drops, and summaries are written in the background after each call is saved.',
+    imgUrl: '/images/projects/gwahm.png',
+    liveDemo: 'https://gwahm.vercel.app',
   },
-
-  {
-    id: '1',
-    stack: ['Next.js', 'UploadThing', 'NextAuth', 'MongoDB'],
-    title: 'Pallly',
-    description:
-      'Pallly is a scalable and secure food delivery platform serving over 100 active users. The platform supports real-time order updates and secure authentication.',
-    impact: 'Serving 100+ active users in production',
-    keyFeatures: [
-      'User authentication with NextAuth',
-      'Responsive UI across devices',
-      'Real-time order tracking',
-      'Secure MongoDB data storage',
-      'Production-ready API architecture',
-    ],
-    thoughtProcess:
-      'I focused on building a scalable system capable of handling real-time interactions while keeping authentication and user data secure.',
-    challenges:
-      'Balancing performance with secure authentication and increasing data load.',
-    solutions:
-      'Integrated NextAuth for authentication and optimized backend APIs with MongoDB to support growth.',
-    imgUrl: '/images/projects/pallly1.png',
-    liveDemo: 'https://pallly-online.vercel.app/',
-  },
-
-  {
-    id: '2',
-    stack: ['React', 'Vite', 'React Router', 'GSAP', 'Zustand'],
-    title: 'Kelani.ng - Engineering, Power & Consulting',
-    description:
-      'A corporate website showcasing engineering and consulting services, built using a reusable modular template system with smooth animations and strong performance.',
-    impact: 'Live client site: one template powers three service divisions',
-    keyFeatures: [
-      'Reusable modular template architecture',
-      'Smooth animations powered by GSAP',
-      'State management with Zustand',
-      'Responsive design',
-      'Optimized performance with Vite',
-    ],
-    thoughtProcess:
-      'The goal was consistency across multiple service pages without duplicating code.',
-    challenges:
-      'Designing a flexible template that adapts to different content structures.',
-    solutions:
-      'Built configurable components with shared state management and parameterized animations.',
-    imgUrl: '/images/projects/img-kelani.PNG',
-    liveDemo: 'https://kelani.ng/engineering',
-    githubUrl: 'https://github.com/NwobiaDavid/Kelani-Engineering',
-  },
-
-  {
-    id: '3',
-    stack: ['Next.js', 'Supabase', 'Shadcn', 'Posthog'],
-    title: 'Thumbble',
-    description:
-      'Thumbble is a web platform that allows content creators to upload video ideas, titles, and thumbnails to receive structured peer feedback before publishing.',
-    impact: 'Full product build: auth, database and feedback loop',
-    keyFeatures: [
-      'Supabase authentication and database',
-      'Real-time feedback system',
-      'User submission and review workflow',
-      'Responsive modern UI',
-      'Secure backend integration',
-    ],
-    thoughtProcess:
-      'I wanted to solve the problem of creators publishing blindly without validation. The system encourages feedback-first publishing.',
-    challenges:
-      'Designing a fair feedback loop while preventing spam and low-quality submissions.',
-    solutions:
-      'Built a structured submission-review flow with Supabase handling authentication and data management.',
-    imgUrl: '/images/projects/thumbble1.png',
-    liveDemo: 'https://thumbble.vercel.app/',
-  },
-
   {
     id: '4',
     stack: ['Python', 'NumPy', 'Numba'],
     title: '2048 AI Algorithm Comparison',
     description:
       'A benchmark-driven comparison of Expectimax, Monte Carlo, and NEAT-inspired approaches to evaluate performance in the stochastic 2048 game environment.',
-    impact: 'Three AI strategies benchmarked, JIT-compiled with Numba',
+    impact: 'Expectimax hit the 2048 tile in 79% of 100 games, 5x the next-best approach',
     keyFeatures: [
       'Implemented multiple AI strategies in Python',
       'Optimized performance with NumPy and Numba',
@@ -171,29 +97,150 @@ export const MainProjects: Project[] = [
     githubUrl: 'https://github.com/NwobiaDavid/2048-Algorithm-Comparison',
   },
   {
-    id: '5',
-    stack: ['React 19', 'Vite', 'Chrome Extension API'],
-    title: 'HeartTap',
+    id: '9',
+    stack: ['Electron', 'React', 'TypeScript', 'Python', 'FastAPI', 'LangChain', 'Groq'],
+    title: 'unlost',
     description:
-      'A Chrome extension that automatically likes YouTube videos and Shorts from selected channels while allowing blacklist control.',
-    impact: 'Published Chrome extension with resilient DOM automation',
+      'A desktop app that finds files by description. Type "that invoice I sent in March" and unlost finds it even when it is called document(3).pdf, because it searches the text inside PDFs, Office files and scanned images, fully on-device.',
+    impact: 'Hybrid on-device search with cited Q&A, covered by 41 automated tests',
     keyFeatures: [
-      'Auto-like functionality for selected channels',
-      'Blacklist control for filtering content',
-      'Lightweight and fast execution',
-      'Background script automation',
-      'User-configurable settings',
+      'Searches text inside PDFs, Word, PowerPoint and Excel files, plus OCR for screenshots and scans',
+      'Hybrid retrieval fusing embeddings, SQLite FTS5 and filename matching via reciprocal rank fusion',
+      'Ask questions across your files and get answers that cite the source file',
+      'Organize view suggests clear names and folders, with full undo',
+      'Private by default: indexing, OCR, embeddings and search all run locally',
     ],
     thoughtProcess:
-      'Designed to automate engagement for creators and viewers who consistently support specific channels.',
+      'People remember what a file was about, not what it was called. Searching the contents, and letting people describe what they want in plain language, closes that gap.',
     challenges:
-      'Ensuring reliable DOM interaction despite YouTube UI changes.',
+      'Getting relevant results from very different signals (meaning, exact keywords and filenames) without sending private files to a server.',
     solutions:
-      'Built resilient selectors and optimized background scripts using the Chrome Extension API.',
-    imgUrl: '/images/projects/hearttap.png',
-    githubUrl: 'https://github.com/NwobiaDavid/HeartTap',
+      'An Electron app drives a local FastAPI sidecar that indexes and embeds files on-device, then fuses semantic, full-text and filename rankings with reciprocal rank fusion. LangChain and Groq handle cited answers, sending only the relevant passages.',
+    imgUrl: '/images/projects/unlost.png',
+    githubUrl: 'https://github.com/NwobiaDavid/Unlost',
   },
-]
+];
+
+// Previously featured, kept for reference.
+// export const ArchivedProjects: Project[] = [
+//   {
+//     id: '7',
+//     stack: ['Next.js 16', 'TypeScript', 'D3 v7', 'Chart.js 4', 'Tailwind CSS v4'],
+//     title: 'Paper Web',
+//     description:
+//       'A literature review accelerator for researchers. Point it at any topic and Paper Web pulls real papers from arXiv, then maps the foundational work, the co-authorship links, and how the field\'s priorities shifted over time.',
+//     impact: 'Maps up to 200 real arXiv papers and 1,400+ links per topic',
+//     keyFeatures: [
+//       'Live arXiv search, up to 200 papers per topic',
+//       'Force-directed citation and co-authorship graph in D3',
+//       'Keyword trend analysis across 2012-2025',
+//       'Top papers ranked by how heavily they are linked',
+//       'Filters by edge type, publication year, title and author',
+//     ],
+//     thoughtProcess:
+//       'Starting a literature review means guessing which papers matter. Rendering the field as a network makes the answer visible: the heavily connected nodes are the papers everyone builds on.',
+//     challenges:
+//       'Laying out a 200-node, 1,400-edge graph in the browser without the frame rate collapsing, and deriving citation structure from arXiv metadata that carries no citation field.',
+//     solutions:
+//       'Built the network in a separate pass from rendering, loaded the D3 graph panel client-side only to keep it out of SSR, and inferred links from shared authorship and term overlap between papers.',
+//     imgUrl: '/images/projects/paperweb.png',
+//     liveDemo: 'https://paperweb-five.vercel.app',
+//     githubUrl: 'https://github.com/NwobiaDavid/PaperWeb',
+//   },
+//   {
+//     id: '1',
+//     stack: ['Next.js', 'UploadThing', 'NextAuth', 'MongoDB'],
+//     title: 'Pallly',
+//     description:
+//       'Pallly is a scalable and secure food delivery platform serving over 100 active users. The platform supports real-time order updates and secure authentication.',
+//     impact: 'Serving 100+ active users in production',
+//     keyFeatures: [
+//       'User authentication with NextAuth',
+//       'Responsive UI across devices',
+//       'Real-time order tracking',
+//       'Secure MongoDB data storage',
+//       'Production-ready API architecture',
+//     ],
+//     thoughtProcess:
+//       'I focused on building a scalable system capable of handling real-time interactions while keeping authentication and user data secure.',
+//     challenges:
+//       'Balancing performance with secure authentication and increasing data load.',
+//     solutions:
+//       'Integrated NextAuth for authentication and optimized backend APIs with MongoDB to support growth.',
+//     imgUrl: '/images/projects/pallly1.png',
+//     liveDemo: 'https://pallly-online.vercel.app/',
+//   },
+//   {
+//     id: '2',
+//     stack: ['React', 'Vite', 'React Router', 'GSAP', 'Zustand'],
+//     title: 'Kelani.ng - Engineering, Power & Consulting',
+//     description:
+//       'A corporate website showcasing engineering and consulting services, built using a reusable modular template system with smooth animations and strong performance.',
+//     impact: 'Live client site: one template powers three service divisions',
+//     keyFeatures: [
+//       'Reusable modular template architecture',
+//       'Smooth animations powered by GSAP',
+//       'State management with Zustand',
+//       'Responsive design',
+//       'Optimized performance with Vite',
+//     ],
+//     thoughtProcess:
+//       'The goal was consistency across multiple service pages without duplicating code.',
+//     challenges:
+//       'Designing a flexible template that adapts to different content structures.',
+//     solutions:
+//       'Built configurable components with shared state management and parameterized animations.',
+//     imgUrl: '/images/projects/img-kelani.PNG',
+//     liveDemo: 'https://kelani.ng/engineering',
+//     githubUrl: 'https://github.com/NwobiaDavid/Kelani-Engineering',
+//   },
+//   {
+//     id: '3',
+//     stack: ['Next.js', 'Supabase', 'Shadcn', 'Posthog'],
+//     title: 'Thumbble',
+//     description:
+//       'Thumbble is a web platform that allows content creators to upload video ideas, titles, and thumbnails to receive structured peer feedback before publishing.',
+//     impact: 'Full product build: auth, database and feedback loop',
+//     keyFeatures: [
+//       'Supabase authentication and database',
+//       'Real-time feedback system',
+//       'User submission and review workflow',
+//       'Responsive modern UI',
+//       'Secure backend integration',
+//     ],
+//     thoughtProcess:
+//       'I wanted to solve the problem of creators publishing blindly without validation. The system encourages feedback-first publishing.',
+//     challenges:
+//       'Designing a fair feedback loop while preventing spam and low-quality submissions.',
+//     solutions:
+//       'Built a structured submission-review flow with Supabase handling authentication and data management.',
+//     imgUrl: '/images/projects/thumbble1.png',
+//     liveDemo: 'https://thumbble.vercel.app/',
+//   },
+//   {
+//     id: '5',
+//     stack: ['React 19', 'Vite', 'Chrome Extension API'],
+//     title: 'HeartTap',
+//     description:
+//       'A Chrome extension that automatically likes YouTube videos and Shorts from selected channels while allowing blacklist control.',
+//     impact: 'Published Chrome extension with resilient DOM automation',
+//     keyFeatures: [
+//       'Auto-like functionality for selected channels',
+//       'Blacklist control for filtering content',
+//       'Lightweight and fast execution',
+//       'Background script automation',
+//       'User-configurable settings',
+//     ],
+//     thoughtProcess:
+//       'Designed to automate engagement for creators and viewers who consistently support specific channels.',
+//     challenges:
+//       'Ensuring reliable DOM interaction despite YouTube UI changes.',
+//     solutions:
+//       'Built resilient selectors and optimized background scripts using the Chrome Extension API.',
+//     imgUrl: '/images/projects/hearttap.png',
+//     githubUrl: 'https://github.com/NwobiaDavid/HeartTap',
+//   },
+// ]
 // export const Projectss: Project[] = [
 //   {
 //     id: '1',
