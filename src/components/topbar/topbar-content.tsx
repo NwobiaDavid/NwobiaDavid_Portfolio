@@ -46,7 +46,7 @@ export const TopbarContent = ({ scrollRoot }: TopbarContentProps) => {
       <div ref={sentinelRef} aria-hidden className="h-px w-full shrink-0" />
       <header
         className={cn(
-          "material sticky top-0 z-30 -mt-px flex shrink-0 items-center justify-between gap-3 px-3 py-2.5 md:px-5",
+          "material liquid-glass sticky top-0 z-30 -mt-px flex shrink-0 items-center justify-between gap-3 px-3 py-2.5 md:px-5",
           "bg-background/75 backdrop-blur-xl backdrop-saturate-150",
           "border-b transition-[border-color] duration-200",
           scrolled ? "border-border" : "border-transparent"

@@ -107,7 +107,7 @@ export const SearchCommand = ({ setOpen }: SearchCommandProps) => {
             value="Resume"
             onSelect={() => {
               setOpen(false);
-              window.open("/files/David_Nwobia_Fullstack.pdf", "_blank");
+              window.open("/files/David_Nwobia_Resume_main.pdf", "_blank");
             }}
             className={itemClass}
           >
