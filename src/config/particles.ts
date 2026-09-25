@@ -82,4 +82,4 @@ const makeParticles = (color: string, reduceMotion: boolean): ISourceOptions => 
 });
 
 export const particleOptionsFor = (theme: "light" | "dark" | "fun", reduceMotion: boolean) =>
-  makeParticles(theme === "light" ? "#9a9577" : theme === "fun" ? "#7fd4d4" : "#e8e2d9", reduceMotion);
+  makeParticles(theme === "light" ? "#9a9577" : theme === "fun" ? "#d1d1d6" : "#e8e2d9", reduceMotion);

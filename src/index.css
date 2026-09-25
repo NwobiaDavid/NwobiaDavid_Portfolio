@@ -78,36 +78,42 @@
   }
 
   .fun {
-    /* Fun theme - Dreamy gradient aesthetic with purples and teals */
-    --background: 260 60% 8%; /* Deep purple-black */
-    --foreground: 180 40% 85%; /* Soft cyan */
+    /* Fun theme - Liquid glass. Neutral system-dark content with floating
+       glass controls (sidebar, toolbar, menus, dialogs) layered above it. */
+    --background: 240 6% 4%;
+    --foreground: 0 0% 98%;
 
-    --card: 265 50% 12%; /* Rich purple */
-    --card-foreground: 180 40% 85%;
+    --card: 240 3% 11%;
+    --card-foreground: 0 0% 98%;
 
-    --popover: 265 50% 14%;
-    --popover-foreground: 180 40% 85%;
+    --popover: 240 3% 14%;
+    --popover-foreground: 0 0% 98%;
 
-    --primary: 180 60% 55%; /* Vibrant cyan-teal */
-    --primary-foreground: 260 60% 8%;
+    --primary: 211 100% 60%; /* System blue */
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 290 60% 50%; /* Rich magenta */
-    --secondary-foreground: 180 40% 95%;
+    --secondary: 240 3% 18%;
+    --secondary-foreground: 0 0% 98%;
 
-    --muted: 265 40% 20%;
-    --muted-foreground: 260 20% 72%;
+    --muted: 240 3% 16%;
+    --muted-foreground: 240 4% 64%;
 
-    --accent: 320 70% 60%; /* Hot pink */
-    --accent-foreground: 260 60% 8%;
+    --accent: 240 3% 22%;
+    --accent-foreground: 0 0% 98%;
 
-    --destructive: 0 75% 60%;
-    --destructive-foreground: 260 60% 8%;
+    --destructive: 3 100% 61%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 265 50% 26%; /* Subtle purple glow */
-    --input: 265 45% 18%;
-    --ring: 180 60% 55%;
+    --border: 240 3% 20%;
+    --input: 240 3% 18%;
+    --ring: 211 100% 60%;
 
-    --sidebar: 262 58% 6%;
+    --sidebar: 240 5% 7%;
+
+    /* How much the glass is tinted and frosted. Overlays that sit on top of
+       text get more of both so what's on them stays legible. */
+    --lg-tint: 0.32;
+    --lg-frost: 2px;
   }
 }
 
@@ -181,6 +187,65 @@
 
   a {
     text-underline-offset: 0.2em;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Liquid glass (fun theme)
+   Only the control layer is glass; content stays solid. The rim is lit from
+   the top-left like a lens catching light. Refraction at the edges comes from
+   an SVG displacement filter (see liquid-glass.tsx) where the browser can
+   render it; everywhere else this frosted layer is the whole material.
+--------------------------------------------------------------------------- */
+
+.fun .liquid-glass {
+  border-color: hsl(0 0% 100% / 0.1);
+  background-color: hsl(240 6% 10% / var(--lg-tint));
+  background-image: linear-gradient(180deg, hsl(0 0% 100% / 0.07), hsl(0 0% 100% / 0.015) 40%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  backdrop-filter: blur(12px) saturate(180%);
+  box-shadow:
+    inset 1px 1px 0 0 hsl(0 0% 100% / 0.3),
+    inset -1px -1px 0 0 hsl(0 0% 100% / 0.1),
+    inset 0 0 16px 0 hsl(0 0% 100% / 0.04),
+    0 10px 30px -10px rgb(0 0 0 / 0.6);
+}
+
+/* Menus, tooltips and dialogs float over text, so they frost more. */
+.fun .liquid-glass:is([role], [data-side], .fixed) {
+  --lg-tint: 0.62;
+  --lg-frost: 7px;
+}
+
+/* A glass surface never sits on another: whatever it contains is clear. */
+.fun .liquid-glass .bg-sidebar,
+.fun .liquid-glass .bg-popover {
+  background-color: transparent;
+}
+
+/* The sidebar and toolbar float inset from the window edges, as rounded
+   panes with content visible around them. */
+.fun .liquid-glass[data-floating] {
+  margin: 10px 0 10px 10px;
+  height: calc(100% - 20px);
+  border-width: 1px;
+  border-radius: 24px;
+}
+
+.fun .material.liquid-glass {
+  top: 10px;
+  margin: 10px 12px 0;
+  border-width: 1px;
+  border-color: hsl(0 0% 100% / 0.1);
+  border-radius: 22px;
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .fun .liquid-glass {
+    background-color: hsl(var(--popover));
+    background-image: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
   }
 }
 
