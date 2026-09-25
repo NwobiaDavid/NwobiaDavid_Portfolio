@@ -8,9 +8,9 @@ import { useDocumentTitle } from "usehooks-ts";
 // Most-recent first, matching the Experiences timeline's date format and order.
 const timelineItems: TimelineItemProps[] = [
   {
-    date: "Sept 2021 - Oct 2025",
-    duration: "4 yrs 2 mos",
-    title: "B.Sc. Industrial Physics, First Class Honours",
+    date: "Sept 2021 - Aug 2025",
+    duration: "4 yrs",
+    title: "B.Sc. Industrial Physics, First Class Honours (CGPA 4.68/5.0)",
     company: "Covenant University",
     description:
       "Active participant in the Hebron Startup Lab, where I spearheaded various tech projects and built innovative solutions, demonstrating leadership and teamwork. Co-lead of the Frontend Track for the Google Developer Student Club (Covenant University), mentoring peers in modern web technologies and fostering community growth. Additionally, served as the Financial Secretary for the National Association of Physics Students (NAPS), managing budgets and financial records with precision and accountability.",

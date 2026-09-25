@@ -68,7 +68,7 @@ export default function Home() {
             className="hero-fade mt-6 max-w-[44ch] text-lg leading-relaxed text-muted-foreground"
             style={beat(380)}
           >
-            Building things that work, then making them fast is my philosophy, shaped by four
+            Building things that work, then making them fast is my philosophy, shaped by five
             years of coding and a 4.68 GPA Industrial Physics degree from Covenant University.
           </p>
 
