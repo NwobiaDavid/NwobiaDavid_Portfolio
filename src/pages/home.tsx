@@ -89,7 +89,7 @@ export default function Home() {
 
         <div className="order-first md:order-none">
           <div
-            className="hero-portrait w-40 overflow-hidden rounded-2xl bg-muted shadow-[0_24px_48px_-24px_hsl(var(--foreground)/0.45)] ring-1 ring-foreground/10 sm:w-52 md:w-64 lg:w-72"
+            className="hero-portrait w-40 overflow-hidden rounded-2xl bg-muted ring-1 ring-foreground/10 sm:w-52 md:w-64 lg:w-72"
             data-blobity-tooltip="Always Active!"
             data-blobity-invert="false"
           >
