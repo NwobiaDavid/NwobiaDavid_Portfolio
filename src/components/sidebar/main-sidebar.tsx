@@ -35,6 +35,7 @@ import IconGmail from "../svg/gmail-svg";
 import { useDrawer } from "@/hooks/use-drawer";
 import { ResumeViewer } from "../resume-viewer";
 import { SidebarPlatformer } from "./sidebar-platformer";
+import { useTheme } from "../theme-provider";
 
 interface MainSidebarProps {
   isMobile?: boolean;
@@ -71,6 +72,8 @@ const isActive = (pathname: string, to: string) =>
 
 export const MainSidebar = ({ isMobile = false }: MainSidebarProps) => {
   const { pathname } = useLocation();
+  const { resolvedTheme } = useTheme();
+  const showGame = !isMobile || resolvedTheme === "fun";
   const { close } = useSheet();
   const drawer = useDrawer();
   const [open, setOpen] = useState(false);
@@ -230,13 +233,20 @@ export const MainSidebar = ({ isMobile = false }: MainSidebarProps) => {
       </LayoutGroup>
 
       {/* On desktop it only shows when the window is tall enough that it never makes the
-          sidebar scroll. In the mobile menu, which already scrolls, it always shows. */}
-      <div className={cn("mt-auto pt-6", !isMobile && "hidden [@media(min-height:760px)]:block")}>
-        <SidebarPlatformer />
-      </div>
+          sidebar scroll. In the mobile menu it's an extra of the fun theme. */}
+      {showGame && (
+        <div className={cn("mt-auto pt-6", !isMobile && "hidden [@media(min-height:760px)]:block")}>
+          <SidebarPlatformer />
+        </div>
+      )}
 
       {isMobile && (
-        <div className="mt-4 flex items-center justify-between border-t px-2.5 pt-3 text-sm text-muted-foreground">
+        <div
+          className={cn(
+            "flex items-center justify-between border-t px-2.5 pt-3 text-sm text-muted-foreground",
+            showGame ? "mt-4" : "mt-auto"
+          )}
+        >
           Theme
           <ModeToggle />
         </div>
