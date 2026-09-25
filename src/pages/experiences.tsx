@@ -6,23 +6,26 @@ import { PageHeader, PageShell } from "@/components/page-header";
 import { useDocumentTitle } from "usehooks-ts";
 
 // Listed most-recent first, and stored that way so the file reads in the same
-// order it renders. One date format throughout (Mon YYYY), every span carries a
-// duration, and the spans run back to back: no gaps and no two full-time roles
-// competing for the same months.
+// order it renders. One date format throughout (Mon YYYY), and every span
+// carries a duration. Mirrors the current CV.
 const timelineItems: TimelineItemProps[] = [
     {
-        date: "Aug 2024 - Present",
-        duration: "2 yrs",
-        title: "Full-Stack Developer",
-        company: "Pally",
+        date: "Apr 2026 - Present",
+        duration: "6 mos",
+        title: "Software Engineer",
+        company: "Serlzo",
+        location: "UK (Remote)",
         isCurrent: true,
         bullets: [
-            "Led Pally's web application from wireframes to production as the sole full-stack developer.",
-            "Designed the API architecture and state management layer that now serves 100+ active users.",
-            "Built real-time order tracking and secure authentication with NextAuth.",
-            "Delivered a responsive experience that holds up across mobile and desktop.",
+            "Engineer on Serlzo v2, an all-in-one SaaS platform for creators, in a 4-person Agile Scrum team; shipped 7 of 8 assigned modules in my first quarter.",
+            "Built the CRM and courses modules across the creator dashboard, admin app and public site.",
+            "Owned the frontend of the workflow automation module, a trigger-and-action builder connecting features across the platform.",
+            "Built the admin dashboard, making routine operations self-serve with no direct database access.",
+            "Building the AI page builder: a visual editor and funnel canvas driven by Sio, Serlzo's AI agent.",
+            "Built the landing page from scratch and led its performance optimisation and technical SEO.",
+            "Took the mobile app to a release-ready Android build; built the community discovery and referral interfaces.",
         ],
-        stack: ["Next.js", "Node.js", "MongoDB", "NextAuth"],
+        stack: ["TypeScript", "React", "Next.js", "React Native", "Node.js"],
     },
     {
         date: "Sept 2024 - July 2025",
@@ -30,48 +33,35 @@ const timelineItems: TimelineItemProps[] = [
         title: "Frontend Co-Lead",
         company: "Google Developer Student Club, Covenant University",
         bullets: [
-            "Co-led the Frontend track, running workshops and technical sessions for 50+ students.",
-            "Mentored peers in modern web development and cloud fundamentals.",
-            "Grew a stronger, more active developer community on campus.",
+            "Led the frontend track for 80+ students.",
+            "Ran 12+ workshops and technical sessions on modern web development.",
+            "Mentored 25+ students.",
         ],
-        stack: ["React", "Next.js", "Google Cloud", "Mentoring"],
+        stack: ["React", "Next.js", "Mentoring"],
     },
     {
-        date: "Mar 2024 - July 2024",
-        duration: "5 mos",
+        date: "Mar 2024 - Sept 2024",
+        duration: "7 mos",
         title: "Robotics Engineer Intern",
         company: "Oceanz Robotics",
         bullets: [
-            "Designed and prototyped robotics and IoT solutions to improve client operations.",
-            "Programmed Arduino-based systems in Embedded C++, integrating sensors and actuators for real-world automation.",
-            "Built internal software tools and tightened workflows through rapid prototyping and iterative testing.",
+            "Designed IoT automation for 5+ client projects in embedded C++ on Arduino, improving operational efficiency by 40%.",
+            "Built React and Node.js dashboards for real-time system monitoring, cutting development cycles by 25%.",
         ],
-        stack: ["Embedded C++", "Arduino", "IoT", "Python"],
+        stack: ["Embedded C++", "Arduino", "IoT", "React", "Node.js"],
     },
     {
-        date: "Feb 2023 - Feb 2024",
-        duration: "1 yr 1 mo",
-        title: "Frontend Developer · Contract",
-        company: "Transcend Agency",
+        date: "2021 - 2024",
+        duration: "3 yrs",
+        title: "Freelance Software Engineer",
+        company: "Self-employed",
         bullets: [
-            "Built high-performance marketing and product sites for global brands on React and Next.js.",
-            "Partnered directly with designers and backend engineers to refine UI/UX ahead of each release.",
-            "Improved load speed across client sites, contributing to stronger engagement and retention.",
+            "Delivered React, Next.js, Node.js and TypeScript apps for startups and 3 global brands, including a MERN e-commerce platform and a people matching app with a 12+ endpoint REST API.",
+            "Built JWT/NextAuth authentication and Flutterwave payments, reaching 92% onboarding completion and a 99.2% payment success rate.",
+            "Set up CI/CD that cut deploy time from 45 to 8 minutes and page load times by 60%.",
+            "Built a Telegram bot that reduced delivery delays by 35%.",
         ],
-        stack: ["React", "Next.js", "TypeScript", "Tailwind CSS"],
-    },
-    {
-        date: "Jan 2021 - Jan 2023",
-        duration: "2 yrs 1 mo",
-        title: "Full-Stack Developer",
-        company: "Byte&Crunch",
-        bullets: [
-            "Owned an e-commerce platform end to end on the MERN stack, from data modelling through to the storefront UI.",
-            "Shipped secure checkout with integrated payments and authentication, handling 100+ product listings.",
-            "Cut page load times through front-end optimisation, improving the conversion-focused browsing experience.",
-            "Automated menu management with a Telegram bot that let admins bulk-update the catalogue from a CSV upload.",
-        ],
-        stack: ["React", "Node.js", "Express", "MongoDB", "React Query"],
+        stack: ["React", "Next.js", "Node.js", "TypeScript", "MongoDB"],
     },
 ];
 
@@ -82,7 +72,7 @@ export default function Experiences() {
         <PageShell>
             <PageHeader
                 title="Experiences"
-                description="Five years of building for the web: e-commerce, agency work, robotics and community, in that order."
+                description="Five years of building for the web, mobile and AI: freelance work, robotics, community and now SaaS at Serlzo."
             />
             <Timeline items={timelineItems} />
             <FlowAppButton
