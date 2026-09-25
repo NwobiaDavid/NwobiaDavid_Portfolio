@@ -34,6 +34,7 @@ import IconLinkedin from "../svg/linkedin-svg";
 import IconGmail from "../svg/gmail-svg";
 import { useDrawer } from "@/hooks/use-drawer";
 import { ResumeViewer } from "../resume-viewer";
+import { SidebarPlatformer } from "./sidebar-platformer";
 
 interface MainSidebarProps {
   isMobile?: boolean;
@@ -90,8 +91,9 @@ export const MainSidebar = ({ isMobile = false }: MainSidebarProps) => {
 
   return (
     <aside
+      data-floating={!isMobile || undefined}
       className={cn(
-        !isMobile ? "hidden w-64 shrink-0 border-r md:flex lg:w-72" : "flex w-full",
+        !isMobile ? "liquid-glass hidden w-64 shrink-0 border-r md:flex lg:w-72" : "flex w-full",
         "h-full flex-col overflow-y-auto bg-sidebar px-3 py-4"
       )}
     >
@@ -227,8 +229,14 @@ export const MainSidebar = ({ isMobile = false }: MainSidebarProps) => {
         </nav>
       </LayoutGroup>
 
+      {/* On desktop it only shows when the window is tall enough that it never makes the
+          sidebar scroll. In the mobile menu, which already scrolls, it always shows. */}
+      <div className={cn("mt-auto pt-6", !isMobile && "hidden [@media(min-height:760px)]:block")}>
+        <SidebarPlatformer />
+      </div>
+
       {isMobile && (
-        <div className="mt-auto flex items-center justify-between border-t px-2.5 pt-3 text-sm text-muted-foreground">
+        <div className="mt-4 flex items-center justify-between border-t px-2.5 pt-3 text-sm text-muted-foreground">
           Theme
           <ModeToggle />
         </div>
