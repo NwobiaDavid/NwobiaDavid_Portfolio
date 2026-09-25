@@ -94,7 +94,7 @@ const ProjectDetail: React.FC = () => {
         </div>
       </header>
 
-      <figure className="mt-10 overflow-hidden rounded-2xl bg-muted shadow-[0_32px_64px_-32px_hsl(var(--foreground)/0.4)] ring-1 ring-foreground/10">
+      <figure className="mt-10 overflow-hidden rounded-2xl bg-muted ring-1 ring-foreground/10">
         {hasVideo ? (
           <div className="aspect-video">
             <iframe
