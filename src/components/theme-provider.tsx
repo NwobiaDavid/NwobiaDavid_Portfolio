@@ -14,7 +14,8 @@ type ThemeProviderState = {
   theme: Theme
   /** What is actually on screen once "system" has been resolved. */
   resolvedTheme: ResolvedTheme
-  setTheme: (theme: Theme) => void
+  /** `origin` is the viewport point the transition spreads from. */
+  setTheme: (theme: Theme, origin?: { x: number; y: number }) => void
 }
 
 const darkQuery = "(prefers-color-scheme: dark)"
@@ -71,7 +72,7 @@ export function ThemeProvider({
   const value = {
     theme,
     resolvedTheme,
-    setTheme: (next: Theme) => {
+    setTheme: (next: Theme, origin?: { x: number; y: number }) => {
       localStorage.setItem(storageKey, next)
 
       const commit = () => {
@@ -79,13 +80,32 @@ export function ThemeProvider({
         applyTheme(resolve(next))
       }
 
-      // Crossfade the whole page between themes instead of an abrupt brightness jump.
       const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
-      if (!reduceMotion && typeof document.startViewTransition === "function") {
-        document.startViewTransition(commit)
-      } else {
+      if (reduceMotion || typeof document.startViewTransition !== "function") {
         commit()
+        return
       }
+
+      // The new theme spreads out as a circle from where it was picked
+      // (the toggle), growing until it covers the farthest corner.
+      const x = origin?.x ?? window.innerWidth / 2
+      const y = origin?.y ?? window.innerHeight / 2
+      const radius = Math.hypot(
+        Math.max(x, window.innerWidth - x),
+        Math.max(y, window.innerHeight - y)
+      )
+
+      const transition = document.startViewTransition(commit)
+      transition.ready.then(() => {
+        document.documentElement.animate(
+          { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${radius}px at ${x}px ${y}px)`] },
+          {
+            duration: 650,
+            easing: "cubic-bezier(0.65, 0, 0.35, 1)",
+            pseudoElement: "::view-transition-new(root)",
+          }
+        )
+      })
     },
   }
 
