@@ -73,7 +73,7 @@ const isActive = (pathname: string, to: string) =>
 export const MainSidebar = ({ isMobile = false }: MainSidebarProps) => {
   const { pathname } = useLocation();
   const { resolvedTheme } = useTheme();
-  const showGame = !isMobile || resolvedTheme === "fun";
+  const showGame = resolvedTheme === "fun";
   const { close } = useSheet();
   const drawer = useDrawer();
   const [open, setOpen] = useState(false);
@@ -233,7 +233,7 @@ export const MainSidebar = ({ isMobile = false }: MainSidebarProps) => {
       </LayoutGroup>
 
       {/* On desktop it only shows when the window is tall enough that it never makes the
-          sidebar scroll. In the mobile menu it's an extra of the fun theme. */}
+          sidebar scroll. It only appears in the fun theme. */}
       {showGame && (
         <div className={cn("mt-auto pt-6", !isMobile && "hidden [@media(min-height:760px)]:block")}>
           <SidebarPlatformer />
