@@ -80,8 +80,12 @@ export function ThemeProvider({
         applyTheme(resolve(next))
       }
 
-      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
-      if (reduceMotion || typeof document.startViewTransition !== "function") {
+      // Phones skip the circular reveal: snapshotting a page full of frosted glass
+      // stalls their GPU for long enough that the switch looks frozen.
+      const skipReveal = window.matchMedia(
+        "(prefers-reduced-motion: reduce), (pointer: coarse)"
+      ).matches
+      if (skipReveal || typeof document.startViewTransition !== "function") {
         commit()
         return
       }
