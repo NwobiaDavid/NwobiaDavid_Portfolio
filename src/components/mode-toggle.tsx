@@ -1,3 +1,4 @@
+import { useRef } from "react"
 import { Check, Moon, Sun, PartyPopper } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -27,11 +28,18 @@ const iconState = (visible: boolean) =>
 
 export function ModeToggle() {
   const { theme, resolvedTheme, setTheme } = useTheme()
+  const triggerRef = useRef<HTMLButtonElement>(null)
+
+  // The new theme spreads out from the toggle itself.
+  const pick = (value: (typeof options)[number]["value"]) => {
+    const rect = triggerRef.current?.getBoundingClientRect()
+    setTheme(value, rect && { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 })
+  }
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon" className="relative h-8 w-8 text-muted-foreground hover:text-foreground">
+        <Button ref={triggerRef} variant="ghost" size="icon" className="relative h-8 w-8 text-muted-foreground hover:text-foreground">
           <Sun className={iconState(resolvedTheme === "light")} />
           <Moon className={iconState(resolvedTheme === "dark")} />
           <PartyPopper className={iconState(resolvedTheme === "fun")} />
@@ -42,7 +50,7 @@ export function ModeToggle() {
         {options.map((option) => (
           <DropdownMenuItem
             key={option.value}
-            onClick={() => setTheme(option.value)}
+            onClick={() => pick(option.value)}
             className="justify-between"
           >
             {option.label}
