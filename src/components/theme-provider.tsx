@@ -85,12 +85,8 @@ export function ThemeProvider({
         applyTheme(resolve(next))
       }
 
-      // Phones skip the circular reveal: snapshotting a page full of frosted glass
-      // stalls their GPU for long enough that the switch looks frozen.
-      const skipReveal = window.matchMedia(
-        "(prefers-reduced-motion: reduce), (pointer: coarse)"
-      ).matches
-      if (skipReveal || typeof document.startViewTransition !== "function") {
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      if (reduceMotion || typeof document.startViewTransition !== "function") {
         commit()
         return
       }
@@ -104,7 +100,21 @@ export function ThemeProvider({
         Math.max(y, window.innerHeight - y)
       )
 
-      const transition = document.startViewTransition(commit)
+      // While the circle grows, the page under it is redrawn every frame, so
+      // `theme-reveal` strips the costly parts (see index.css) until it is done.
+      const root = document.documentElement
+      const transition = document.startViewTransition(() => {
+        root.classList.add("theme-reveal")
+        flushSync(() => {
+          setThemeState(next)
+          setRevealing(true)
+        })
+        applyTheme(resolve(next))
+      })
+      transition.finished.finally(() => {
+        root.classList.remove("theme-reveal")
+        setRevealing(false)
+      })
       transition.ready.then(() => {
         document.documentElement.animate(
           { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${radius}px at ${x}px ${y}px)`] },
