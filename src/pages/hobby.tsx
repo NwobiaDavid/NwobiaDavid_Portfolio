@@ -1,120 +1,84 @@
-// import { GameHobbyContent } from "@/components/content/game-hobby-content";
 import { MusicHobbyContent } from "@/components/content/music-hobby-content";
 import { BookHobbyContent } from "@/components/content/books-hobby-content";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import {
-  Book,
-  Folder,
-  GraduationCap,
-  Headphones,
-  Speaker,
-  Volume2,
-} from "lucide-react";
+import { bookCount } from "@/constants/data/books";
+import { BookOpen, Folder, GraduationCap, Headphones } from "lucide-react";
 import { useDocumentTitle } from "usehooks-ts";
 import { useState } from "react";
+import { motion } from "framer-motion";
 import { FlowAppButton } from "@/components/content/flow-app-button";
+import { PageHeader, PageShell } from "@/components/page-header";
+import { videoUrls } from "@/constants/data/video";
 import { cn } from "@/lib/utils";
-import { TourProvider } from "@reactour/tour";
-import { steps } from "@/constants/steps";
-import { usePlay } from "@/hooks/use-play";
+
+type Tab = "reading" | "listening";
+
+const tabs = [
+  { value: "reading", label: "Reading", icon: BookOpen, count: bookCount },
+  { value: "listening", label: "Listening", icon: Headphones, count: videoUrls.length },
+] as const;
 
 export default function Hobby() {
   useDocumentTitle("David Nwobia | Hobby");
-  const [tabState, setTabState] = useState("books");
-  const play = usePlay();
+  const [tab, setTab] = useState<Tab>("reading");
 
   return (
-    <TourProvider
-      steps={steps}
-      scrollSmooth
-      onClickClose={(e) => {
-        e.setIsOpen(false);
-        play.setTrue();
-      }}
-      onClickMask={(e) => {
-        e.setIsOpen(false);
-        play.setTrue();
-      }}
-      badgeContent={({ totalSteps, currentStep }) =>
-        currentStep + 1 + "/" + totalSteps
-      }
-      styles={{
-        popover: (base) => ({
-          ...base,
-          backgroundColor:
-            document.documentElement.className === "dark" ? "black" : "white",
-        }),
-      }}
-    >
-      <div className="w-screen md:w-full h-full overflow-y-auto">
-        <Tabs value={tabState}>
-          <TabsList className="mx-5">
-            <TabsTrigger
-              value="books"
-              onClick={() => {
-                setTabState("books");
-                play.setFalse();
-              }}
+    <PageShell>
+      <PageHeader
+        title="Hobbies"
+        description="Away from the editor I'm usually halfway through a book or have something on repeat. Here's the shelf and the playlist."
+      />
+
+      <div
+        role="tablist"
+        aria-label="Hobbies"
+        className="mb-10 inline-flex rounded-full bg-muted p-1"
+      >
+        {tabs.map(({ value, label, icon: Icon, count }) => {
+          const active = tab === value;
+          return (
+            <button
+              key={value}
+              type="button"
+              role="tab"
+              id={`tab-${value}`}
+              aria-selected={active}
+              aria-controls={`panel-${value}`}
+              onClick={() => setTab(value)}
+              data-no-blobity
+              className={cn(
+                "relative flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                active ? "text-primary-foreground" : "text-muted-foreground hover:text-foreground"
+              )}
             >
-              <Book className="h-4 w-4 mr-2" /> Books
-            </TabsTrigger>
-            <AlertDialog>
-              <AlertDialogTrigger>
-                <TabsTrigger value="music">
-                  <Headphones className="h-4 w-4 mr-2" /> Musics
-                </TabsTrigger>
-              </AlertDialogTrigger>
-              <AlertDialogContent>
-                <AlertDialogHeader>
-                  <AlertDialogTitle className="flex p_style items-center gap-2">
-                    <Volume2 /> Audio Playback Confirmation
-                  </AlertDialogTitle>
-                  <AlertDialogDescription>
-                    This action will play audio in background, are you sure?
-                  </AlertDialogDescription>
-                </AlertDialogHeader>
-                <AlertDialogFooter>
-                  <AlertDialogCancel>No, Cancel</AlertDialogCancel>
-                  <AlertDialogAction onClick={() => setTabState("music")}>
-                    <Speaker className="w-4 h-4 mr-1  " /> Yes, Play
-                  </AlertDialogAction>
-                </AlertDialogFooter>
-              </AlertDialogContent>
-            </AlertDialog>
-          </TabsList>
-          <TabsContent value="books">
-            <BookHobbyContent />
-          </TabsContent>
-          <TabsContent value="music" className="h-full  bg-blue-600">
-            <MusicHobbyContent />
-          </TabsContent>
-        </Tabs>
-        <FlowAppButton
-          containerClassName={cn(
-            tabState === "music" && "hidden",
-            "p-5 w-full"
-          )}
-          leftTitle="Education"
-          leftDescription="see my education arc"
-          leftIcon={<GraduationCap />}
-          leftRoute="/education"
-          rightTitle="Projects"
-          rightDescription="see what I'm working on"
-          rightIcon={<Folder />}
-          rightRoute="/projects"
-        />
+              {active && (
+                <motion.span
+                  layoutId="hobby-tab"
+                  transition={{ type: "spring", bounce: 0.15, duration: 0.4 }}
+                  className="absolute inset-0 rounded-full bg-primary"
+                />
+              )}
+              <Icon className="relative h-4 w-4" />
+              <span className="relative">{label}</span>
+              <span className="relative tabular-nums opacity-70">{count}</span>
+            </button>
+          );
+        })}
       </div>
-    </TourProvider>
+
+      <div role="tabpanel" id={`panel-${tab}`} aria-labelledby={`tab-${tab}`}>
+        {tab === "reading" ? <BookHobbyContent /> : <MusicHobbyContent />}
+      </div>
+
+      <FlowAppButton
+        leftTitle="Education"
+        leftDescription="see my education arc"
+        leftIcon={<GraduationCap />}
+        leftRoute="/education"
+        rightTitle="Projects"
+        rightDescription="see what I'm working on"
+        rightIcon={<Folder />}
+        rightRoute="/projects"
+      />
+    </PageShell>
   );
 }
