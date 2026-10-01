@@ -18,7 +18,13 @@ const beat = (ms: number) => ({ "--delay": `${ms}ms` }) as React.CSSProperties;
 export default function Home() {
   useDocumentTitle("David Nwobia | Home");
   const [init, setInit] = useState<boolean>(false);
-  const { resolvedTheme } = useTheme();
+  const { resolvedTheme, revealing } = useTheme();
+  // Rebuilding the particle field is costly, so during a theme reveal it keeps the
+  // old colour (hidden by index.css) and only switches once the circle has landed.
+  const [particleTheme, setParticleTheme] = useState(resolvedTheme);
+  useEffect(() => {
+    if (!revealing) setParticleTheme(resolvedTheme);
+  }, [resolvedTheme, revealing]);
   const reduceMotion = useReducedMotion() ?? false;
 
   useEffect(() => {
@@ -30,8 +36,8 @@ export default function Home() {
   }, []);
 
   const particleOptions = useMemo(
-    () => particleOptionsFor(resolvedTheme, reduceMotion),
-    [resolvedTheme, reduceMotion]
+    () => particleOptionsFor(particleTheme, reduceMotion),
+    [particleTheme, reduceMotion]
   );
 
   return (
@@ -39,7 +45,7 @@ export default function Home() {
       {init && (
         <Particles
           // Remount on theme change so the new colour applies to every square at once.
-          key={`${resolvedTheme}-${reduceMotion}`}
+          key={`${particleTheme}-${reduceMotion}`}
           id="tsparticles"
           options={particleOptions}
         />
