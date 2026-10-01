@@ -5,7 +5,9 @@ const SVG_NS = "http://www.w3.org/2000/svg";
 
 // Only Chromium renders SVG filters inside `backdrop-filter`. Safari and Firefox
 // accept the syntax but draw nothing, so they keep the plain frosted glass.
+// Phones keep it too: the displacement filter is too heavy for mobile GPUs.
 const canRefract = () =>
+  window.matchMedia("(pointer: fine)").matches &&
   !!(navigator as Navigator & { userAgentData?: { brands: { brand: string }[] } }).userAgentData?.brands.some(
     (b) => b.brand === "Chromium"
   );
