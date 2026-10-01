@@ -14,6 +14,8 @@ type ThemeProviderState = {
   theme: Theme
   /** What is actually on screen once "system" has been resolved. */
   resolvedTheme: ResolvedTheme
+  /** True while the circular reveal is running. Heavy effects wait for it to end. */
+  revealing: boolean
   /** `origin` is the viewport point the transition spreads from. */
   setTheme: (theme: Theme, origin?: { x: number; y: number }) => void
 }
@@ -35,6 +37,7 @@ const applyTheme = (theme: ResolvedTheme) => {
 const initialState: ThemeProviderState = {
   theme: "system",
   resolvedTheme: "light",
+  revealing: false,
   setTheme: () => null,
 }
 
@@ -50,6 +53,7 @@ export function ThemeProvider({
     () => (localStorage.getItem(storageKey) as Theme) || defaultTheme
   )
   const [resolvedTheme, setResolvedTheme] = useState<ResolvedTheme>(() => resolve(theme))
+  const [revealing, setRevealing] = useState(false)
 
   useEffect(() => {
     const next = resolve(theme)
@@ -72,6 +76,7 @@ export function ThemeProvider({
   const value = {
     theme,
     resolvedTheme,
+    revealing,
     setTheme: (next: Theme, origin?: { x: number; y: number }) => {
       localStorage.setItem(storageKey, next)
 
