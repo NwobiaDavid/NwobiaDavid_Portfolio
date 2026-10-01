@@ -542,20 +542,44 @@ export function SidebarPlatformer() {
           ? `Score ${score} · ${verb.toLowerCase()} to retry`
           : null;
 
-  // A held button keeps acting until the finger lifts or slides off it.
-  const holdable = (action: Action) => ({
-    onPointerDown: (e: React.PointerEvent) => {
-      e.preventDefault();
-      press(action, true);
-    },
-    onPointerUp: () => press(action, false),
-    onPointerLeave: () => press(action, false),
-    onPointerCancel: () => press(action, false),
-    onContextMenu: (e: React.MouseEvent) => e.preventDefault(),
-  });
+  // Every finger on the pad row is tracked together, so running and jumping can be
+  // held at once and a finger can slide from one button to the next. Each touch
+  // change re-reads which button sits under each finger still down.
+  const padsRef = useRef<HTMLDivElement>(null);
+  const pressRef = useRef(press);
+  pressRef.current = press;
+  useEffect(() => {
+    const pads = padsRef.current;
+    if (!touch || !pads) return;
+    const buttons = Array.from(pads.querySelectorAll<HTMLElement>("[data-action]"));
+
+    const sync = (e: TouchEvent) => {
+      if (e.cancelable) e.preventDefault();
+      const held = new Set<Action>();
+      for (const t of Array.from(e.touches)) {
+        const hit = buttons.find((b) => {
+          const r = b.getBoundingClientRect();
+          return t.clientX >= r.left && t.clientX <= r.right && t.clientY >= r.top && t.clientY <= r.bottom;
+        });
+        if (hit) held.add(hit.dataset.action as Action);
+      }
+      for (const b of buttons) {
+        const action = b.dataset.action as Action;
+        const down = held.has(action);
+        b.toggleAttribute("data-held", down);
+        if (down !== input.current[action]) pressRef.current(action, down);
+      }
+    };
+
+    const events = ["touchstart", "touchmove", "touchend", "touchcancel"] as const;
+    for (const type of events) pads.addEventListener(type, sync, { passive: false });
+    return () => {
+      for (const type of events) pads.removeEventListener(type, sync);
+    };
+  }, [touch]);
 
   const pad =
-    "flex h-12 select-none items-center justify-center rounded-xl bg-muted text-foreground shadow-[inset_0_1px_0_hsl(var(--foreground)/0.06)] transition-transform duration-100 ease-out [-webkit-touch-callout:none] [touch-action:none] active:scale-95";
+    "flex h-12 select-none items-center justify-center rounded-xl bg-muted text-foreground shadow-[inset_0_1px_0_hsl(var(--foreground)/0.06)] transition-transform duration-100 ease-out [-webkit-touch-callout:none] [touch-action:none] data-[held]:scale-95";
 
   return (
     <section
@@ -596,11 +620,13 @@ export function SidebarPlatformer() {
       </div>
 
       {touch ? (
-        <div className="mt-2 grid grid-cols-[1fr_1fr_1.4fr] gap-2">
-          <button type="button" tabIndex={-1} aria-label="Run left" className={pad} {...holdable("left")}>
+        <div ref={padsRef} className="mt-2 grid grid-cols-[1fr_1fr_1.4fr] gap-2 [touch-action:none]"
+          onContextMenu={(e) => e.preventDefault()}
+        >
+          <button type="button" tabIndex={-1} aria-label="Run left" className={pad} data-action="left">
             <ChevronLeft className="h-5 w-5" />
           </button>
-          <button type="button" tabIndex={-1} aria-label="Run right" className={pad} {...holdable("right")}>
+          <button type="button" tabIndex={-1} aria-label="Run right" className={pad} data-action="right">
             <ChevronRight className="h-5 w-5" />
           </button>
           <button
@@ -608,7 +634,7 @@ export function SidebarPlatformer() {
             tabIndex={-1}
             aria-label="Jump"
             className={cn(pad, "bg-primary font-display text-sm font-semibold text-primary-foreground")}
-            {...holdable("jump")}
+            data-action="jump"
           >
             Jump
           </button>
