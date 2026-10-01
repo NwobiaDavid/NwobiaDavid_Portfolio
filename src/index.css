@@ -412,3 +412,11 @@
     transform: rotateX(0deg);
   }
 }
+
+/* Theme switches reveal the new theme in a growing circle (see theme-provider)
+   instead of the default crossfade, so both snapshots stay fully opaque. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
