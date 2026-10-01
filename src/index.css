@@ -432,3 +432,23 @@
   animation: none;
   mix-blend-mode: normal;
 }
+
+/* During the reveal the new theme is redrawn every frame under the growing
+   circle. The particle field sits it out and fades back in once rebuilt in the
+   new colour, and on phones the frosted blur is dropped until the circle lands. */
+.theme-reveal #tsparticles {
+  visibility: hidden;
+}
+
+#tsparticles {
+  animation: fade 600ms var(--ease-out) both;
+}
+
+@media (pointer: coarse) {
+  .theme-reveal *,
+  .theme-reveal *::before,
+  .theme-reveal *::after {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+}
