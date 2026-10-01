@@ -1,339 +1,235 @@
-import {
-  Music,
-  Pause,
-  Play,
-  Repeat,
-  Shuffle,
-  SkipBack,
-  SkipForward,
-} from "lucide-react";
+import { Pause, Play, Repeat, Shuffle, SkipBack, SkipForward } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
 import ReactPlayer from "react-player";
 import { useBoolean } from "usehooks-ts";
-import { Button } from "../ui/button";
 import { useEffect, useRef, useState } from "react";
-import { OnProgressProps } from "react-player/base";
-import { toast } from "sonner";
-import { VideoData, videoUrls } from "@/constants/data/video";
-import { MusicList } from "../music/music-list";
+import { videoUrls } from "@/constants/data/video";
 import { secondsToTimeString } from "@/lib/time";
 import { cn } from "@/lib/utils";
 import { getRandomVideo } from "@/lib/random";
-import { motion } from "framer-motion";
-import { useTour } from "@reactour/tour";
 import { usePlay } from "@/hooks/use-play";
 
+const controlButton =
+  "flex h-10 w-10 items-center justify-center rounded-full text-muted-foreground transition-[color,background-color,transform] duration-150 hover:bg-muted hover:text-foreground active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
+
+const randomOtherIndex = (current: number) => {
+  let next = getRandomVideo(videoUrls).index;
+  while (videoUrls.length > 1 && next === current) next = getRandomVideo(videoUrls).index;
+  return next;
+};
+
+/** Three bars that bounce while a track is playing and rest when it isn't. */
+const Equalizer = ({ playing }: { playing: boolean }) => (
+  <span aria-hidden className="flex h-3.5 items-end gap-[2px]">
+    {[0, 1, 2].map((bar) => (
+      <span
+        key={bar}
+        className={cn("w-[3px] origin-bottom rounded-full bg-primary", playing ? "eq-bar" : "h-1")}
+        style={{ animationDelay: `${bar * -0.3}s` }}
+      />
+    ))}
+  </span>
+);
+
 export const MusicHobbyContent = () => {
-  const { setIsOpen, isOpen, currentStep } = useTour();
-  const isFirstRender = useRef(true);
   const play = usePlay();
-  const seek = useBoolean(false);
   const shuffle = useBoolean(false);
   const repeat = useBoolean(false);
   const playerRef = useRef<ReactPlayer>(null);
-  const [progressState, setProgressState] = useState<OnProgressProps>({
-    loaded: 0,
-    loadedSeconds: 0,
-    played: 0,
-    playedSeconds: 0,
-  });
-  const [duration, setDuration] = useState<number>(0);
-  const bottomRef = useRef<HTMLDivElement | null>(null);
-  const isTourFinish = !isOpen && currentStep === 5;
+  const [current, setCurrent] = useState(0);
+  const [started, setStarted] = useState(false);
+  const [played, setPlayed] = useState(0);
+  const [playedSeconds, setPlayedSeconds] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const [seeking, setSeeking] = useState(false);
+  const track = videoUrls[current];
 
-  useEffect(() => {
-    if (!isTourFinish) {
-      setIsOpen(true);
-    } else {
-      play.setTrue();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // Never carry playback past this view.
+  const stop = usePlay((state) => state.setFalse);
+  useEffect(() => stop, [stop]);
 
-  useEffect(() => {
-    if (bottomRef.current) {
-      bottomRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-  }, []);
-
-  const [currentVideoIndex, setCurrentVideoIndex] = useState<number>(0);
-
-  const handleSeekChange = (newPlayed: number) => {
-    setProgressState((prevState) => ({
-      ...prevState,
-      played: newPlayed,
-    }));
-    playerRef.current?.seekTo(newPlayed, "fraction");
-  };
-
-  const handleSkipBack = () => {
-    if (Math.floor(progressState.playedSeconds) !== 0) {
-      handleSeekChange(0);
-      return;
-    }
-
-    setCurrentVideoIndex((prevIndex) =>
-      prevIndex === 0 ? videoUrls.length - 1 : prevIndex - 1,
-    );
-
-    play.setTrue();
-  };
-
-  const handleSkipForward = () => {
-    // if shuffle on, next song will ignore
-    if (shuffle.value) {
-      // get random video
-      let randomVideo = getRandomVideo(videoUrls);
-      // if random video is same with current video, get another random video
-      while (randomVideo.video.link === videoUrls[currentVideoIndex].link) {
-        randomVideo = getRandomVideo(videoUrls);
-      }
-      setCurrentVideoIndex(randomVideo.index);
-      return;
-    }
-
-    setCurrentVideoIndex((prevIndex) =>
-      prevIndex === videoUrls.length - 1 ? 0 : prevIndex + 1,
-    );
-
-    play.setTrue();
-  };
-
-  const findIndexByLink = (array: VideoData[], searchLink: string): number => {
-    for (let i = 0; i < array.length; i++) {
-      if (array[i].link === searchLink) {
-        return i;
-      }
-    }
-    return -1;
-  };
-
-  const handleNotSelectedSongButtonClick = (value: VideoData) => {
-    if (value.link === videoUrls[currentVideoIndex].link) {
+  const select = (index: number) => {
+    setStarted(true);
+    if (index === current) {
       play.toggle();
-    } else {
-      const newIndex = findIndexByLink(videoUrls, value.link);
-      setCurrentVideoIndex(newIndex);
+      return;
     }
-
+    setCurrent(index);
+    setPlayed(0);
+    setPlayedSeconds(0);
     play.setTrue();
   };
 
-  const handleOnEnded = () => {
-    if (repeat.value) {
-      handleSeekChange(0);
-    } else if (shuffle.value) {
-      let randomVideo = getRandomVideo(videoUrls);
-      while (randomVideo.video.link === videoUrls[currentVideoIndex].link) {
-        randomVideo = getRandomVideo(videoUrls);
-      }
-      setCurrentVideoIndex(randomVideo.index);
-    } else {
-      handleSkipForward();
-    }
+  const seekTo = (fraction: number) => {
+    setPlayed(fraction);
+    playerRef.current?.seekTo(fraction, "fraction");
   };
 
-  useEffect(() => {
-    if (!isFirstRender.current) {
-      // This code will run after currentVideoIndex is updated
-      toast(`Now playing: ${videoUrls[currentVideoIndex].title}`, {
-        description: `By ${videoUrls[currentVideoIndex].artist}`,
-        cancel: {
-          label: "Prev",
-          onClick: handleSkipBack,
-        },
-        action: {
-          label: "Next",
-          onClick: handleSkipForward,
-        },
-        icon: <Music />,
-        dismissible: true,
-        position: "top-right",
-        duration: 3000,
-      });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentVideoIndex]);
+  const skipBack = () => {
+    if (playedSeconds > 3) return seekTo(0);
+    select(current === 0 ? videoUrls.length - 1 : current - 1);
+  };
 
-  useEffect(() => {
-    if (!isFirstRender.current) {
-      if (shuffle.value) {
-        toast("Song shuffle is enabled!", {
-          cancel: {
-            label: "Disable shuffle",
-            onClick: shuffle.setFalse,
-          },
-          position: "bottom-right",
-          duration: 3000,
-        });
-      } else {
-        toast("Song shuffle is disabled!", {
-          action: {
-            label: "Enable shuffle",
-            onClick: shuffle.setTrue,
-          },
-          position: "bottom-right",
-          duration: 3000,
-        });
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [shuffle.setFalse, shuffle.setTrue, shuffle.value]);
+  const skipForward = () => {
+    if (shuffle.value) return select(randomOtherIndex(current));
+    select(current === videoUrls.length - 1 ? 0 : current + 1);
+  };
 
-  useEffect(() => {
-    if (isFirstRender.current && !repeat.value) {
-      isFirstRender.current = false;
-      return;
-    } else {
-      if (repeat.value) {
-        toast("Song repeat is enabled!", {
-          cancel: {
-            label: "Disable Repeat",
-            onClick: repeat.setFalse,
-          },
-          position: "bottom-right",
-          duration: 3000,
-        });
-      } else {
-        toast("Song repeat is disabled", {
-          action: {
-            label: "Enable Repeat",
-            onClick: repeat.setTrue,
-          },
-          position: "bottom-right",
-          duration: 3000,
-        });
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [repeat.setFalse, repeat.setTrue, repeat.value]);
+  const onEnded = () => (repeat.value ? seekTo(0) : skipForward());
 
   return (
-    <div className="h-screen relative w-full flex flex-col justify-between">
-      <ReactPlayer
-        ref={playerRef}
-        url={videoUrls[currentVideoIndex].link}
-        onEnded={handleOnEnded}
-        onError={() => handleSkipForward()}
-        controls={false}
-        playing={play.value}
-        onProgress={(e) => {
-          if (!seek.value) {
-            setProgressState((prevState) => ({
-              ...prevState,
-              loaded: e.loaded,
-              loadedSeconds: e.loadedSeconds,
-              played: e.played,
-              playedSeconds: e.playedSeconds,
-            }));
-          }
-        }}
-        onDuration={(duration) => setDuration(duration)}
-        style={{
-          position: "absolute",
-          top: 0,
-          right: 0,
-          left: 0,
-          bottom: 0,
-        }}
-        width="100%"
-        height="100%"
-      />
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ type: "spring", duration: 0.8 }}
-        className="z-30 w-full overflow-auto bg-black/70 p-4 flex flex-col gap-4 music-list"
-      >
-        {videoUrls.map((value, index) => (
-          <MusicList
-            key={`${index}:${value.link}`}
-            currentVideoIndex={currentVideoIndex}
-            handleNotSelectedSongButtonClick={handleNotSelectedSongButtonClick}
-            index={index}
-            play={play}
-            value={value}
+    <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(300px,380px)] lg:gap-10">
+      <section aria-label="Now playing" className="min-w-0">
+        <div className="relative aspect-video overflow-hidden rounded-xl bg-black shadow-[0_24px_48px_-28px_hsl(var(--foreground)/0.6)] ring-1 ring-foreground/10">
+          {started && (
+            <ReactPlayer
+              ref={playerRef}
+              url={track.link}
+              playing={play.value}
+              controls={false}
+              onEnded={onEnded}
+              onError={skipForward}
+              onDuration={setDuration}
+              onProgress={(e) => {
+                if (seeking) return;
+                setPlayed(e.played);
+                setPlayedSeconds(e.playedSeconds);
+              }}
+              width="100%"
+              height="100%"
+              style={{ position: "absolute", inset: 0 }}
+            />
+          )}
+          {!started && (
+            <button
+              type="button"
+              onClick={() => select(current)}
+              aria-label={`Play ${track.title}`}
+              data-no-blobity
+              className="group absolute inset-0 flex items-center justify-center"
+            >
+              <img src={track.thumbnail} alt="" className="absolute inset-0 h-full w-full object-cover" />
+              <span aria-hidden className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+              <span className="relative flex h-16 w-16 items-center justify-center rounded-full bg-white/90 text-black shadow-lg transition-transform duration-200 ease-out group-hover:scale-105 group-active:scale-95">
+                <Play className="ml-1 h-7 w-7 fill-current" />
+              </span>
+              <span className="absolute bottom-4 left-4 text-sm text-white/85">Press play. Sound will start.</span>
+            </button>
+          )}
+        </div>
+
+        <div className="mt-6">
+          <h2 className="text-2xl font-semibold tracking-[-0.015em] md:text-3xl">{track.title}</h2>
+          <p className="mt-1 text-muted-foreground">{track.artist.trim()}</p>
+        </div>
+
+        <div className="mt-6">
+          <Slider
+            value={[played]}
+            max={1}
+            step={0.001}
+            disabled={!started}
+            aria-label="Seek"
+            onValueChange={([value]) => {
+              setSeeking(true);
+              seekTo(value);
+            }}
+            onValueCommit={() => setSeeking(false)}
           />
-        ))}
-      </motion.div>
-      <div className="px-4 py-2 sticky bottom-0 bg-popover z-40 music-player">
-        <div>
-          <h4 className="scroll-m-20 text-md md:text-lg font-semibold tracking-tight">
-            {videoUrls[currentVideoIndex].title}
-          </h4>
-          <p className="text-sm text-muted-foreground">
-            {videoUrls[currentVideoIndex].artist}
-          </p>
+          <div className="mt-2 flex justify-between text-xs text-muted-foreground tabular-nums">
+            <span>{secondsToTimeString(Math.floor(playedSeconds))}</span>
+            <span>{started ? secondsToTimeString(duration) : "--:--"}</span>
+          </div>
         </div>
-        <Slider
-          value={[
-            progressState.played as number,
-            progressState.loaded as number,
-          ]}
-          onValueChange={(values) => handleSeekChange(values[0])}
-          onValueCommit={() => seek.setFalse()}
-          max={1}
-          step={0.0001}
-          className="mt-6 music-duration"
-        />
-        <div className="flex justify-between mt-2">
-          <p className="text-sm text-muted-foreground">
-            {secondsToTimeString(Math.floor(progressState.playedSeconds))}
-          </p>
-          <p className="text-sm text-muted-foreground">
-            {secondsToTimeString(duration)}
-          </p>
-        </div>
-        <div className="w-full flex justify-between mt-4">
-          <Button
+
+        <div className="mt-4 flex items-center justify-between">
+          <button
+            type="button"
+            aria-label="Shuffle"
+            aria-pressed={shuffle.value}
             onClick={() => {
-              if (repeat.value) {
-                repeat.setFalse();
-              }
+              repeat.setFalse();
               shuffle.toggle();
             }}
-            size="icon"
-            variant="ghost"
-            className="shuffle-button"
+            className={cn(controlButton, shuffle.value && "text-primary hover:text-primary")}
           >
-            <Shuffle
-              className={cn(
-                shuffle.value ? "text-primary" : "text-muted-foreground",
-              )}
-            />
-          </Button>
-          <div className="flex gap-4 control-buttons">
-            <Button onClick={handleSkipBack} size="icon" variant="ghost">
-              <SkipBack />
-            </Button>
-            <Button onClick={play.toggle} size="icon" variant="ghost">
-              {play.value ? <Pause /> : <Play />}
-            </Button>
-            <Button onClick={handleSkipForward} size="icon" variant="ghost">
-              <SkipForward />
-            </Button>
+            <Shuffle className="h-[18px] w-[18px]" />
+          </button>
+          <div className="flex items-center gap-3">
+            <button type="button" aria-label="Previous" onClick={skipBack} className={controlButton}>
+              <SkipBack className="h-5 w-5 fill-current" />
+            </button>
+            <button
+              type="button"
+              aria-label={play.value ? "Pause" : "Play"}
+              onClick={() => select(current)}
+              data-no-blobity
+              className="flex h-14 w-14 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-[0_8px_20px_-8px_hsl(var(--primary)/0.7)] transition-transform duration-150 ease-out hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+            >
+              {play.value ? <Pause className="h-6 w-6 fill-current" /> : <Play className="ml-0.5 h-6 w-6 fill-current" />}
+            </button>
+            <button type="button" aria-label="Next" onClick={skipForward} className={controlButton}>
+              <SkipForward className="h-5 w-5 fill-current" />
+            </button>
           </div>
-          <Button
+          <button
+            type="button"
+            aria-label="Repeat track"
+            aria-pressed={repeat.value}
             onClick={() => {
-              if (shuffle.value) {
-                shuffle.setFalse();
-              }
-
+              shuffle.setFalse();
               repeat.toggle();
             }}
-            size="icon"
-            variant="ghost"
-            className="repeat-button"
+            className={cn(controlButton, repeat.value && "text-primary hover:text-primary")}
           >
-            <Repeat
-              className={cn(
-                repeat.value ? "text-primary" : "text-muted-foreground",
-              )}
-            />
-          </Button>
+            <Repeat className="h-[18px] w-[18px]" />
+          </button>
         </div>
-      </div>
-      <div ref={bottomRef}></div>
+      </section>
+
+      <section aria-label="Playlist" className="min-w-0">
+        <h2 className="mb-3 flex items-baseline gap-3 text-xl font-semibold tracking-[-0.01em]">
+          Playlist
+          <span className="font-sans text-sm font-normal tracking-normal text-muted-foreground tabular-nums">
+            {videoUrls.length}
+          </span>
+        </h2>
+        <ol className="-mx-2 flex max-h-[34rem] flex-col overflow-y-auto pr-1 [scrollbar-width:thin]">
+          {videoUrls.map((video, index) => {
+            const isCurrent = index === current;
+            return (
+              <li key={`${index}:${video.link}`}>
+                <button
+                  type="button"
+                  onClick={() => select(index)}
+                  aria-current={isCurrent ? "true" : undefined}
+                  data-no-blobity
+                  className={cn(
+                    "group flex w-full items-center gap-3 rounded-lg px-2 py-2 text-left transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                    isCurrent ? "bg-muted" : "hover:bg-muted/60"
+                  )}
+                >
+                  <span className="flex w-5 shrink-0 justify-center text-xs text-muted-foreground tabular-nums">
+                    {isCurrent && started ? <Equalizer playing={play.value} /> : index + 1}
+                  </span>
+                  <img
+                    src={video.thumbnail}
+                    alt=""
+                    loading="lazy"
+                    className="aspect-video w-16 shrink-0 rounded-md object-cover ring-1 ring-foreground/10"
+                  />
+                  <span className="min-w-0 flex-1">
+                    <span className={cn("block truncate text-sm font-medium", isCurrent && "text-primary")}>
+                      {video.title}
+                    </span>
+                    <span className="block truncate text-xs text-muted-foreground">{video.artist.trim()}</span>
+                  </span>
+                </button>
+              </li>
+            );
+          })}
+        </ol>
+      </section>
     </div>
   );
 };
