@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { TopbarContent } from "@/components/topbar/topbar-content";
+import { PageBuddy } from "@/components/page-buddy";
 
 interface ContentLayoutProps {
   children: React.ReactNode;
@@ -28,6 +29,8 @@ export const ContentLayout = ({ children }: ContentLayoutProps) => {
       <main key={pathname} className="page-enter flex flex-1 flex-col">
         {children}
       </main>
+      {/* Outside the keyed page so the character carries over from page to page. */}
+      <PageBuddy scrollRoot={scrollRef} />
     </div>
   );
 };
