@@ -331,6 +331,17 @@
   animation-delay: calc(min(var(--i, 0), 6) * 45ms + 60ms);
 }
 
+/* Now-playing bars in the playlist. */
+.eq-bar {
+  height: 100%;
+  animation: eq 0.9s var(--ease-in-out) infinite alternate;
+}
+
+@keyframes eq {
+  from { transform: scaleY(0.25); }
+  to { transform: scaleY(1); }
+}
+
 .hero-line {
   display: block;
   overflow: hidden;
@@ -364,7 +375,8 @@
     animation-delay: 0ms;
   }
 
-  .hero-line > span {
+  .hero-line > span,
+  .eq-bar {
     animation: none;
   }
 
