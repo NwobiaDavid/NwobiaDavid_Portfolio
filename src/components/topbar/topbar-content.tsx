@@ -6,6 +6,7 @@ import { Button } from "../ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { MainSidebar } from "../sidebar/main-sidebar";
 import { useSheet } from "@/hooks/use-sheet";
+import { useSwipeSheet } from "@/hooks/use-swipe-sheet";
 import GithubLink from "../github-link";
 import { cn } from "@/lib/utils";
 
@@ -20,6 +21,7 @@ export const TopbarContent = ({ scrollRoot }: TopbarContentProps) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { isOpen, setOpen } = useSheet();
+  useSwipeSheet();
   const sentinelRef = useRef<HTMLDivElement>(null);
   const [scrolled, setScrolled] = useState(false);
 
