@@ -30,7 +30,7 @@ export const MainProjects: Project[] = [
     title: 'SendSawa',
     description:
       'SendSawa turns an Instagram or TikTok account into a real shop. Nigerian sellers get one link: customers browse, pick, and pay on their own, so orders stop living in the DMs.',
-    impact: 'Serving 100+ merchants in Nigeria, 0% fees on sales',
+    impact: 'Serving hundreds of merchants in Nigeria, 0% fees on sales',
     keyFeatures: [
       'One storefront link per seller at sendsawa.com/<store>',
       'SSR, dynamic sitemaps and subdomain storefronts that rank in Google Search and AI Overviews',
