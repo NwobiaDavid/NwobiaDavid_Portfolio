@@ -49,7 +49,8 @@ export const MainProjects: Project[] = [
     imgUrl: '/images/projects/sendsawa.png',
     liveDemo: 'https://sendsawa.com',
   },
-  {
+  // Hidden for now. Uncomment to put Gwahm back on the site.
+  /* {
     id: '8',
     stack: ['Next.js 16', 'TypeScript', 'Gemini Live', 'Supabase', 'Tailwind CSS v4'],
     title: 'Gwahm',
@@ -72,7 +73,7 @@ export const MainProjects: Project[] = [
       'The server mints a short-lived Gemini token with the interview prompt locked in, so the idea never reaches the participant. An audio worklet handles mic capture and recording, the call hook reconnects on drops, and summaries are written in the background after each call is saved.',
     imgUrl: '/images/projects/gwahm.png',
     liveDemo: 'https://gwahm.vercel.app',
-  },
+  }, */
   {
     id: '4',
     stack: ['Python', 'NumPy', 'Numba'],
