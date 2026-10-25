@@ -4,9 +4,20 @@ import { useDocumentTitle } from "usehooks-ts";
 import { FlowAppButton } from "@/components/content/flow-app-button";
 import { MainProjects } from "@/constants/data/projects";
 import { PageHeader, PageShell } from "@/components/page-header";
+import { PreviewRegion, PreviewWord, type PreviewItem } from "@/components/preview-words";
 
 const externalLink =
   "inline-flex items-center gap-1 rounded-md text-sm font-medium text-muted-foreground transition-colors duration-150 hover:text-foreground";
+
+// The work the lede names, in the order it names it, with a caption for its card.
+const previews: PreviewItem[] = [
+  { id: "6", caption: "SendSawa, storefronts for Nigerian sellers" },
+  { id: "9", caption: "unlost, on-device file search" },
+  { id: "4", caption: "2048 AI, an algorithm head-to-head" },
+].flatMap(({ id, caption }) => {
+  const project = MainProjects.find((p) => p.id === id);
+  return project ? [{ id, caption, image: project.imgUrl, to: `/projects/${id}` }] : [];
+});
 
 export default function Projects() {
   useDocumentTitle("David Nwobia | Projects");
@@ -14,6 +25,19 @@ export default function Projects() {
   return (
     <PageShell>
       <PageHeader title="Projects" meta={MainProjects.length} />
+
+      <PreviewRegion items={previews} className="mb-12 md:mb-16">
+        <p className="max-w-[46rem] text-xl font-light leading-relaxed tracking-[-0.01em] md:text-[1.75rem] md:leading-relaxed">
+          Lately I&rsquo;ve been building <PreviewWord id="6">SendSawa</PreviewWord>, a one-link shop for
+          sellers who live in their DMs; <PreviewWord id="9">unlost</PreviewWord>, a desktop app that finds
+          files by what&rsquo;s inside them; and a race between <PreviewWord id="4">2048 algorithms</PreviewWord>{" "}
+          to see which one plays best.
+        </p>
+        <p className="mt-5 text-xs uppercase tracking-[0.08em] text-muted-foreground" aria-hidden>
+          <span className="pw-hint-mouse">Hover</span>
+          <span className="pw-hint-touch">Tap</span> the underlined names to see the work
+        </p>
+      </PreviewRegion>
 
       <ul className="stagger grid gap-x-8 gap-y-12 sm:grid-cols-2 2xl:grid-cols-3">
         {MainProjects.map((project, index) => (
