@@ -4,6 +4,7 @@ import {
   Home,
   Gamepad,
   ShieldCheckIcon,
+  BookOpen,
   PackageOpen,
   GraduationCap,
   FileText,
@@ -43,6 +44,7 @@ const menuItems: Record<"main" | "secondary", PaletteItem[]> = {
     { value: "education", label: "Education", icon: GraduationCap, description: "Academic background" },
     { value: "skills", label: "Skills", icon: Wrench, description: "Technical expertise" },
     { value: "certifications", label: "Certifications", icon: ShieldCheckIcon, description: "Professional credentials" },
+    { value: "publications", label: "Publications", icon: BookOpen, description: "Research papers" },
     { value: "hobby", label: "Hobby", icon: Gamepad, description: "Personal interests" },
   ],
 };

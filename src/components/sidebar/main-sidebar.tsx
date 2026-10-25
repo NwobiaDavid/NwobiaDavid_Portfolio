@@ -20,6 +20,7 @@ import {
   Wrench,
   GraduationCap,
   ShieldCheck,
+  BookOpen,
   Contact,
   PackageOpen,
   type LucideIcon,
@@ -58,6 +59,7 @@ const navGroups: NavEntry[][] = [
     { to: "/education", label: "Education", icon: GraduationCap },
     { to: "/skills", label: "Skills", icon: Wrench },
     { to: "/certifications", label: "Certifications", icon: ShieldCheck },
+    { to: "/publications", label: "Publications", icon: BookOpen },
   ],
 ];
 

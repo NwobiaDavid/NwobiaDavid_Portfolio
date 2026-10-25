@@ -1,5 +1,6 @@
 import {
   Book,
+  BookOpen,
   ChevronRight,
   Contact,
   DoorClosed,
@@ -28,6 +29,7 @@ const iconMap: Record<string, React.ReactElement> = {
   education: <GraduationCap className={iconClass} />,
   experiences: <PackageOpen className={iconClass} />,
   certifications: <ShieldCheck className={iconClass} />,
+  publications: <BookOpen className={iconClass} />,
   skills: <Wrench className={iconClass} />,
   contact: <Contact className={iconClass} />,
   login: <DoorClosed className={iconClass} />,

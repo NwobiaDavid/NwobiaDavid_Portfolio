@@ -1,7 +1,7 @@
 import { useDocumentTitle } from "usehooks-ts";
 import { AnimatePresence, motion } from "framer-motion";
 import { FlowAppButton } from "@/components/content/flow-app-button";
-import { ArrowUpRight, Contact, GraduationCap, X } from "lucide-react";
+import { ArrowUpRight, BookOpen, GraduationCap, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { PageHeader, PageShell } from "@/components/page-header";
@@ -147,9 +147,10 @@ export default function Certifications() {
         leftDescription="history of my academics timeline"
         leftIcon={<GraduationCap />}
         leftRoute="/education"
-        rightTitle="Say hi"
-        rightDescription="reach out to me through these channels"
-        rightIcon={<Contact />}
+        rightTitle="Publications"
+        rightDescription="research papers I've co-authored"
+        rightIcon={<BookOpen />}
+        rightRoute="/publications"
       />
     </PageShell>
   );
