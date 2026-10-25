@@ -44,8 +44,14 @@ const offsetWithin = (el: HTMLElement, root: HTMLElement) => {
 };
 
 // A snap leaves at full pull and decelerates hard into place, like a magnet catching:
-// an exponential curve covers most of the distance in the first tenth of the time.
-const magnet = (t: number) => (1 - 2 ** (-9 * t)) / (1 - 2 ** -9);
+// an exponential curve covers most of the distance in the first few frames.
+const magnet = (t: number) => (1 - 2 ** (-12 * t)) / (1 - 2 ** -12);
+
+// How far the wheel must push against a section's edge, as a share of the screen, before
+// the page moves on (about three notches of a mouse wheel), and how much the page gives
+// while it pushes.
+const PULL = 0.3;
+const GIVE = 0.35;
 
 // The site's --ease-in-out, for longer trips started from the sidebar or a link.
 const travel = (t: number) => (t < 0.5 ? 8 * t ** 4 : 1 - (-2 * t + 2) ** 4 / 2);
@@ -75,6 +81,9 @@ export default function SectionStack() {
   const spied = useRef<string | null>(null);
   const glideRef = useRef<((index: number) => void) | null>(null);
   const firstRun = useRef(true);
+  // Opened on a section's top (not on a spot restored from earlier), so it should stay
+  // there while images above it load and push it down.
+  const openedOnEdge = useRef(true);
 
   // Every page renders once; a URL change re-renders the stack, not its pages.
   const content = useMemo(
@@ -110,7 +119,9 @@ export default function SectionStack() {
     resize.observe(root);
 
     const start = sectionIndex(urlPath.current);
-    const restore = navigationType === "POP" && saved?.path === urlPath.current ? saved.y : els[start]?.offsetTop ?? 0;
+    const restoring = navigationType === "POP" && saved?.path === urlPath.current;
+    openedOnEdge.current = !restoring;
+    const restore = restoring && saved ? saved.y : els[start]?.offsetTop ?? 0;
     if (lenis) {
       lenis.resize();
       lenis.scrollTo(restore, { immediate: true, force: true });
@@ -181,12 +192,18 @@ export default function SectionStack() {
     let rest: Point | null = null;
     {
       const list = ranges();
+      const opened = sectionIndex(urlPath.current);
       const index = list.findIndex((r) => Math.abs(r.start - lenis.scroll) < 1);
-      if (index >= 0) rest = { y: list[index].start, index, end: false };
+      if (openedOnEdge.current && opened >= 0) rest = { y: list[opened].start, index: opened, end: false };
+      else if (index >= 0) rest = { y: list[index].start, index, end: false };
     }
     // After a jump, or after running into a section's edge, the rest of that flick is spent.
     // Only a new gesture moves on.
     let armed = true;
+    // Reached a section's edge by scrolling through it. The reader was heading for that
+    // edge, not past it, so only a pause and a new scroll may carry on.
+    let walled = false;
+    let wallDir = 0;
     let lastWheel = 0;
     let lastAbs = 0;
     let lastSign = 0;
@@ -196,6 +213,10 @@ export default function SectionStack() {
     let lastY = lenis.scroll;
     let timer = 0;
     const touch = { active: false, moved: false, axis: "" as "" | "x" | "y", from: 0, atStart: false, atEnd: false, v: 0, t: 0 };
+    // The wheel leaning off a section's edge: how hard it has pushed so far, and from where.
+    let pull = 0;
+    let pullFrom: Point | null = null;
+    let pullTimer = 0;
 
     // The URL follows whichever section holds the middle of the screen.
     const spy = () => {
@@ -214,6 +235,10 @@ export default function SectionStack() {
 
     const glideTo = (point: Point, duration: number, easing: (t: number) => number) => {
       armed = false;
+      walled = false;
+      pull = 0;
+      pullFrom = null;
+      window.clearTimeout(pullTimer);
       if (Math.abs(point.y - lenis.scroll) < 1) {
         rest = point;
         return;
@@ -238,26 +263,69 @@ export default function SectionStack() {
       const r = ranges()[index];
       const y = end ? r.end : r.start;
       const dist = Math.min(1, Math.abs(y - lenis.scroll) / view());
-      glideTo({ y, index, end }, 0.4 + 0.2 * dist, magnet);
+      glideTo({ y, index, end }, 0.3 + 0.15 * dist, magnet);
     };
 
-    /** One push of the wheel or a key: scroll within a tall section, otherwise jump. */
-    const step = (dy: number) => {
+    // Not pushed hard enough to leave: settle back onto the edge. Not locked, so the
+    // reader can lean in again straight away.
+    const springBack = () => {
+      const from = pullFrom;
+      pull = 0;
+      pullFrom = null;
+      if (!from || glide !== null) return;
+      lenis.scrollTo(from.y, {
+        duration: 0.35,
+        easing: magnet,
+        force: true,
+        onComplete: () => {
+          rest = from;
+        },
+      });
+    };
+
+    /** One push of the wheel or a key: scroll within a tall section, otherwise move on a
+     *  section. The wheel has to lean on an edge for a while first; a key press moves at
+     *  once, but a held key only scrolls, so holding it never runs past an edge. */
+    const step = (dy: number, mode: "wheel" | "key" | "held") => {
       const list = ranges();
-      const y = lenis.targetScroll;
+      const y = pullFrom?.y ?? lenis.targetScroll;
       const i = sectionAt(list, y);
       const { start, end } = list[i];
       if (end > start && (dy > 0 ? y < end - 1 : y > start + 1)) {
+        pull = 0;
+        pullFrom = null;
+        window.clearTimeout(pullTimer);
         const to = clamp(y + dy, start, end);
         lenis.scrollTo(to, { programmatic: false, lerp: lenis.options.lerp });
         // Ran into the edge: stop dead there instead of spilling into the next section.
-        if (to === start || to === end) armed = false;
+        if (to === start || to === end) {
+          armed = false;
+          walled = true;
+          wallDir = Math.sign(dy);
+        }
         return;
       }
-      if (dy > 0) {
-        if (i + 1 < list.length) snapTo(i + 1, false);
-      } else if (y > start + 1) snapTo(i, false);
-      else if (i > 0) snapTo(i - 1, true);
+      if (mode === "held") return;
+      const next: [number, boolean] | null =
+        dy > 0 ? (i + 1 < list.length ? [i + 1, false] : null) : y > start + 1 ? [i, false] : i > 0 ? [i - 1, true] : null;
+      if (!next) return;
+      const edge = dy > 0 ? end : start;
+      // Caught between sections (the scrollbar, a resize): no edge to lean on, just land.
+      if (mode === "key" || Math.abs(y - edge) > 1) {
+        snapTo(...next);
+        return;
+      }
+      if (pullFrom?.y !== edge || Math.sign(dy) !== Math.sign(pull)) pull = 0;
+      pullFrom = { y: edge, index: i, end: dy > 0 && end > start };
+      pull += dy;
+      window.clearTimeout(pullTimer);
+      if (Math.abs(pull) >= view() * PULL) {
+        snapTo(...next);
+        return;
+      }
+      // The page gives a little as the push builds, so the resistance is visible.
+      lenis.scrollTo(edge + pull * GIVE, { programmatic: false, lerp: 0.25 });
+      pullTimer = window.setTimeout(springBack, 240);
     };
 
     // Nested scroll areas keep the wheel while they can still move.
@@ -281,15 +349,15 @@ export default function SectionStack() {
       const { start, end } = list[i];
       const y = lenis.scroll;
       const v = performance.now() - touch.t > 80 ? 0 : touch.v; // a finger that rested first has no flick
-      // From the edge a short pull or a flick jumps. A drag that ran into the edge from
-      // inside a tall section stops there, unless it pulled well past it.
-      const far = view() * 0.2;
+      // From the edge it takes a long pull or a hard flick to move on. A drag that started
+      // inside a tall section and ran into its edge always stops there.
+      const pulled = view() * 0.12;
       if (y > end + 0.5) {
-        const onward = touch.atEnd ? y - end > 28 || v > 0.25 : y - end > far;
+        const onward = touch.atEnd && (y - end > pulled || v > 0.7);
         if (onward && i + 1 < list.length) snapTo(i + 1, false);
         else snapTo(i, true);
       } else if (y < start - 0.5) {
-        const onward = touch.atStart ? start - y > 28 || v < -0.25 : start - y > far;
+        const onward = touch.atStart && (start - y > pulled || v < -0.7);
         if (onward && i > 0) snapTo(i - 1, true);
         else snapTo(i, false);
       } else if (end > start) {
@@ -311,14 +379,18 @@ export default function SectionStack() {
         const abs = Math.abs(deltaY);
         const sign = Math.sign(deltaY);
         const gap = event.timeStamp - lastWheel;
-        const fresh = sign !== lastSign || abs > lastAbs * 1.5 + 4 || (gap > 300 && abs > lastAbs) || gap > 600;
+        const fresh = walled
+          ? gap > 450 // only a real pause; a speed-up mid-scroll is still the same scroll
+          : sign !== lastSign || abs > lastAbs * 1.5 + 4 || (gap > 300 && abs > lastAbs) || gap > 600;
         lastWheel = event.timeStamp;
         lastAbs = abs;
         lastSign = sign;
         if (glide !== null || !deltaY) return false;
-        if (!armed && !fresh) return false;
+        // Turning back into the section is always allowed.
+        if (!armed && !fresh && !(walled && sign !== wallDir)) return false;
         armed = true;
-        step(deltaY);
+        walled = false;
+        step(deltaY, "wheel");
         return false;
       }
 
@@ -387,7 +459,7 @@ export default function SectionStack() {
       if (glide !== null) return;
       if (e.key === "Home") snapTo(0, false);
       else if (e.key === "End") snapTo(els.length - 1, true);
-      else step(keys[e.key]);
+      else step(keys[e.key], e.repeat ? "held" : "key");
     };
     window.addEventListener("keydown", onKey);
 
@@ -462,11 +534,12 @@ export default function SectionStack() {
     glideRef.current = (index) => {
       const y = ranges()[index].start;
       const dist = Math.abs(y - lenis.scroll) / view();
-      glideTo({ y, index, end: false }, clamp(0.5 + 0.3 * Math.sqrt(dist), 0.5, 1.1), travel);
+      glideTo({ y, index, end: false }, clamp(0.45 + 0.25 * Math.sqrt(dist), 0.45, 0.9), travel);
     };
 
     return () => {
       window.clearTimeout(timer);
+      window.clearTimeout(pullTimer);
       lenis.options.virtualScroll = undefined;
       offScroll();
       window.removeEventListener("keydown", onKey);
