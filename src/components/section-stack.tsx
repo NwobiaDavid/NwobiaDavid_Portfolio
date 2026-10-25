@@ -43,8 +43,9 @@ const offsetWithin = (el: HTMLElement, root: HTMLElement) => {
   return y;
 };
 
-// A snap leaves at full pull and decelerates hard into place, like a magnet catching.
-const magnet = (t: number) => 1 - (1 - t) ** 4;
+// A snap leaves at full pull and decelerates hard into place, like a magnet catching:
+// an exponential curve covers most of the distance in the first tenth of the time.
+const magnet = (t: number) => (1 - 2 ** (-9 * t)) / (1 - 2 ** -9);
 
 // The site's --ease-in-out, for longer trips started from the sidebar or a link.
 const travel = (t: number) => (t < 0.5 ? 8 * t ** 4 : 1 - (-2 * t + 2) ** 4 / 2);
@@ -237,7 +238,7 @@ export default function SectionStack() {
       const r = ranges()[index];
       const y = end ? r.end : r.start;
       const dist = Math.min(1, Math.abs(y - lenis.scroll) / view());
-      glideTo({ y, index, end }, 0.5 + 0.3 * dist, magnet);
+      glideTo({ y, index, end }, 0.4 + 0.2 * dist, magnet);
     };
 
     /** One push of the wheel or a key: scroll within a tall section, otherwise jump. */
@@ -282,13 +283,13 @@ export default function SectionStack() {
       const v = performance.now() - touch.t > 80 ? 0 : touch.v; // a finger that rested first has no flick
       // From the edge a short pull or a flick jumps. A drag that ran into the edge from
       // inside a tall section stops there, unless it pulled well past it.
-      const far = view() * 0.3;
+      const far = view() * 0.2;
       if (y > end + 0.5) {
-        const onward = touch.atEnd ? y - end > 48 || v > 0.35 : y - end > far;
+        const onward = touch.atEnd ? y - end > 28 || v > 0.25 : y - end > far;
         if (onward && i + 1 < list.length) snapTo(i + 1, false);
         else snapTo(i, true);
       } else if (y < start - 0.5) {
-        const onward = touch.atStart ? start - y > 48 || v < -0.35 : start - y > far;
+        const onward = touch.atStart ? start - y > 28 || v < -0.25 : start - y > far;
         if (onward && i > 0) snapTo(i - 1, true);
         else snapTo(i, false);
       } else if (end > start) {
@@ -461,7 +462,7 @@ export default function SectionStack() {
     glideRef.current = (index) => {
       const y = ranges()[index].start;
       const dist = Math.abs(y - lenis.scroll) / view();
-      glideTo({ y, index, end: false }, clamp(0.6 + 0.35 * Math.sqrt(dist), 0.6, 1.4), travel);
+      glideTo({ y, index, end: false }, clamp(0.5 + 0.3 * Math.sqrt(dist), 0.5, 1.1), travel);
     };
 
     return () => {
