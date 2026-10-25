@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
+import { pageKeyFor } from "@/constants/sections";
 
 // Clawd, Claude's pixel mascot, living in the content pane. The top edges of the
 // page's headings, cards, images and buttons are its platforms: it runs along
@@ -76,7 +77,7 @@ const pastimes = (path: string): Activity[] => {
   const bias: Activity[] =
     path.startsWith("/projects") || path.startsWith("/skills")
       ? ["code", "code", "code"]
-      : path.startsWith("/education") || path.startsWith("/certifications")
+      : path.startsWith("/education") || path.startsWith("/certifications") || path.startsWith("/publications")
         ? ["read", "read", "read"]
         : path.startsWith("/hobby")
           ? ["music", "music", "music"]
@@ -227,8 +228,16 @@ const collectPlatforms = (root: HTMLElement): Platform[] => {
   const list: Platform[] = [{ el: "floor", x1: HALF, x2: width - HALF, y: root.scrollTop + root.clientHeight }];
   if (!main) return list;
 
+  // In the section stack, only the sections around the screen are worth standing on.
+  const near = (el: Element) => {
+    const r = el.getBoundingClientRect();
+    return r.bottom > box.top - root.clientHeight && r.top < box.bottom + root.clientHeight;
+  };
+  const sections = Array.from(main.querySelectorAll(".snap-section")).filter(near);
+  const candidates = (sections.length ? sections : [main]).flatMap((scope) => Array.from(scope.querySelectorAll(PLATFORMS)));
+
   const range = document.createRange();
-  for (const el of main.querySelectorAll(PLATFORMS)) {
+  for (const el of candidates) {
     if (list.length > 300) break;
     if (el.closest("[data-no-buddy]")) continue;
     let { left, right, top } = el.getBoundingClientRect();
@@ -507,6 +516,8 @@ export function PageBuddy({ scrollRoot }: PageBuddyProps) {
   const platforms = useRef<Platform[]>([]);
   const path = useRef(pathname);
   path.current = pathname;
+  // Scrolling between sections is one page; only a real page change counts as new.
+  const page = pageKeyFor(pathname);
 
   // Every new page, it drops in from behind the top bar wherever it last stood.
   useEffect(() => {
@@ -521,7 +532,7 @@ export function PageBuddy({ scrollRoot }: PageBuddyProps) {
     hop(b, now, 0, 0);
     b.nextThink = now + 1;
     b.lastActive = now;
-  }, [pathname, scrollRoot]);
+  }, [page, scrollRoot]);
 
   useEffect(() => {
     const root = scrollRoot.current;

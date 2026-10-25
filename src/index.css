@@ -331,6 +331,11 @@
   animation-delay: calc(min(var(--i, 0), 6) * 45ms + 60ms);
 }
 
+/* In the section stack, entrances wait until the reader reaches their section. */
+.snap-section:not([data-seen]) * {
+  animation-play-state: paused;
+}
+
 /* Now-playing bars in the playlist. */
 .eq-bar {
   height: 100%;

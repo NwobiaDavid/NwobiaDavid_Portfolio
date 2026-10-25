@@ -5,6 +5,8 @@ import { type ISourceOptions } from "@tsparticles/engine";
 // motion the field is still: no drift, no twinkle, no cursor reactions.
 const makeParticles = (color: string, reduceMotion: boolean): ISourceOptions => ({
   fpsLimit: 60,
+  // Confined to the hero, so it scrolls away with it instead of covering every section.
+  fullScreen: { enable: false },
   detectRetina: true,
   pauseOnOutsideViewport: true,
   particles: {
