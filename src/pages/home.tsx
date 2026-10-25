@@ -10,6 +10,7 @@ import { useEffect, useMemo, useState } from "react";
 import { particleOptionsFor } from "@/config/particles";
 import { useTheme } from "@/components/theme-provider";
 import { ResumeViewer } from "@/components/resume-viewer";
+import { HeroCard } from "@/components/hero-card";
 
 // Delay, in ms, for each beat of the hero entrance. The name leads, the two headline
 // lines follow on the same rhythm, then the supporting copy and actions settle in.
@@ -94,20 +95,7 @@ export default function Home() {
         </div>
 
         <div className="order-first md:order-none">
-          <div
-            className="hero-portrait w-40 overflow-hidden rounded-2xl bg-muted ring-1 ring-foreground/10 sm:w-52 md:w-64 lg:w-72"
-            data-blobity-tooltip="Always Active!"
-            data-blobity-invert="false"
-          >
-            <img
-              src="/images/pfpmain-comp.jpg"
-              alt="David Nwobia"
-              width={576}
-              height={576}
-              decoding="async"
-              className="aspect-square h-full w-full object-cover"
-            />
-          </div>
+          <HeroCard />
         </div>
       </section>
     </div>

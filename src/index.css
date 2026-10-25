@@ -298,17 +298,17 @@
   }
 }
 
-/* The portrait arrives as a surface coming into focus, not a box fading in. */
-@keyframes materialize {
+/* The portrait card swings in from an angle and comes into focus as it squares up. */
+@keyframes swing-in {
   from {
     opacity: 0;
-    transform: scale(0.96);
-    filter: blur(10px);
+    transform: perspective(900px) translateY(16px) rotateX(14deg) rotateY(-34deg) scale(0.9);
+    filter: blur(8px);
   }
   to {
     opacity: 1;
     transform: none;
-    filter: blur(0);
+    filter: none;
   }
 }
 
@@ -334,6 +334,376 @@
 /* In the section stack, entrances wait until the reader reaches their section. */
 .snap-section:not([data-seen]) * {
   animation-play-state: paused;
+}
+
+/* ...and while the intro plays, until the sheet starts to part (see intro.tsx). */
+[data-intro] .page-enter,
+[data-intro] .page-enter * {
+  animation-play-state: paused;
+}
+
+/* ---------------------------------------------------------------------------
+   Intro: a type specimen of the name that tears in two along a line through
+   the letters. Both halves render the same specimen; each shows its own slice.
+--------------------------------------------------------------------------- */
+
+@keyframes guide-draw {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+@keyframes caret-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+.intro {
+  --split: 50%;
+  --ease-expo-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-expo-in-out: cubic-bezier(0.87, 0, 0.13, 1);
+  position: fixed;
+  inset: 0;
+  z-index: 9500;
+  cursor: pointer;
+  color: hsl(var(--foreground));
+}
+
+.intro-half {
+  position: absolute;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+  background: hsl(var(--background));
+  transition: transform 1200ms var(--ease-expo-in-out);
+}
+
+.intro-half-top {
+  top: 0;
+  height: var(--split);
+}
+
+.intro-half-bottom {
+  top: var(--split);
+  bottom: 0;
+}
+
+.intro-half-bottom .intro-spec {
+  top: calc(-1 * var(--split));
+}
+
+.intro[data-split] .intro-half-top {
+  transform: translateY(-100%);
+}
+
+.intro[data-split] .intro-half-bottom {
+  transform: translateY(100%);
+}
+
+.intro-spec {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100vh;
+}
+
+.intro-spec:not([data-ready]) > * {
+  visibility: hidden;
+}
+
+.intro-guide {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: hsl(var(--foreground) / 0.18);
+  transform-origin: left;
+}
+
+.intro-guide span {
+  position: absolute;
+  bottom: 6px;
+  left: 1.5rem;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: hsl(var(--muted-foreground));
+}
+
+.intro-word {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
+  text-align: center;
+  font-family: "Syne Variable", sans-serif;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  white-space: nowrap;
+}
+
+/* A zero-size box whose top edge sits on the word's baseline, for measuring. */
+.intro-baseline {
+  display: inline-block;
+  width: 0;
+  height: 0;
+}
+
+.intro-meta {
+  position: absolute;
+  left: 1.5rem;
+  right: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+  color: hsl(var(--muted-foreground));
+}
+
+@media (min-width: 768px) {
+  .intro-guide span,
+  .intro-meta {
+    left: 4rem;
+  }
+
+  .intro-meta {
+    right: 4rem;
+  }
+}
+
+.intro-caret {
+  display: inline-block;
+  width: 1px;
+  height: 1.1em;
+  margin-left: 2px;
+  vertical-align: -0.2em;
+  background: currentColor;
+  animation: caret-blink 1s steps(1) infinite;
+}
+
+.intro[data-split] .intro-caret {
+  visibility: hidden;
+}
+
+.intro-spec[data-ready] .intro-guide {
+  animation: guide-draw 1000ms var(--ease-expo-out) both;
+  animation-delay: calc(var(--i) * 100ms);
+}
+
+.intro-spec[data-ready] .intro-guide span {
+  animation: fade 500ms ease both;
+  animation-delay: calc(300ms + var(--i) * 100ms);
+}
+
+.intro-spec[data-ready] .intro-meta {
+  animation: fade 500ms ease 200ms both;
+}
+
+.intro-spec[data-ready] .intro-word {
+  animation: fade 450ms ease 350ms both;
+}
+
+/* ---------------------------------------------------------------------------
+   Grain: a sheet of film noise over everything, so flat colour reads as paper.
+--------------------------------------------------------------------------- */
+
+@keyframes grain {
+  25% {
+    transform: translate(-3%, 2%);
+  }
+  50% {
+    transform: translate(2%, -3%);
+  }
+  75% {
+    transform: translate(-2%, -2%);
+  }
+}
+
+.grain {
+  position: fixed;
+  inset: -50%;
+  z-index: 9000;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain 0.8s steps(4, end) infinite;
+}
+
+.dark .grain {
+  opacity: 0.07;
+}
+
+/* Glass should look like glass, not frosted paper. */
+.fun .grain {
+  display: none;
+}
+
+/* ---------------------------------------------------------------------------
+   Preview words: words in running text that carry a small image of the work.
+   Hovering one rises a highlight behind it and floats a card of the work
+   beside the pointer (see preview-words.tsx).
+--------------------------------------------------------------------------- */
+
+@keyframes thumb-jiggle {
+  0%,
+  9%,
+  100% {
+    rotate: 0deg;
+    scale: 1;
+  }
+  1.5% {
+    rotate: -9deg;
+    scale: 1.12;
+  }
+  3% {
+    rotate: 7deg;
+  }
+  4.5% {
+    rotate: -5deg;
+  }
+  6% {
+    rotate: 3deg;
+    scale: 1.04;
+  }
+  7.5% {
+    rotate: -1deg;
+  }
+}
+
+.pw-word {
+  --pw-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  position: relative;
+  color: hsl(var(--foreground));
+  text-decoration: none;
+  /* A highlight band (collapsed until hover) and a hairline rule, both stopping
+     short of the thumbnail. */
+  background-image: linear-gradient(hsl(var(--foreground) / 0.08), hsl(var(--foreground) / 0.08)),
+    linear-gradient(hsl(var(--foreground) / 0.35), hsl(var(--foreground) / 0.35));
+  background-repeat: no-repeat;
+  background-position: 0 92%, 0 96%;
+  background-size: calc(100% - 2em) 0, calc(100% - 2em) 1px;
+  transition: background-size 450ms var(--pw-ease);
+}
+
+.pw-word:hover,
+.pw-word.is-active,
+.pw-word.is-hinting {
+  background-size: calc(100% - 2em) 0.5em, calc(100% - 2em) 1px;
+}
+
+.pw-word:focus-visible {
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+.pw-thumb {
+  display: inline-block;
+  width: 1.75em;
+  height: 0.95em;
+  margin-left: 0.25em;
+  vertical-align: -0.12em;
+  border-radius: 0.12em;
+  background: hsl(var(--muted)) center top / cover no-repeat;
+  box-shadow: inset 0 0 0 1px hsl(var(--foreground) / 0.1);
+  transform-origin: 40% 60%;
+  transition: transform 450ms var(--pw-ease);
+  animation: thumb-jiggle 9s ease-in-out infinite;
+  animation-delay: var(--jiggle-delay, 0s);
+}
+
+.pw-word:hover .pw-thumb,
+.pw-word.is-active .pw-thumb,
+.pw-word.is-hinting .pw-thumb {
+  transform: scale(1.18) rotate(-3deg);
+}
+
+.pw-word:hover .pw-thumb,
+.pw-word.is-active .pw-thumb {
+  animation: none;
+}
+
+.pw-card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 30;
+  width: clamp(200px, 20vw, 300px);
+  pointer-events: none;
+}
+
+.pw-card-inner {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border-radius: 6px;
+  background: hsl(var(--muted));
+  box-shadow: 0 24px 46px -24px rgb(0 0 0 / 0.55), 0 0 0 1px hsl(var(--foreground) / 0.08);
+  opacity: 0;
+  transform: scale(0.5);
+  transform-origin: var(--card-origin, 0 0);
+  transition: transform 500ms cubic-bezier(0.22, 1, 0.36, 1), opacity 300ms;
+}
+
+.pw-card.is-on .pw-card-inner {
+  opacity: 1;
+  transform: none;
+}
+
+/* Each piece of work waits below the frame and wipes up over the last one. */
+.pw-card-art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  clip-path: inset(100% 0 0);
+  transition: clip-path 550ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.pw-card-art.is-current {
+  z-index: 1;
+  clip-path: inset(0);
+}
+
+.pw-card-caption {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 10px;
+  z-index: 2;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: rgb(255 255 255 / 0.95);
+  text-shadow: 0 1px 6px rgb(0 0 0 / 0.5);
+}
+
+.pw-card-inner::after {
+  content: "";
+  position: absolute;
+  inset: 45% 0 0;
+  z-index: 1;
+  background: linear-gradient(transparent, rgb(0 0 0 / 0.55));
+}
+
+.pw-hint-touch {
+  display: none;
+}
+
+@media (hover: none) {
+  .pw-hint-mouse {
+    display: none;
+  }
+
+  .pw-hint-touch {
+    display: inline;
+  }
 }
 
 /* Now-playing bars in the playlist. */
@@ -367,8 +737,15 @@
 }
 
 .hero-portrait {
-  animation: materialize 900ms var(--ease-out) both;
+  animation: swing-in 1100ms var(--ease-out) both;
   animation-delay: 120ms;
+}
+
+/* On a phone-sized card the small print would be too small to read. */
+@container (max-width: 220px) {
+  .hero-card-facts {
+    display: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -381,8 +758,17 @@
   }
 
   .hero-line > span,
-  .eq-bar {
+  .eq-bar,
+  .grain,
+  .pw-thumb {
     animation: none;
+  }
+
+  .pw-word,
+  .pw-thumb,
+  .pw-card-inner,
+  .pw-card-art {
+    transition: none;
   }
 
   *,
