@@ -28,7 +28,8 @@ export const ResumeViewer = ({
     // Create a temporary link to download the file
     const link = document.createElement("a");
     // link.href = "/files/my-resume-2025.pdf";
-    link.href = "/files/David_Nwobia_Resume_main.pdf";
+    // link.href = "/files/David_Nwobia_Resume_main.pdf";
+    link.href = "/files/David_Nwobia_Resume_2026.pdf";
     link.download = "David_Nwobia_Resume.pdf";
     document.body.appendChild(link);
     link.click();
@@ -72,7 +73,8 @@ export const ResumeViewer = ({
         </DialogHeader>
         <div className="flex-1 overflow-hidden">
           <iframe
-            src="/files/David_Nwobia_Resume_main.pdf"
+            src="/files/David_Nwobia_Resume_2026.pdf"
+            // src="/files/David_Nwobia_Resume_main.pdf"
             // src="/files/my-resume-2025.pdf"
             className="w-full h-full border-0"
             title="Resume PDF Viewer"
