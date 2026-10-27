@@ -2,6 +2,7 @@ import { Link, useLocation } from "react-router-dom";
 import { LayoutGroup, motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { useSheet } from "@/hooks/use-sheet";
+import { Logo } from "@/components/logo";
 
 import {
   Drawer,
@@ -106,9 +107,10 @@ export const MainSidebar = ({ isMobile = false }: MainSidebarProps) => {
         <Link
           to="/"
           onClick={close}
-          className="truncate font-display text-lg font-semibold tracking-[-0.01em] lg:text-xl"
+          className="brand flex min-w-0 items-center gap-2.5 rounded-md font-display text-lg font-semibold tracking-[-0.01em] lg:text-xl"
         >
-          David Nwobia
+          <Logo className="h-7 w-7 lg:h-8 lg:w-8" />
+          <span className="truncate">David Nwobia</span>
         </Link>
         {/* In the sheet the top-right corner belongs to the sheet's own close button. */}
         {!isMobile && <ModeToggle />}
