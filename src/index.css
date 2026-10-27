@@ -343,15 +343,10 @@
 }
 
 /* ---------------------------------------------------------------------------
-   Intro: a type specimen of the name that tears in two along a line through
-   the letters. Both halves render the same specimen; each shows its own slice.
+   Intro: the site boots like a dev server, the name decodes out of noise, and
+   the screen tears in two along a line through it. Both halves render the same
+   screen; each shows its own slice.
 --------------------------------------------------------------------------- */
-
-@keyframes guide-draw {
-  from {
-    transform: scaleX(0);
-  }
-}
 
 @keyframes caret-blink {
   50% {
@@ -359,10 +354,32 @@
   }
 }
 
+/* The logo's underscore is a live cursor while the brand link is pointed at. */
+.brand:hover .logo-cursor,
+.brand:focus-visible .logo-cursor {
+  animation: caret-blink 1s steps(1) infinite;
+}
+
+/* The tear runs across the screen just before the halves pull apart. */
+@keyframes tear-line {
+  0% {
+    transform: scaleX(0);
+    opacity: 1;
+  }
+  45% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scaleX(1);
+    opacity: 0;
+  }
+}
+
 .intro {
   --split: 50%;
-  --ease-expo-out: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-expo-in-out: cubic-bezier(0.87, 0, 0.13, 1);
+  --mono: ui-monospace, "SF Mono", "Cascadia Code", Consolas, monospace;
   position: fixed;
   inset: 0;
   z-index: 9500;
@@ -370,12 +387,32 @@
   color: hsl(var(--foreground));
 }
 
+.intro::after {
+  content: "";
+  position: absolute;
+  top: var(--split);
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: hsl(var(--primary));
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+.intro[data-split]::after {
+  animation: tear-line 700ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* A faint dot grid, like graph paper or a canvas editor. The bottom half shifts
+   its grid up by the split so the dots line up across the seam. */
 .intro-half {
   position: absolute;
   left: 0;
   right: 0;
   overflow: hidden;
-  background: hsl(var(--background));
+  background-color: hsl(var(--background));
+  background-image: radial-gradient(hsl(var(--foreground) / 0.09) 1px, transparent 1.5px);
+  background-size: 24px 24px;
   transition: transform 1200ms var(--ease-expo-in-out);
 }
 
@@ -387,6 +424,7 @@
 .intro-half-bottom {
   top: var(--split);
   bottom: 0;
+  background-position: 0 calc(-1 * var(--split));
 }
 
 .intro-half-bottom .intro-spec {
@@ -409,49 +447,6 @@
   height: 100vh;
 }
 
-.intro-spec:not([data-ready]) > * {
-  visibility: hidden;
-}
-
-.intro-guide {
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: hsl(var(--foreground) / 0.18);
-  transform-origin: left;
-}
-
-.intro-guide span {
-  position: absolute;
-  bottom: 6px;
-  left: 1.5rem;
-  font-size: 10px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: hsl(var(--muted-foreground));
-}
-
-.intro-word {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  right: 0;
-  transform: translateY(-50%);
-  text-align: center;
-  font-family: "Syne Variable", sans-serif;
-  line-height: 1;
-  letter-spacing: -0.04em;
-  white-space: nowrap;
-}
-
-/* A zero-size box whose top edge sits on the word's baseline, for measuring. */
-.intro-baseline {
-  display: inline-block;
-  width: 0;
-  height: 0;
-}
-
 .intro-meta {
   position: absolute;
   left: 1.5rem;
@@ -459,54 +454,90 @@
   display: flex;
   justify-content: space-between;
   gap: 1rem;
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  font-variant-numeric: tabular-nums;
+  font-family: var(--mono);
+  font-size: 12px;
   color: hsl(var(--muted-foreground));
+  animation: fade 400ms ease both;
 }
 
 @media (min-width: 768px) {
-  .intro-guide span,
   .intro-meta {
     left: 4rem;
-  }
-
-  .intro-meta {
     right: 4rem;
+    font-size: 13px;
   }
+}
+
+.intro-term {
+  align-items: flex-end;
+}
+
+.intro-log {
+  animation: rise 260ms var(--ease-out) both;
+}
+
+.intro-name {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
+  text-align: center;
+  font-family: "Syne Variable", sans-serif;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  white-space: nowrap;
+}
+
+.intro-cell {
+  position: relative;
+  display: inline-block;
+}
+
+/* A stand-in glyph, centred over the real letter it is hiding. */
+.intro-noise {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--mono);
+  font-size: 0.72em;
+  font-weight: 400;
+  color: hsl(var(--muted-foreground) / 0.6);
+}
+
+.intro-role {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin-top: 1.25rem;
+  font-family: var(--mono);
+  font-size: clamp(11px, 1.05vw, 14px);
+  font-weight: 400;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: hsl(var(--muted-foreground));
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 400ms ease, transform 500ms var(--ease-out);
+}
+
+.intro-role[data-on] {
+  opacity: 1;
+  transform: none;
 }
 
 .intro-caret {
   display: inline-block;
-  width: 1px;
+  width: 0.55em;
   height: 1.1em;
-  margin-left: 2px;
+  margin-left: 1px;
   vertical-align: -0.2em;
-  background: currentColor;
+  background: hsl(var(--foreground) / 0.75);
   animation: caret-blink 1s steps(1) infinite;
-}
-
-.intro[data-split] .intro-caret {
-  visibility: hidden;
-}
-
-.intro-spec[data-ready] .intro-guide {
-  animation: guide-draw 1000ms var(--ease-expo-out) both;
-  animation-delay: calc(var(--i) * 100ms);
-}
-
-.intro-spec[data-ready] .intro-guide span {
-  animation: fade 500ms ease both;
-  animation-delay: calc(300ms + var(--i) * 100ms);
-}
-
-.intro-spec[data-ready] .intro-meta {
-  animation: fade 500ms ease 200ms both;
-}
-
-.intro-spec[data-ready] .intro-word {
-  animation: fade 450ms ease 350ms both;
 }
 
 /* ---------------------------------------------------------------------------
@@ -760,7 +791,8 @@
   .hero-line > span,
   .eq-bar,
   .grain,
-  .pw-thumb {
+  .pw-thumb,
+  .logo-cursor {
     animation: none;
   }
 

@@ -1,29 +1,24 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { flushSync } from "react-dom";
+import { sections } from "@/constants/sections";
 
-// A type specimen of the name: guide lines draw in, the word steps through Syne's
-// weights while the role types out, then the sheet tears along a line through the
-// letters and the two halves part to show the site.
+// The site boots like a dev server: a command types out in the corner, the build
+// logs report in, and the name decodes out of noise. Once it is "ready" the screen
+// tears along a line through the name and the two halves part to show the site.
 
-const NAME = "David";
-const ROLE = "Software engineer";
+const NAME = "David Nwobia";
+const ROLE = "Software Engineer";
+const COMMAND = "npm run dev";
+const NOISE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#$%&*+=<>/\\{}[]";
 const FONT = '"Syne Variable"';
-const GUIDES = ["Cap height", "x-height", "Baseline", "Descender"];
-const WEIGHTS = [
-  { weight: 400, label: "Regular 400" },
-  { weight: 500, label: "Medium 500" },
-  { weight: 600, label: "Semibold 600" },
-  { weight: 700, label: "Bold 700" },
-  { weight: 800, label: "Extrabold 800" },
-  { weight: 700, label: "Bold 700" },
-];
 
-// The beats, in ms from when the fonts are ready.
-const WEIGHT_AT = 450;
-const WEIGHT_STEP = 240;
-const TYPE_FROM = 1000;
-const TYPE_TO = 2000;
-const SPLIT_AT = 2500;
+// The beats, in ms from when the font is ready.
+const TYPE_FROM = 150;
+const TYPE_TO = 650;
+const LOG_AT = [800, 1000, 1200];
+const DECODE_FROM = 700;
+const DECODE_TO = 1900;
+const DECODE_TICK = 45;
+const SPLIT_AT = 2600;
 const SPLIT_FOR = 1200; // matches .intro-half in index.css
 
 const SEEN_KEY = "intro-seen";
@@ -39,67 +34,75 @@ const shouldPlay = () => {
   }
 };
 
-interface Layout {
+const noise = () => NOISE[Math.floor(Math.random() * NOISE.length)];
+
+/** Each letter resolves in turn, left to right; the rest keep flickering. */
+const decodeAt = (progress: number) =>
+  [...NAME].map((ch, i) => (ch === " " || progress * NAME.length > i ? null : noise()));
+
+interface Screen {
   size: number;
-  guides: number[];
-  split: number;
   height: number;
-  /** The word spans the screen, leaving no margin for labels beside it. */
-  narrow: boolean;
+  typed: string;
+  logs: string[];
+  /** Per letter: the noise glyph standing in for it, or null once it has resolved. */
+  glyphs: (string | null)[];
+  role: boolean;
+  /** On a narrow screen the name takes two lines, and the tear runs between them. */
+  stacked: boolean;
 }
 
-const Specimen = ({ weight, label, typed, layout, measureRef }: {
-  weight: number;
-  label: string;
-  typed: string;
-  layout: Layout | null;
-  measureRef?: React.Ref<HTMLSpanElement>;
-}) => (
-  // Nothing shows, or starts animating, until the guides have been measured.
-  <div
-    className="intro-spec"
-    data-ready={layout && layout.guides.length > 0 ? "" : undefined}
-    style={layout ? { height: layout.height } : undefined}
-  >
-    {GUIDES.map((name, i) => {
-      // A label needs room above its line, and on a narrow screen the inner two
-      // would sit on the letters.
-      const inner = i === 1 || i === 2;
-      const roomy = !layout || ((i === 0 || layout.guides[i] - layout.guides[i - 1] >= 18) && !(inner && layout.narrow));
-      return (
-        <div key={name} className="intro-guide" style={{ top: layout?.guides[i], "--i": i } as React.CSSProperties}>
-          {roomy && <span>{name}</span>}
-        </div>
-      );
-    })}
-    <div className="intro-word" style={{ fontWeight: weight, fontSize: layout?.size }}>
-      {NAME}
-      <span ref={measureRef} className="intro-baseline" />
-    </div>
+const Terminal = ({ size, height, typed, logs, glyphs, role, stacked }: Screen) => (
+  <div className="intro-spec" style={{ height }}>
     <div className="intro-meta top-6 md:top-10">
-      <span>Syne</span>
-      <span>{label}</span>
-    </div>
-    <div className="intro-meta bottom-6 md:bottom-10">
+      <span>~/david-nwobia</span>
       <span>
-        {typed}
-        <span className="intro-caret" />
+        git:(<span className="text-foreground">main</span>)
       </span>
-      <span>Aa Bb Cc 0123</span>
+    </div>
+
+    <div className="intro-name" style={{ fontSize: size }}>
+      {[...NAME].map((ch, i) =>
+        ch === " " && stacked ? (
+          <br key={i} />
+        ) : (
+          // The real letter holds its own width, so the noise never shifts the word.
+          <span key={i} className="intro-cell">
+            <span className={glyphs[i] ? "invisible" : undefined}>{ch === " " ? " " : ch}</span>
+            {glyphs[i] && <span className="intro-noise">{glyphs[i]}</span>}
+          </span>
+        )
+      )}
+      <span className="intro-role" data-on={role ? "" : undefined}>
+        {ROLE}
+      </span>
+    </div>
+
+    <div className="intro-meta intro-term bottom-6 md:bottom-10">
+      <div className="flex flex-col gap-1">
+        <span>
+          <span className="text-muted-foreground">$ </span>
+          <span className="text-foreground">{typed}</span>
+          {logs.length === 0 && <span className="intro-caret" />}
+        </span>
+        {logs.map((line) => (
+          <span key={line} className="intro-log">
+            {line}
+          </span>
+        ))}
+      </div>
+      <span className="hidden self-end sm:inline">Click or press any key to skip</span>
     </div>
   </div>
 );
 
 export function Intro() {
   const [playing, setPlaying] = useState(shouldPlay);
-  const [step, setStep] = useState(0);
-  const [typed, setTyped] = useState("");
-  const [layout, setLayout] = useState<Layout | null>(null);
+  const [screen, setScreen] = useState<Screen | null>(null);
   const [split, setSplit] = useState(false);
-  const baselineRef = useRef<HTMLSpanElement>(null);
   const skipRef = useRef<() => void>(() => {});
 
-  // Hold the page's own entrance until the sheet parts, so the hero rises as it opens.
+  // Hold the page's own entrance until the screen parts, so the hero rises as it opens.
   useLayoutEffect(() => {
     if (!playing) return;
     const root = document.documentElement;
@@ -114,7 +117,23 @@ export function Intro() {
     let alive = true;
     const timers: number[] = [];
     const at = (ms: number, fn: () => void) => timers.push(window.setTimeout(fn, ms));
-    const clear = () => timers.splice(0).forEach((t) => window.clearTimeout(t));
+    let ticker = 0;
+    const clear = () => {
+      timers.splice(0).forEach((t) => window.clearTimeout(t));
+      window.clearInterval(ticker);
+    };
+    const update = (patch: Partial<Screen>) => setScreen((s) => (s ? { ...s, ...patch } : s));
+
+    // Real numbers, not set dressing: the sections on this page, how fast the server
+    // answered, and where it is being served from. Time to first byte measures the
+    // hosting, not the visitor's connection, so a slow phone network doesn't show here.
+    const [nav] = performance.getEntriesByType("navigation") as PerformanceNavigationTiming[];
+    const ttfb = nav ? Math.max(1, Math.round(nav.responseStart)) : null;
+    const logs = () => [
+      `› compiling ${sections.length} sections`,
+      ttfb ? `✓ first byte in ${ttfb} ms` : "✓ compiled",
+      `➜ live at ${window.location.host}`,
+    ];
 
     const finish = () => {
       try {
@@ -126,50 +145,27 @@ export function Intro() {
     };
     const part = () => {
       clear();
-      setStep(WEIGHTS.length - 1);
-      setTyped(ROLE);
+      update({ typed: COMMAND, logs: logs(), glyphs: decodeAt(1), role: true });
       setSplit(true);
       // The split eases in slowly, so the hero waits until the gap is opening to rise.
       at(SPLIT_FOR * 0.3, () => delete document.documentElement.dataset.intro);
       at(SPLIT_FOR, finish);
     };
 
-    // Size the word to the screen and find where its guide lines fall.
-    const measure = () => {
-      const w = window.innerWidth;
-      const h = window.innerHeight;
-      // The boldest weight is the widest; it must still fit with room either side.
-      // Measured in the DOM: canvas ignores the variable font's weight axis.
-      const probe = document.createElement("span");
-      probe.className = "intro-word";
-      probe.style.cssText = "position:fixed;visibility:hidden;font-size:100px;font-weight:800;left:0;right:auto;transform:none";
-      probe.textContent = NAME;
-      document.body.appendChild(probe);
-      const widest = probe.getBoundingClientRect().width;
-      probe.remove();
-      const size = Math.min((w * 0.86 * 100) / widest, h * 0.46, w * 0.26);
-      const ctx = document.createElement("canvas").getContext("2d")!;
-      ctx.font = `400 ${size}px ${FONT}`;
-      // The baseline sits where the centred word lands, so apply the size first.
-      const base = { size, split: Math.round(h * 0.49), height: h, narrow: w < 768 };
-      flushSync(() => setLayout({ ...base, guides: [] }));
-      if (!baselineRef.current) return;
-      const baseline = baselineRef.current.getBoundingClientRect().top;
-      const guides = [
-        baseline - ctx.measureText("H").actualBoundingBoxAscent,
-        baseline - ctx.measureText("x").actualBoundingBoxAscent,
-        baseline,
-        baseline + ctx.measureText("y").actualBoundingBoxDescent,
-      ];
-      setLayout({ ...base, guides });
-      run();
-    };
-
     const run = () => {
-      WEIGHTS.forEach((_, i) => at(WEIGHT_AT + i * WEIGHT_STEP, () => setStep(i)));
-      for (let n = 1; n <= ROLE.length; n++) {
-        at(TYPE_FROM + ((TYPE_TO - TYPE_FROM) * n) / ROLE.length, () => setTyped(ROLE.slice(0, n)));
+      for (let n = 1; n <= COMMAND.length; n++) {
+        at(TYPE_FROM + ((TYPE_TO - TYPE_FROM) * n) / COMMAND.length, () => update({ typed: COMMAND.slice(0, n) }));
       }
+      LOG_AT.forEach((ms, i) => at(ms, () => update({ logs: logs().slice(0, i + 1) })));
+      at(DECODE_FROM, () => {
+        const start = performance.now();
+        ticker = window.setInterval(() => {
+          const progress = Math.min(1, (performance.now() - start) / (DECODE_TO - DECODE_FROM));
+          update({ glyphs: decodeAt(progress) });
+          if (progress === 1) window.clearInterval(ticker);
+        }, DECODE_TICK);
+      });
+      at(DECODE_TO - 100, () => update({ role: true }));
       at(SPLIT_AT, part);
     };
 
@@ -179,14 +175,30 @@ export function Intro() {
       if (started) part();
     };
 
-    const fonts = Promise.all([400, 800].map((wt) => document.fonts.load(`${wt} 100px ${FONT}`))).catch(() => undefined);
+    // The name is set as wide as the screen allows, in the font it will be shown in.
+    const start = () => {
+      if (!alive) return;
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      const probe = document.createElement("span");
+      probe.className = "intro-name";
+      probe.style.cssText = "position:fixed;visibility:hidden;font-size:100px;left:0;right:auto;transform:none";
+      const stacked = w < 640;
+      // Stacked, the longest word sets the size.
+      probe.textContent = stacked ? NAME.split(" ").reduce((a, b) => (b.length > a.length ? b : a)) : NAME;
+      document.body.appendChild(probe);
+      const width = probe.getBoundingClientRect().width;
+      probe.remove();
+      const size = Math.min((w * 0.84 * 100) / width, h * (stacked ? 0.13 : 0.2));
+      setScreen({ size, height: h, typed: "", logs: [], glyphs: decodeAt(0), role: false, stacked });
+      started = true;
+      run();
+    };
+
+    const font = document.fonts.load(`700 100px ${FONT}`).catch(() => undefined);
     // A slow font shouldn't hold the site hostage.
     const timeout = new Promise((resolve) => window.setTimeout(resolve, 1500));
-    Promise.race([fonts, timeout]).then(() => {
-      if (!alive) return;
-      started = true;
-      measure();
-    });
+    Promise.race([font, timeout]).then(start);
 
     return () => {
       alive = false;
@@ -211,22 +223,15 @@ export function Intro() {
 
   if (!playing) return null;
 
-  const { weight, label } = WEIGHTS[step];
-  const spec = { weight, label, typed, layout };
-
   return (
     <div
       className="intro"
       data-split={split ? "" : undefined}
-      style={layout ? ({ "--split": `${layout.split}px` } as React.CSSProperties) : undefined}
+      style={screen ? ({ "--split": `${Math.round(screen.height * 0.49)}px` } as React.CSSProperties) : undefined}
       aria-hidden
     >
-      <div className="intro-half intro-half-top">
-        <Specimen {...spec} measureRef={baselineRef} />
-      </div>
-      <div className="intro-half intro-half-bottom">
-        <Specimen {...spec} />
-      </div>
+      <div className="intro-half intro-half-top">{screen && <Terminal {...screen} />}</div>
+      <div className="intro-half intro-half-bottom">{screen && <Terminal {...screen} />}</div>
     </div>
   );
 }
