@@ -7,6 +7,7 @@ import { createPortal } from "react-dom";
 import { PageHeader, PageShell } from "@/components/page-header";
 
 enum Category {
+  AI,
   WEBDEVELOPMENT,
   DATASCIENCE,
   OTHERS,
@@ -20,6 +21,18 @@ interface Certificate {
 }
 
 const Certs: Certificate[] = [
+  {
+    title: "Model Context Protocol: Advanced Topics",
+    link: "https://academy.claude.com/verify/b9f1d734f94fe782c317ee3ac8b52ec3",
+    image: "/images/certs/Claude Academy - MCP Advanced Topics.png",
+    category: Category.AI
+  },
+  {
+    title: "Building with the Claude API",
+    link: "https://academy.claude.com/verify/aea969a3f5d23ce69beee724827c4ebe",
+    image: "/images/certs/Claude Academy - Building with the Claude API.png",
+    category: Category.AI
+  },
   {
     title: "JavaScript (Intermediate) Certificate",
     link: "https://www.hackerrank.com/certificates/a26fd989b676",
@@ -71,6 +84,7 @@ const Certs: Certificate[] = [
 ]
 
 const sections = [
+  { title: "AI Engineering", category: Category.AI },
   { title: "Web Development", category: Category.WEBDEVELOPMENT },
   { title: "Data Science", category: Category.DATASCIENCE },
   { title: "Others", category: Category.OTHERS },
