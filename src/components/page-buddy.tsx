@@ -60,31 +60,60 @@ interface Platform {
   y: number;
 }
 
-type Activity = "read" | "code" | "coffee" | "music" | "think" | "wave";
+type Activity = "read" | "code" | "coffee" | "music" | "think" | "wave" | "build" | "stamp" | "write" | "guitar";
 
-const DURATION: Record<Activity, [number, number]> = {
-  read: [6, 10],
-  code: [6, 11],
-  coffee: [5, 8],
-  music: [6, 10],
-  think: [4.6, 5.4],
-  wave: [1.6, 2.2],
-};
+/** What a pastime does to Clawd while it lasts. Anything left out falls back to the idle pose. */
+interface ActivityDef {
+  duration: [number, number];
+  /** Sits down on the spot: the body drops two cells and the legs tuck away. */
+  sits?: boolean;
+  /** Vertical bob of the whole body, in cells. */
+  bob?: (now: number) => number;
+  /** Taps the back foot on the beat. */
+  taps?: boolean;
+  /** Overrides where the eyes look, or shuts them. Unset fields keep the default. */
+  eyes?: (t: number, now: number) => { ex?: number; ey?: number; closed?: boolean };
+  /** Draws the arms behind the props. Omitted, the arms hang at its sides. */
+  arms?: (d: Draw) => void;
+  /** Props and effects, drawn in front of the body and eyes. */
+  props?: (d: Draw) => void;
+}
 
-/** Some pages make some pastimes likelier: coding among the projects, reading the certificates. */
+/** The pen an activity draws with, in cells of Clawd's frame. */
+interface Draw {
+  cell: (c: number, r: number, w?: number, h?: number) => void;
+  fill: (color: string) => void;
+  alpha: (a: number) => void;
+  /** Seconds since the activity began. */
+  t: number;
+  now: number;
+  /** How far the body is bobbed or sat down. */
+  oy: number;
+  k: Colors;
+}
+
+/** The shared pastimes, on every page. */
+const COMMON: Activity[] = ["read", "code", "coffee", "music", "think"];
+
+/** How many draws a page's signature pastime gets against the common ones. */
+const SIGNATURE_WEIGHT = 4;
+
+/** Some pages make some pastimes likelier, and some have pastimes found nowhere else. */
+const PAGES: { path: string; favor: Activity[]; signature?: Activity[] }[] = [
+  { path: "/projects", favor: ["code", "code", "code"], signature: ["build"] },
+  { path: "/skills", favor: ["code", "code", "code"] },
+  { path: "/education", favor: ["read", "read", "read"] },
+  { path: "/certifications", favor: ["read", "read", "read"], signature: ["stamp"] },
+  { path: "/publications", favor: ["read", "read", "read"], signature: ["write"] },
+  { path: "/hobby", favor: ["music", "music", "music"], signature: ["guitar"] },
+  { path: "/experiences", favor: ["code", "coffee", "coffee"] },
+];
+
 const pastimes = (path: string): Activity[] => {
-  const all: Activity[] = ["read", "code", "coffee", "music", "think"];
-  const bias: Activity[] =
-    path.startsWith("/projects") || path.startsWith("/skills")
-      ? ["code", "code", "code"]
-      : path.startsWith("/education") || path.startsWith("/certifications") || path.startsWith("/publications")
-        ? ["read", "read", "read"]
-        : path.startsWith("/hobby")
-          ? ["music", "music", "music"]
-          : path.startsWith("/experiences")
-            ? ["code", "coffee", "coffee"]
-            : [];
-  return [...all, ...bias];
+  const page = PAGES.find((p) => path.startsWith(p.path));
+  if (!page) return COMMON;
+  const signature = (page.signature ?? []).flatMap((a) => Array<Activity>(SIGNATURE_WEIGHT).fill(a));
+  return [...COMMON, ...page.favor, ...signature];
 };
 
 interface Buddy {
@@ -172,7 +201,7 @@ const newBuddy = (): Buddy => ({
 });
 
 const begin = (b: Buddy, activity: Activity, now: number) => {
-  const [min, max] = DURATION[activity];
+  const [min, max] = ACTIVITIES[activity].duration;
   b.activity = activity;
   b.activityAt = now;
   b.activityUntil = now + between(min, max);
@@ -273,57 +302,393 @@ const readColors = () => ({
   glyph: `hsl(${token("--foreground")})`,
 });
 
+type Colors = ReturnType<typeof readColors>;
+
 const CODE_COLORS = ["#7aa2f7", "#9ece6a", "#e0af68", "#bb9af7"];
+
+const beatOf = (now: number) => Math.floor(now * 4) % 2;
+const flipping = (t: number) => t % 3 > 2.7;
+const sipping = (t: number) => t % 3.5 > 2.6;
+const hasIdea = (t: number) => t > 3.2;
+const none = () => {};
+
+/** Notes drifting up and away on either side of it. */
+const risingNotes = ({ cell, fill, alpha, t, k }: Draw) => {
+  fill(k.glyph);
+  for (let i = 0; i < 2; i++) {
+    const phase = (t * 0.6 + i / 2) % 1;
+    const c = i ? -3 : 18;
+    const r = Math.round(5 - phase * 10);
+    alpha(1 - phase);
+    cell(c + 1, r, 1, 3);
+    cell(c, r + 2);
+    cell(c + 2, r);
+  }
+  alpha(1);
+};
+
+/** A sheet of paper held up in front of it, with a few lines of grey text. */
+const sheet = ({ cell, fill }: Draw, long: number, short: number) => {
+  fill("#fbfaf7");
+  cell(3, 10, 12, 6);
+  fill("#d5cdbf");
+  cell(3, 10, 12, 1);
+  fill("#b8b0a2");
+  cell(5, 12, long, 1);
+  cell(5, 14, short, 1);
+};
+
+/** Where the quill is on the scroll: it writes one line, then the next, then pauses. */
+const quillAt = (t: number) => {
+  const n = Math.floor(t * 3) % 19;
+  const first = Math.min(n, 8);
+  const second = clamp(n - 9, 0, 7);
+  return n < 9 ? { first, second, x: 5 + first, y: 12 } : { first, second, x: 5 + second, y: 14 };
+};
+
+const ACTIVITIES: Record<Activity, ActivityDef> = {
+  read: {
+    duration: [6, 10],
+    eyes: (t) => ({ ex: flipping(t) ? 1 : [-1, 0, 1][Math.floor(t * 2) % 3], ey: 1 }),
+    arms: none,
+    props: (d) => {
+      const { cell, fill, t, k } = d;
+      sheet(d, 8, 6);
+      if (flipping(t)) {
+        // A page lifting as it turns.
+        fill("#fbfaf7");
+        cell(9, 8, 5, 4);
+        fill("#d5cdbf");
+        cell(9, 8, 5, 1);
+      }
+      fill(k.body);
+      cell(2, 12, 2, 2);
+      cell(14, 12, 2, 2);
+    },
+  },
+
+  code: {
+    duration: [6, 11],
+    sits: true,
+    eyes: () => ({ ex: 0, ey: 0 }),
+    arms: none,
+    props: ({ cell, fill, alpha, t, now, k }) => {
+      const tap = Math.floor(now * 10) % 2;
+      fill("#c4c8ce");
+      cell(4, 11, 10, 4);
+      fill("#e3e6ea");
+      cell(4, 11, 10, 1);
+      fill("#d97757");
+      cell(8, 13, 2, 1);
+      fill("#9097a1");
+      cell(2, 15, 14, 1);
+      fill(k.body);
+      cell(2, 12 + tap, 2, 2);
+      cell(14, 13 - tap, 2, 2);
+
+      // Lines of code drift up out of the laptop and fade.
+      for (let i = 0; i < 3; i++) {
+        const phase = (t * 0.7 + i / 3) % 1;
+        const cycle = Math.floor(t * 0.7 + i / 3);
+        alpha(1 - phase);
+        fill(CODE_COLORS[(cycle + i) % CODE_COLORS.length]);
+        cell(6 + ((cycle + i) % 3), Math.round(7 - phase * 12), 3 + ((cycle * 7 + i * 3) % 4), 1);
+      }
+      alpha(1);
+      // Every so often it all compiles.
+      if (t % 6 > 5.2) {
+        fill("#9ece6a");
+        cell(15, 2);
+        cell(16, 3);
+        cell(17, 2);
+        cell(18, 1);
+      }
+    },
+  },
+
+  coffee: {
+    duration: [5, 8],
+    eyes: (t) => ({ ex: sipping(t) ? 0 : 1, ey: 0, closed: sipping(t) || undefined }),
+    arms: ({ cell, t }) => {
+      cell(1, 10, 2, 2);
+      cell(sipping(t) ? 14 : 15, sipping(t) ? 9 : 10, 2, 2);
+    },
+    props: ({ cell, fill, alpha, t, now, k }) => {
+      const sip = sipping(t);
+      const [mx, my] = sip ? [11, 9] : [16, 8];
+      fill("#f2f0ec");
+      cell(mx, my, 3, 4);
+      cell(mx + 3, my + 1, 1, 2);
+      fill("#6b4226");
+      cell(mx, my, 3, 1);
+      if (!sip) {
+        // Steam curling up from the cup.
+        const curl = Math.floor(now * 3) % 2;
+        alpha(0.55);
+        fill(k.glyph);
+        cell(mx + curl, my - 2);
+        cell(mx + 1 - curl, my - 4);
+        cell(mx + curl + 1, my - 6);
+        alpha(1);
+      }
+    },
+  },
+
+  music: {
+    duration: [6, 10],
+    bob: beatOf,
+    taps: true,
+    eyes: () => ({ closed: true }),
+    props: (d) => {
+      const { cell, fill, oy } = d;
+      fill("#5b5f66");
+      cell(4, 4 + oy, 10, 1);
+      cell(3, 5 + oy);
+      cell(14, 5 + oy);
+      cell(2, 6 + oy, 2, 4);
+      cell(14, 6 + oy, 2, 4);
+      fill("#d97757");
+      cell(2, 7 + oy, 1, 2);
+      cell(15, 7 + oy, 1, 2);
+      risingNotes(d);
+    },
+  },
+
+  think: {
+    duration: [4.6, 5.4],
+    eyes: (t) => (hasIdea(t) ? { ex: 0, ey: -1 } : { ex: 1, ey: -1 }),
+    arms: ({ cell, t }) => {
+      cell(1, 10, 2, 2);
+      if (hasIdea(t)) cell(15, 6, 2, 2);
+      else cell(14, 10, 2, 2);
+    },
+    props: ({ cell, fill, alpha, t, k }) => {
+      // Bubbles lead up to a cloud that fills with dots, then an idea.
+      fill(k.glyph);
+      alpha(0.6);
+      cell(15, 4);
+      cell(16, 1, 2, 2);
+      alpha(1);
+      fill("#fbfaf7");
+      cell(15, -6, 8, 6);
+      fill(k.glyph);
+      alpha(0.6);
+      cell(16, -6, 6, 1);
+      cell(16, -1, 6, 1);
+      cell(15, -5, 1, 4);
+      cell(22, -5, 1, 4);
+      alpha(1);
+      if (hasIdea(t)) {
+        fill("#f5c542");
+        cell(18, -5, 2, 2);
+        cell(17, -4, 4, 1);
+        fill("#9097a1");
+        cell(18, -3, 2, 1);
+      } else {
+        fill("#6b6b6b");
+        for (let i = 0; i < Math.floor(t * 1.2) % 4; i++) cell(16 + i * 2, -3);
+      }
+    },
+  },
+
+  wave: {
+    duration: [1.6, 2.2],
+    arms: ({ cell, now }) => {
+      cell(1, 10, 2, 2);
+      if (Math.floor(now * 7) % 2) cell(15, 5, 2, 3);
+      else cell(16, 4, 2, 3);
+    },
+  },
+
+  // Signature pastimes, each found on one page only.
+
+  /** On the projects: hammering a nail into a plank, sparks flying. */
+  build: {
+    duration: [5, 8],
+    eyes: () => ({ ex: 1, ey: 1 }),
+    arms: ({ cell, t }) => {
+      const down = (t / 0.7) % 1 > 0.55;
+      cell(1, 10, 2, 2);
+      cell(15, down ? 10 : 7, 2, 2);
+    },
+    props: ({ cell, fill, t }) => {
+      const phase = (t / 0.7) % 1;
+      const down = phase > 0.55;
+      fill("#a0703c");
+      cell(17, 14, 7, 2);
+      fill("#7d5530");
+      cell(17, 15, 7, 1);
+      fill("#9097a1");
+      cell(21, 13);
+      if (down) {
+        fill("#6b4226");
+        cell(17, 11, 3, 1);
+        fill("#9097a1");
+        cell(20, 10, 2, 3);
+        if (phase < 0.75) {
+          fill("#f5c542");
+          cell(19, 13);
+          cell(23, 12);
+          cell(22, 9);
+        }
+      } else {
+        fill("#6b4226");
+        cell(16, 3, 1, 4);
+        fill("#9097a1");
+        cell(15, 1, 3, 2);
+      }
+    },
+  },
+
+  /** On the certificates: stamping one with a red seal of approval. */
+  stamp: {
+    duration: [5, 8],
+    eyes: () => ({ ex: 0, ey: 1 }),
+    arms: none,
+    props: (d) => {
+      const { cell, fill, alpha, t, k } = d;
+      const phase = (t / 1.6) % 1;
+      const down = phase > 0.5 && phase < 0.75;
+      sheet(d, 4, 3);
+
+      // The seal stays once it has been pressed the first time.
+      if (t > 0.8) {
+        fill("#c0392b");
+        cell(10, 12, 3, 3);
+        fill("#fbfaf7");
+        cell(11, 13);
+      }
+
+      if (down) {
+        // Pressed flat and kept low, so it never hides the eyes.
+        fill("#6b4226");
+        cell(10, 10, 2, 1);
+        cell(11, 11);
+        fill("#c0392b");
+        cell(10, 12, 3, 1);
+        fill(k.body);
+        cell(12, 11, 2, 2);
+        if (phase < 0.6) {
+          fill(k.glyph);
+          alpha(0.7);
+          cell(8, 11);
+          cell(14, 10);
+          alpha(1);
+        }
+      } else {
+        fill("#6b4226");
+        cell(12, 4, 3, 1);
+        cell(13, 5, 1, 2);
+        fill("#c0392b");
+        cell(12, 7, 3, 1);
+        fill(k.body);
+        cell(15, 4, 2, 2);
+      }
+      fill(k.body);
+      cell(2, 12, 2, 2);
+    },
+  },
+
+  /** On the publications: sitting down to write with a quill, a line at a time. */
+  write: {
+    duration: [6, 10],
+    sits: true,
+    eyes: (t) => {
+      const { x } = quillAt(t);
+      return { ex: x < 8 ? -1 : x > 11 ? 1 : 0, ey: 1 };
+    },
+    arms: none,
+    props: ({ cell, fill, t, k }) => {
+      const { first, second, x, y } = quillAt(t);
+      fill("#f3ead6");
+      cell(3, 11, 12, 5);
+      fill("#d9c9a3");
+      cell(3, 11, 1, 5);
+      cell(14, 11, 1, 5);
+      fill(k.eye);
+      if (first) cell(5, 12, first, 1);
+      if (second) cell(5, 14, second, 1);
+
+      // The nib on the line, the hand just above, the feather sticking up.
+      cell(x, y);
+      fill("#7aa2f7");
+      cell(x + 2, y - 5, 2, 3);
+      fill(k.body);
+      cell(x + 1, y - 2, 2, 2);
+      cell(2, 12, 2, 2);
+      // Now and then, a flick of ink.
+      if (t % 4 > 3.7) {
+        fill(k.eye);
+        cell(x + 3, y - 1);
+      }
+    },
+  },
+
+  /** On the hobbies: strumming a guitar, eyes shut when it gets into it. */
+  guitar: {
+    duration: [6, 10],
+    bob: beatOf,
+    taps: true,
+    eyes: (t) => (t % 4 > 2 ? { closed: true } : { ex: 1, ey: 0 }),
+    arms: none,
+    props: (d) => {
+      const { cell, fill, now, oy, k } = d;
+      fill("#5b3a1e");
+      cell(8, 10 + oy, 2, 1);
+      cell(10, 9 + oy, 2, 1);
+      cell(12, 8 + oy, 2, 1);
+      cell(14, 7 + oy, 2, 1);
+      cell(16, 5 + oy, 2, 2);
+      fill("#a0522d");
+      cell(1, 10 + oy, 7, 4);
+      cell(2, 9 + oy, 5, 1);
+      cell(2, 14 + oy, 5, 1);
+      fill(k.eye);
+      cell(4, 11 + oy, 2, 2);
+      fill(k.body);
+      cell(16, 7 + oy, 2, 2);
+      cell(6, 10 + oy + (Math.floor(now * 8) % 2), 2, 2);
+      risingNotes(d);
+    },
+  },
+};
 
 /** Draws one frame of Clawd in grid cells, feet on the bottom row of its frame. The
  *  proportions follow the block-character Clawd from the Claude Code welcome screen. */
-const paint = (ctx: CanvasRenderingContext2D, b: Buddy, now: number, k: ReturnType<typeof readColors>) => {
+const paint = (ctx: CanvasRenderingContext2D, b: Buddy, now: number, k: Colors) => {
   ctx.setTransform(ctx.canvas.width / GW, 0, 0, ctx.canvas.height / GH, 0, 0);
   ctx.clearRect(0, 0, GW, GH);
   ctx.translate(FX, FY);
   ctx.globalAlpha = 1;
   const cell = (c: number, r: number, w = 1, h = 1) => ctx.fillRect(c, r, w, h);
   const fill = (color: string) => (ctx.fillStyle = color);
+  const alpha = (a: number) => (ctx.globalAlpha = a);
 
-  const act = b.ground ? b.activity : null;
+  const def = b.ground && b.activity ? ACTIVITIES[b.activity] : null;
   const t = now - b.activityAt;
   const air = !b.ground;
   const running = !air && Math.abs(b.vx) > 20;
   const stride = running ? Math.floor(now * 11) % 2 : 0;
-  const beat = Math.floor(now * 4) % 2;
-  const sitting = b.asleep || act === "code";
-  const oy = sitting ? 2 : act === "music" ? beat : stride;
+  const sitting = b.asleep || !!def?.sits;
+  const oy = sitting ? 2 : def?.bob ? def.bob(now) : stride;
+  const d: Draw = { cell, fill, alpha, t, now, oy, k };
 
   // What the eyes are doing: following the cursor by default, busy otherwise.
   let ex = b.lookX > 0.35 ? 1 : b.lookX < -0.35 ? -1 : 0;
   let ey = b.lookY > 0.5 ? 1 : b.lookY < -0.5 ? -1 : 0;
   let closed = b.asleep || (now > b.nextBlink && now < b.nextBlink + 0.12);
-  const flipping = act === "read" && t % 3 > 2.7;
-  const sipping = act === "coffee" && t % 3.5 > 2.6;
-  const idea = act === "think" && t > 3.2;
-  if (act === "read") [ex, ey] = [flipping ? 1 : [-1, 0, 1][Math.floor(t * 2) % 3], 1];
-  if (act === "code") [ex, ey] = [0, 0];
-  if (act === "coffee") [ex, ey, closed] = [sipping ? 0 : 1, 0, sipping || closed];
-  if (act === "music") closed = true;
-  if (act === "think") [ex, ey] = idea ? [0, -1] : [1, -1];
+  const eyes = def?.eyes?.(t, now);
+  if (eyes?.ex !== undefined) ex = eyes.ex;
+  if (eyes?.ey !== undefined) ey = eyes.ey;
+  if (eyes?.closed !== undefined) closed = eyes.closed;
 
   fill(k.body);
   cell(3, 6 + oy, 12, 8);
 
   // Arms: busy with whatever it is doing, otherwise flung up in the air,
-  // swinging on the run, or at its sides. Reading and coding draw theirs over the props.
-  if (act === "coffee") {
-    cell(1, 10, 2, 2);
-    cell(sipping ? 14 : 15, sipping ? 9 : 10, 2, 2);
-  } else if (act === "think") {
-    cell(1, 10, 2, 2);
-    cell(idea ? 15 : 14, idea ? 6 : 10, 2, 2);
-  } else if (act === "wave") {
-    cell(1, 10, 2, 2);
-    if (Math.floor(now * 7) % 2) cell(15, 5, 2, 3);
-    else cell(16, 4, 2, 3);
-  } else if (act === "read" || act === "code") {
-    // Drawn with the props.
+  // swinging on the run, or at its sides.
+  if (def?.arms) {
+    def.arms(d);
   } else if (air) {
     const flail = b.vy < 0 ? 0 : Math.floor(now * 14) % 2;
     cell(1, 8 + flail, 2, 2);
@@ -338,8 +703,9 @@ const paint = (ctx: CanvasRenderingContext2D, b: Buddy, now: number, k: ReturnTy
 
   // Four little legs: alternating pairs on the run, tapping to music, tucked in the air.
   if (!sitting) {
+    const beat = beatOf(now);
     [4, 6, 11, 13].forEach((c, i) => {
-      const lifted = air || (running && i % 2 === stride) || (act === "music" && i === 3 && beat === 1);
+      const lifted = air || (running && i % 2 === stride) || (!!def?.taps && i === 3 && beat === 1);
       cell(c, 14, 1, lifted ? 1 : 2);
     });
   }
@@ -354,130 +720,8 @@ const paint = (ctx: CanvasRenderingContext2D, b: Buddy, now: number, k: ReturnTy
   }
 
   // Props, in front of the body.
-  if (act === "read") {
-    fill("#fbfaf7");
-    cell(3, 10, 12, 6);
-    fill("#d5cdbf");
-    cell(3, 10, 12, 1);
-    fill("#b8b0a2");
-    cell(5, 12, 8, 1);
-    cell(5, 14, 6, 1);
-    if (flipping) {
-      // A page lifting as it turns.
-      fill("#fbfaf7");
-      cell(9, 8, 5, 4);
-      fill("#d5cdbf");
-      cell(9, 8, 5, 1);
-    }
-    fill(k.body);
-    cell(2, 12, 2, 2);
-    cell(14, 12, 2, 2);
-  }
-
-  if (act === "code") {
-    const tap = Math.floor(now * 10) % 2;
-    fill("#c4c8ce");
-    cell(4, 11, 10, 4);
-    fill("#e3e6ea");
-    cell(4, 11, 10, 1);
-    fill("#d97757");
-    cell(8, 13, 2, 1);
-    fill("#9097a1");
-    cell(2, 15, 14, 1);
-    fill(k.body);
-    cell(2, 12 + tap, 2, 2);
-    cell(14, 13 - tap, 2, 2);
-
-    // Lines of code drift up out of the laptop and fade.
-    for (let i = 0; i < 3; i++) {
-      const phase = (t * 0.7 + i / 3) % 1;
-      const cycle = Math.floor(t * 0.7 + i / 3);
-      ctx.globalAlpha = 1 - phase;
-      fill(CODE_COLORS[(cycle + i) % CODE_COLORS.length]);
-      cell(6 + ((cycle + i) % 3), Math.round(7 - phase * 12), 3 + ((cycle * 7 + i * 3) % 4), 1);
-    }
-    ctx.globalAlpha = 1;
-    // Every so often it all compiles.
-    if (t % 6 > 5.2) {
-      fill("#9ece6a");
-      cell(15, 2);
-      cell(16, 3);
-      cell(17, 2);
-      cell(18, 1);
-    }
-  }
-
-  if (act === "coffee") {
-    const [mx, my] = sipping ? [11, 9] : [16, 8];
-    fill("#f2f0ec");
-    cell(mx, my, 3, 4);
-    cell(mx + 3, my + 1, 1, 2);
-    fill("#6b4226");
-    cell(mx, my, 3, 1);
-    if (!sipping) {
-      // Steam curling up from the cup.
-      const curl = Math.floor(now * 3) % 2;
-      ctx.globalAlpha = 0.55;
-      fill(k.glyph);
-      cell(mx + curl, my - 2);
-      cell(mx + 1 - curl, my - 4);
-      cell(mx + curl + 1, my - 6);
-      ctx.globalAlpha = 1;
-    }
-  }
-
-  if (act === "music") {
-    fill("#5b5f66");
-    cell(4, 4 + oy, 10, 1);
-    cell(3, 5 + oy);
-    cell(14, 5 + oy);
-    cell(2, 6 + oy, 2, 4);
-    cell(14, 6 + oy, 2, 4);
-    fill("#d97757");
-    cell(2, 7 + oy, 1, 2);
-    cell(15, 7 + oy, 1, 2);
-
-    // Notes rising off the headphones.
-    fill(k.glyph);
-    for (let i = 0; i < 2; i++) {
-      const phase = (t * 0.6 + i / 2) % 1;
-      const c = i ? -3 : 18;
-      const r = Math.round(5 - phase * 10);
-      ctx.globalAlpha = 1 - phase;
-      cell(c + 1, r, 1, 3);
-      cell(c, r + 2);
-      cell(c + 2, r);
-    }
-    ctx.globalAlpha = 1;
-  }
-
-  if (act === "think") {
-    // Bubbles lead up to a cloud that fills with dots, then an idea.
-    fill(k.glyph);
-    ctx.globalAlpha = 0.6;
-    cell(15, 4);
-    cell(16, 1, 2, 2);
-    ctx.globalAlpha = 1;
-    fill("#fbfaf7");
-    cell(15, -6, 8, 6);
-    fill(k.glyph);
-    ctx.globalAlpha = 0.6;
-    cell(16, -6, 6, 1);
-    cell(16, -1, 6, 1);
-    cell(15, -5, 1, 4);
-    cell(22, -5, 1, 4);
-    ctx.globalAlpha = 1;
-    if (idea) {
-      fill("#f5c542");
-      cell(18, -5, 2, 2);
-      cell(17, -4, 4, 1);
-      fill("#9097a1");
-      cell(18, -3, 2, 1);
-    } else {
-      fill("#6b6b6b");
-      for (let i = 0; i < Math.floor(t * 1.2) % 4; i++) cell(16 + i * 2, -3);
-    }
-  }
+  def?.props?.(d);
+  ctx.globalAlpha = 1;
 
   fill(k.glyph);
   if (now - b.startledAt < 0.7) {
